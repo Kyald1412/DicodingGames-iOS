@@ -1,0 +1,10 @@
+${PODS_ROOT}/Target Support Files/Pods-DicodingGames/Pods-DicodingGames-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/AlamofireEasyLogger/AlamofireEasyLogger.framework
+${BUILT_PRODUCTS_DIR}/Closures/Closures.framework
+${BUILT_PRODUCTS_DIR}/ImageSlideshow/ImageSlideshow.framework
+${BUILT_PRODUCTS_DIR}/PKHUD/PKHUD.framework
+${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
+${BUILT_PRODUCTS_DIR}/SDWebImageSwiftUI/SDWebImageSwiftUI.framework
+${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework
+${BUILT_PRODUCTS_DIR}/imageOptClient/imageOptClient.framework

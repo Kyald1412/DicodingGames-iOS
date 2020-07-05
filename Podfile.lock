@@ -1,0 +1,58 @@
+PODS:
+  - Alamofire (5.2.1)
+  - AlamofireEasyLogger (1.4.0):
+    - Alamofire (>= 5.0)
+  - Closures (0.7)
+  - imageOptClient (1.0.0)
+  - ImageSlideshow (1.9.1):
+    - ImageSlideshow/Core (= 1.9.1)
+  - ImageSlideshow/Core (1.9.1)
+  - ImageSlideshow/SDWebImage (1.9.1):
+    - ImageSlideshow/Core
+    - SDWebImage (>= 3.7)
+  - PKHUD (5.3.0)
+  - SDWebImage (5.8.1):
+    - SDWebImage/Core (= 5.8.1)
+  - SDWebImage/Core (5.8.1)
+  - SDWebImageSwiftUI (1.5.0):
+    - SDWebImage (~> 5.7)
+  - SwiftyJSON (5.0.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - AlamofireEasyLogger
+  - Closures
+  - imageOptClient
+  - ImageSlideshow
+  - ImageSlideshow/SDWebImage
+  - PKHUD
+  - SDWebImage
+  - SDWebImageSwiftUI
+  - SwiftyJSON
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - AlamofireEasyLogger
+    - Closures
+    - imageOptClient
+    - ImageSlideshow
+    - PKHUD
+    - SDWebImage
+    - SDWebImageSwiftUI
+    - SwiftyJSON
+
+SPEC CHECKSUMS:
+  Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
+  AlamofireEasyLogger: fa67d9063e16b1f20993f4d802226ca6e3d54f6b
+  Closures: a83b9892a5b1c4125a9dfcd53e2754db5d7f6d22
+  imageOptClient: 683d7b6b4f19fa37e4cf39d007517781d4932123
+  ImageSlideshow: 67184be896a28472bd3b906c33ce4e0734aa3d22
+  PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
+  SDWebImage: e3eae2eda88578db0685a0c88597fdadd9433f05
+  SDWebImageSwiftUI: 43687ffe232ddd33fe0659498b7ca9884fdd6b35
+  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
+
+PODFILE CHECKSUM: f2f0e6378d7584007d0f8c86c51495cb22a876d2
+
+COCOAPODS: 1.9.3

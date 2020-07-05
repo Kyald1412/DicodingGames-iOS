@@ -7,14 +7,20 @@
 //
 
 import UIKit
+import AlamofireEasyLogger
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
+    
+    let alamofireLogger = FancyAppAlamofireLogger(
+           logFunction: {
+               print($0)
+           }
+       )
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
         return true
     }
 

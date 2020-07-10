@@ -61,10 +61,16 @@ class HomeScreenView: UIViewController {
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.presenter?.interactor?.retrieveLocalFavoriteCount()
+    }
+    
     @objc private func refreshData(_ sender: Any) {
         self.presenter?.interactor?.retrieveGamesData(size: 5)
         self.presenter?.interactor?.retrieveUpcomingGamesData()
         self.presenter?.interactor?.retrievePopularNowGamesData()
+        self.presenter?.interactor?.retrieveLocalFavoriteCount()
     }
     
     @IBAction func onSearchButton(_ sender: Any) {
@@ -79,20 +85,20 @@ class HomeScreenView: UIViewController {
         self.presenter?.showProfileView()
     }
     
+    
 }
 
 extension HomeScreenView: HomeScreenViewProtocol {
     
     func showFavoriteGamesCount(with favorite: Bool){
         self.isFavorite = favorite
-        self.tableView.reloadSections(IndexSet.init(integer: 0), with: .automatic)
+        self.tableView.reloadSections(IndexSet.init(integer: 0), with: .none)
     }
     
     func showNewReleasedGames(with games: GameModel) {
         guard let results = games.results  else { return }
         self.newReleaseGameList = results
         self.tableView.reloadSections(IndexSet.init(integer: 4), with: .automatic)
-//        self.tableView.reloadRows(at: [IndexPath.init(row: 0, section: 4)], with: .automatic)
         self.refreshControl.endRefreshing()
 
     }
@@ -108,7 +114,6 @@ extension HomeScreenView: HomeScreenViewProtocol {
         
         self.bannerGameList = results
         self.tableView.reloadSections(IndexSet.init(integer: 0), with: .automatic)
-//        self.tableView.reloadRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
         self.refreshControl.endRefreshing()
 
     }
@@ -117,7 +122,6 @@ extension HomeScreenView: HomeScreenViewProtocol {
         guard let results = games.results  else { return }
         self.popularNowGameList = results
         self.tableView.reloadSections(IndexSet.init(integer: 1), with: .automatic)
-//        self.tableView.reloadRows(at: [IndexPath.init(row: 0, section: 1)], with: .automatic)
         self.refreshControl.endRefreshing()
 
     }
@@ -126,7 +130,6 @@ extension HomeScreenView: HomeScreenViewProtocol {
         guard let results = games.results  else { return }
         self.upcomingGameList = results
         self.tableView.reloadSections(IndexSet.init(integer: 2), with: .automatic)
-//        self.tableView.reloadRows(at: [IndexPath.init(row: 0, section: 2)], with: .automatic)
         self.refreshControl.endRefreshing()
 
     }
@@ -168,10 +171,13 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? HomeGameCell {
-            if(cell.subCategoryLabel.text == "Upcoming Games") {
+            
+            print("HOMEGAME \(cell.subCategoryLabel.text)")
+            
+            if(cell.cellIdentifier == HOME_UPCOMING_GAME) {
                 cachedUpcomingPosition[indexPath] = cell.collectionView.contentOffset
             }
-            if(cell.subCategoryLabel.text == "Popular") {
+            if(cell.cellIdentifier == HOME_TOP_GAME_POPULAR) {
                 cachedPopularNowPosition[indexPath] = cell.collectionView.contentOffset
             }
             
@@ -345,7 +351,6 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
                 
                 let url = URL(string: self.newReleaseGameList?[indexPath.row].backgroundImage ?? "_")
                 cell.img.sd_imageIndicator = SDWebImageProgressIndicator.default;
-//                let thumbnailSize = CGSize(width: 500, height: 500) // Thumbnail will bounds to (200,200)
                 cell.img.sd_setImage(with: url)
                 
             }

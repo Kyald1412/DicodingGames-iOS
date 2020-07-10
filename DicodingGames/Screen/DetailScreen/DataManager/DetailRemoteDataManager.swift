@@ -13,11 +13,13 @@ import SwiftyJSON
 protocol DetailRemoteDataManagerInputProtocol: class {
     var remoteRequestHandler: DetailRemoteDataManagerOutputProtocol? { get set }
     func retrieveGameDetailData(gameId: Int)
+    func retrieveGameSuggestedData(gameId: Int)
     func retrieveGameDetailScreenshots(gameId: Int)
 }
 
 protocol DetailRemoteDataManagerOutputProtocol: class {
     func onGameDetailRetrieved(_ gameDetail: GameDetail)
+    func onGameSuggestedRetrieved(_ suggestedGame: GameModel)
     func onGameDetailScreenshotRetrieved(_ gameScreenShot: GameDetailScreenshots)
     func onError()
 }
@@ -38,6 +40,25 @@ class DetailRemoteDataManager:DetailRemoteDataManagerInputProtocol {
                    switch response.result {
                    case .success(let games):
                        self.remoteRequestHandler?.onGameDetailRetrieved(games)
+                   case .failure(let error):
+                       print(error.localizedDescription)
+                       self.remoteRequestHandler?.onError()
+                       
+                   }
+           }
+       }
+    
+    func retrieveGameSuggestedData(gameId: Int) {
+           
+           let url = "\(Endpoints.Games.detail.url)\(gameId)/suggested"
+           
+           AF.request(url, method: .get)
+               .validate()
+               .responseDecodable(of: GameModel.self) { (response) in
+                   
+                   switch response.result {
+                   case .success(let games):
+                       self.remoteRequestHandler?.onGameSuggestedRetrieved(games)
                    case .failure(let error):
                        print(error.localizedDescription)
                        self.remoteRequestHandler?.onError()

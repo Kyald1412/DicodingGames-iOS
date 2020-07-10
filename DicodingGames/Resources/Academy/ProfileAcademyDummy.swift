@@ -16,10 +16,3 @@ let academies = [
     ProfileAcademy(id: 4, photo: "kotlin_android_developer_expert_logo", name: "Kotlin Android Developer Expert", description: "Belajar Android Jetpack Pro"),
     ProfileAcademy(id: 5, photo: "memulai_pemrograman_dengan_swift_logo", name: "Memulai Pemrograman Dengan Swift", description: "Belajar Android Jetpack Pro"),
     ProfileAcademy(id: 6, photo: "menjadi_android_developer_expert_logo", name: "Menjadi Android Developer Expert", description: "Belajar Android Jetpack Pro")]
-
-
-
-
-
-
-

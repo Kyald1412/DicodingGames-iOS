@@ -10,9 +10,6 @@ import UIKit
 
 class DetailContentCell: UITableViewCell {
     
-    @IBOutlet weak var lblPlatform: UILabel!
-    @IBOutlet weak var lblCategory: UILabel!
-    @IBOutlet weak var lblReleaseDate: UILabel!
     @IBOutlet weak var lblDescription: UILabel!
     
     override func prepareForReuse() {

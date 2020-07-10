@@ -19,14 +19,22 @@ class HomeScreenView: UIViewController {
     let HOME_BANNER = "home_banner"
     let HOME_TOP_GAME_POPULAR = "home_top_game_popular"
     let HOME_UPCOMING_GAME = "home_upcoming_game"
-    
+    let HOME_NEW_RELEASE_HEADER = "home_new_releases_header"
+    let HOME_NEW_RELEASE = "home_new_releases"
+
     private var BANNER_PHOTO_LIST = [SDWebImageSource]()
     
     private var bannerGameList: [Results]? = []
     private var upcomingGameList: [Results]? = []
     private var popularNowGameList: [Results]? = []
-    
+    private var newReleaseGameList: [Results]? = []
+    private var isFavorite: Bool = false
+
     @IBOutlet weak var tableView: UITableView!
+    
+    var cachedPopularNowPosition = Dictionary<IndexPath,CGPoint>()
+    var cachedUpcomingPosition = Dictionary<IndexPath,CGPoint>()
+    var cachedBannerPosition = 0
     
     private let refreshControl = UIRefreshControl()
     
@@ -63,6 +71,10 @@ class HomeScreenView: UIViewController {
         self.presenter?.showSearchView()
     }
     
+    @IBAction func onFavoriteButton(_ sender: Any) {
+        self.presenter?.showFavoriteScreenView()
+    }
+    
     @IBAction func onProfileButton(_ sender: Any) {
         self.presenter?.showProfileView()
     }
@@ -70,6 +82,21 @@ class HomeScreenView: UIViewController {
 }
 
 extension HomeScreenView: HomeScreenViewProtocol {
+    
+    func showFavoriteGamesCount(with favorite: Bool){
+        self.isFavorite = favorite
+        self.tableView.reloadSections(IndexSet.init(integer: 0), with: .automatic)
+    }
+    
+    func showNewReleasedGames(with games: GameModel) {
+        guard let results = games.results  else { return }
+        self.newReleaseGameList = results
+        self.tableView.reloadSections(IndexSet.init(integer: 4), with: .automatic)
+//        self.tableView.reloadRows(at: [IndexPath.init(row: 0, section: 4)], with: .automatic)
+        self.refreshControl.endRefreshing()
+
+    }
+    
     func showBannerGames(with games: GameModel) {
         guard let results = games.results  else { return }
         
@@ -80,7 +107,8 @@ extension HomeScreenView: HomeScreenViewProtocol {
         }
         
         self.bannerGameList = results
-        self.tableView.reloadRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
+        self.tableView.reloadSections(IndexSet.init(integer: 0), with: .automatic)
+//        self.tableView.reloadRows(at: [IndexPath.init(row: 0, section: 0)], with: .automatic)
         self.refreshControl.endRefreshing()
 
     }
@@ -88,7 +116,8 @@ extension HomeScreenView: HomeScreenViewProtocol {
     func showPopularNowGames(with games: GameModel) {
         guard let results = games.results  else { return }
         self.popularNowGameList = results
-        self.tableView.reloadRows(at: [IndexPath.init(row: 1, section: 0)], with: .automatic)
+        self.tableView.reloadSections(IndexSet.init(integer: 1), with: .automatic)
+//        self.tableView.reloadRows(at: [IndexPath.init(row: 0, section: 1)], with: .automatic)
         self.refreshControl.endRefreshing()
 
     }
@@ -96,7 +125,8 @@ extension HomeScreenView: HomeScreenViewProtocol {
     func showUpcomingGames(with games: GameModel) {
         guard let results = games.results  else { return }
         self.upcomingGameList = results
-        self.tableView.reloadRows(at: [IndexPath.init(row: 2, section: 0)], with: .automatic)
+        self.tableView.reloadSections(IndexSet.init(integer: 2), with: .automatic)
+//        self.tableView.reloadRows(at: [IndexPath.init(row: 0, section: 2)], with: .automatic)
         self.refreshControl.endRefreshing()
 
     }
@@ -125,6 +155,7 @@ extension HomeScreenView: ImageSlideshowDelegate {
             let cell = tableView.cellForRow(at: IndexPath.init(item: 0, section: 0)) as? HomeBannerCell
             cell?.lblTitle.text = gameList[page].name
             cell?.indicator.currentPage = page
+            self.cachedBannerPosition = page
         }
     }
 }
@@ -135,32 +166,69 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
         self.view.layoutIfNeeded()
     }
     
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? HomeGameCell {
+            if(cell.subCategoryLabel.text == "Upcoming Games") {
+                cachedUpcomingPosition[indexPath] = cell.collectionView.contentOffset
+            }
+            if(cell.subCategoryLabel.text == "Popular") {
+                cachedPopularNowPosition[indexPath] = cell.collectionView.contentOffset
+            }
+            
+        }
+    }
     func identifierConvert(fromFacility facility: String?) -> String? {
         //Add facility&identifier dependance here.
         let identifiersDic = [HOME_BANNER: "HomeBannerCell",
                               HOME_TOP_GAME_POPULAR: "HomeGameCell",
-                              HOME_UPCOMING_GAME: "HomeGameCell"]
+                              HOME_UPCOMING_GAME: "HomeGameCell",
+                              HOME_NEW_RELEASE_HEADER: "HomeNewReleaseHeadCell",
+                              HOME_NEW_RELEASE: "HomeNewReleaseCell"]
         
         return identifiersDic[facility!]
     }
     
-    func tableviewDataModel(withStatus obj: Int?) -> [AnyHashable]? {
+    
+    func tableviewDataModel(with section: Int?) -> [AnyHashable]? {
         
         var model = [AnyHashable]()
-        model.append(HOME_BANNER)
-        model.append(HOME_TOP_GAME_POPULAR)
-        model.append(HOME_UPCOMING_GAME)
+        
+        if(section == 0){
+            model.append(HOME_BANNER)
+        }
+        if(section == 1){
+            model.append(HOME_TOP_GAME_POPULAR)
+        }
+        if(section == 2){
+            model.append(HOME_UPCOMING_GAME)
+        }
+        if(section == 3){
+            model.append(HOME_NEW_RELEASE_HEADER)
+        }
+        if(section == 4) {
+            if let newReleaseGameData = self.newReleaseGameList {
+                for _ in newReleaseGameData {
+                    model.append(HOME_NEW_RELEASE)
+                }
+            }
+        }
         
         return model
     }
     
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 5
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableviewDataModel(withStatus: 0)!.count
+        
+        return tableviewDataModel(with: section)!.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let model = tableviewDataModel(withStatus: 0)
+        let model = tableviewDataModel(with: indexPath.section)
         let facility = model![indexPath.row] as? String
         
         let cell: UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: identifierConvert(fromFacility: facility)!)
@@ -185,7 +253,17 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
             cell.viewSlider.activityIndicator = DefaultActivityIndicator()
             
             if self.bannerGameList?.count ?? 0 > 0 {
-                cell.lblTitle.text = self.bannerGameList?[0].name
+//                cell.lblTitle.text = self.bannerGameList?[0].name
+                cell.lblTitle.text = self.bannerGameList?[self.cachedBannerPosition].name
+                cell.indicator.currentPage = self.cachedBannerPosition
+                cell.viewSlider.setCurrentPage(self.cachedBannerPosition, animated: true)
+                
+            }
+            
+            if self.isFavorite {
+                cell.icFavorite.setImage(UIImage.init(named: "heart_white_fill"), for: .normal)
+            } else {
+                cell.icFavorite.setImage(UIImage.init(named: "heart_white"), for: .normal)
             }
             
             cell.indicator.bringSubviewToFront(cell.contentView)
@@ -219,6 +297,8 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
             
             cell.cellIdentifier = HOME_TOP_GAME_POPULAR
             
+            cell.collectionView.contentOffset = cachedPopularNowPosition[indexPath] ?? .zero
+
             cell.cellDelegate = self
             
             cell.selectionStyle = .none
@@ -237,12 +317,45 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
             
             cell.cellIdentifier = HOME_UPCOMING_GAME
             
+            cell.collectionView.contentOffset = cachedUpcomingPosition[indexPath] ?? .zero
+
             cell.cellDelegate = self
             
             cell.selectionStyle = .none
             
             return cell
         }
+        
+        if (facility == HOME_NEW_RELEASE_HEADER){
+            let cell: HomeNewReleaseHeadCell = (tableView.dequeueReusableCell(withIdentifier: identifierConvert(fromFacility: facility)!) as? HomeNewReleaseHeadCell)!
+            
+            cell.lblTitle.text = "New Releases"
+            
+            cell.selectionStyle = .none
+            
+            return cell
+        }
+        
+        if (facility == HOME_NEW_RELEASE){
+            let cell: HomeNewReleaseCell = (tableView.dequeueReusableCell(withIdentifier: identifierConvert(fromFacility: facility)!) as? HomeNewReleaseCell)!
+            
+            if self.newReleaseGameList?.count ?? 0 > 0 {
+                cell.lblTitle.text = self.newReleaseGameList?[indexPath.row].name
+                cell.lblGenre.text = self.newReleaseGameList?[indexPath.row].genresStringBuilder
+                
+                let url = URL(string: self.newReleaseGameList?[indexPath.row].backgroundImage ?? "_")
+                cell.img.sd_imageIndicator = SDWebImageProgressIndicator.default;
+//                let thumbnailSize = CGSize(width: 500, height: 500) // Thumbnail will bounds to (200,200)
+                cell.img.sd_setImage(with: url)
+                
+            }
+            
+            cell.selectionStyle = .none
+            
+            return cell
+        }
+        
+        
         
         return cell!
         
@@ -252,15 +365,38 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         
-        let model = tableviewDataModel(withStatus: 0)
+        let model = tableviewDataModel(with: indexPath.section)
         let facility = model![indexPath.row] as? String
         
         if (facility == HOME_BANNER) {
             return 300
         }
         
+        if (facility == HOME_NEW_RELEASE_HEADER) {
+            return 60
+        }
+        
+        if (facility == HOME_NEW_RELEASE) {
+            return UITableView.automaticDimension
+        }
+        
         return 300
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let model = tableviewDataModel(with: indexPath.section)
+        let facility = model![indexPath.row] as? String
+        
+        if (facility == HOME_NEW_RELEASE_HEADER) {
+            self.presenter?.showGameListScreen()
+        }
+        if (facility == HOME_NEW_RELEASE) {
+            if(self.newReleaseGameList?.count ?? 0 > 0){
+                self.presenter?.showDetailScreenView(self.newReleaseGameList?[indexPath.row].id ?? 0)
+            }
+            
+        }
     }
     
 }

@@ -19,8 +19,13 @@ class HomeScreenPresenter: HomeScreenPresenterProtocol {
         interactor?.retrieveGamesData(size: 5)
         interactor?.retrievePopularNowGamesData()
         interactor?.retrieveUpcomingGamesData()
+        interactor?.retrieveNewReleaseGamesData()
+        interactor?.retrieveLocalFavoriteCount()
     }
     
+    func showFavoriteScreenView() {
+        wireFrame?.presentFavoriteScreen(from: view!)
+    }
     func showProfileView() {
         wireFrame?.presentProfileScreen(from: view!)
     }
@@ -30,10 +35,22 @@ class HomeScreenPresenter: HomeScreenPresenterProtocol {
     func showDetailScreenView(_ games: Int) {
         wireFrame?.presentDetailScreen(from: view!, games: games)
     }
+    func showGameListScreen() {
+        wireFrame?.presentGameListScreen(from: view!)
+    }
 
 }
 
 extension HomeScreenPresenter: HomeScreenInteractorOutputProtocol {
+    func didRetrieveFavoriteGamesCount(_ favorite: Bool) {
+        view?.showFavoriteGamesCount(with: favorite)
+    }
+    
+    func didRetrieveNewReleaseGamesData(_ games: GameModel) {
+        view?.hideLoading()
+        view?.showNewReleasedGames(with: games)
+    }
+    
     func didRetrievePopularNowGames(_ games: GameModel) {
         view?.hideLoading()
         view?.showPopularNowGames(with: games)

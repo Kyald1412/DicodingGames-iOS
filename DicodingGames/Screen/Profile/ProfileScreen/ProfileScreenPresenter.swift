@@ -13,5 +13,12 @@ class ProfileScreenPresenter: ProfileScreenPresenterProtocol {
     
     func viewDidLoad() {
     }
+    
+    func showProfileEditScreen() {
+        wireFrame?.presentProfileEditScreen(from: view!)
+    }
+    func showAcademyAddScreen(){
+        wireFrame?.presentAcademyScreen(from: view!)
+    }
 
 }

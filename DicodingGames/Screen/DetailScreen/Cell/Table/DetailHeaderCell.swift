@@ -17,6 +17,7 @@ class DetailHeaderCell: UITableViewCell {
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblRating: UILabel!
     
+    @IBOutlet weak var btnFavorite: UIButton!
     let gradientLayer = CAGradientLayer()
     
     override func prepareForReuse() {

@@ -14,8 +14,7 @@ class ProfileScreenView: UIViewController {
     
     var presenter: ProfileScreenPresenterProtocol?
     
-    private let itemsPerRow: CGFloat = 2
-    private let sectionInsets = UIEdgeInsets(top: 0, left: 20.0, bottom: 50.0, right: 20.0)
+    private var sectionInsets = UIEdgeInsets(top: 0, left: 20.0, bottom: 50.0, right: 20.0)
     
     private var isListView = false
     
@@ -31,6 +30,14 @@ class ProfileScreenView: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
+    @IBAction func onAcademyAdd(_ sender: Any) {
+        self.presenter?.showAcademyAddScreen()
+    }
+    
+    @IBAction func onSettingPressed(_ sender: Any) {
+        self.presenter?.showProfileEditScreen()
     }
     
     @IBAction func onBackPressed(_ sender: Any) {
@@ -54,6 +61,26 @@ extension ProfileScreenView: UICollectionViewDelegate, UICollectionViewDataSourc
         
     }
     
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        
+        let academy = academies[indexPath.row]
+
+        return UIContextMenuConfiguration(identifier: "\(academy.id)" as NSCopying, previewProvider: nil) { _ in
+            let editAction = UIAction(
+                title: "Edit",
+                image: UIImage(systemName: "square.and.pencil")) { _ in
+                    // copy the task content
+            }
+            let deleteAction = UIAction(
+                title: "Delete",
+                image: UIImage(systemName: "trash"),
+                attributes: .destructive) { _ in
+                    // delete the task
+            }
+            return UIMenu(title: "", children: [editAction, deleteAction])
+        }
+    }
+    
     internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if isListView {
@@ -64,6 +91,7 @@ extension ProfileScreenView: UICollectionViewDelegate, UICollectionViewDataSourc
             }
             
             cell.imageView.image =  UIImage.init(named:academies[indexPath.row].photo)
+            cell.imageView.translatesAutoresizingMaskIntoConstraints = false
             cell.title.text = academies[indexPath.row].name
             
             return cell
@@ -77,7 +105,8 @@ extension ProfileScreenView: UICollectionViewDelegate, UICollectionViewDataSourc
             }
             
             cell.imageView.image =  UIImage.init(named:academies[indexPath.row].photo)
-            
+            cell.imageView.translatesAutoresizingMaskIntoConstraints = false
+
             return cell
             
         }
@@ -135,10 +164,26 @@ extension ProfileScreenView: UICollectionViewDelegateFlowLayout {
             let width = view.frame.width
             return CGSize(width: width, height: 160)
         }else {
-            let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
+            
+            var itemsPerRow: CGFloat = 2
+            var padding: CGFloat = 0
+
+            let orientation = UIDevice.current.orientation
+
+            if(orientation == .landscapeLeft || orientation == .landscapeRight)
+            {
+                itemsPerRow = 3
+                padding = 50
+            }
+            else{
+                itemsPerRow = 2
+                padding = 20
+            }
+            
+            let paddingSpace = padding * (itemsPerRow + 1)
             let availableWidth = view.frame.width - paddingSpace
             let widthPerItem = availableWidth / itemsPerRow
-            
+
             return CGSize(width: widthPerItem, height: widthPerItem)
             
         }

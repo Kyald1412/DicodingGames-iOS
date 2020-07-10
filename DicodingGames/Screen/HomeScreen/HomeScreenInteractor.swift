@@ -9,9 +9,29 @@
 import Foundation
 
 class HomeScreenInteractor: HomeScreenInteractorInputProtocol {
+
     
     weak var presenter: HomeScreenInteractorOutputProtocol?
     var homeRemoteDataManager: HomeRemoteDataManagerInputProtocol?
+    var favoriteDataManager: FavoriteLocalDataManagerInputProtocol?
+    
+    func retrieveLocalFavoriteCount() {
+        
+        DispatchQueue.main.async { //make sure all UI updates are on the main thread.
+            
+            do {
+                let isFavorite = try self.favoriteDataManager?.retrieveFavoriteGamesCount() ?? false
+                
+                self.presenter?.didRetrieveFavoriteGamesCount(isFavorite)
+                return
+            } catch  {
+                
+            }
+            
+        }
+//        presenter?.didRetrieveFavoriteGamesCount(false)
+        
+    }
     
     func retrievePopularNowGamesData() {
         homeRemoteDataManager?.retrievePopularNowGamesData()
@@ -25,9 +45,16 @@ class HomeScreenInteractor: HomeScreenInteractorInputProtocol {
         homeRemoteDataManager?.retrieveGamesData(size: size)
     }
     
+    func retrieveNewReleaseGamesData() {
+        homeRemoteDataManager?.retrieveNewReleaseGamesData()
+    }
+    
 }
 
 extension HomeScreenInteractor: HomeRemoteDataManagerOutputProtocol {
+    func onRetrieveNewReleaseGamesData(_ gameModel: GameModel) {
+        presenter?.didRetrieveNewReleaseGamesData(gameModel)
+    }
     
     func onUpcomingGamesRetrieved(_ gameModel: GameModel) {
         presenter?.didRetrieveUpcomingGames(gameModel)

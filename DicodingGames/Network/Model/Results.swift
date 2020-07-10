@@ -35,13 +35,14 @@ final class Results {
     var suggestionsCount: Int?
     //  var platforms: [Platforms]?
     var ratingsCount: Int?
+    var genresStringBuilder: String = ""
     
     
     init() {
         
     }
     
-   required init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         added = try container.decodeIfPresent(Int.self, forKey: .added)
         //    clip = try container.decodeIfPresent(Clip.self, forKey: .clip)
@@ -69,6 +70,23 @@ final class Results {
         suggestionsCount = try container.decodeIfPresent(Int.self, forKey: .suggestionsCount)
         //    platforms = try container.decodeIfPresent([Platforms].self, forKey: .platforms)
         ratingsCount = try container.decodeIfPresent(Int.self, forKey: .ratingsCount)
+        
+        if let genres = genres {
+            genresStringBuilder = ""
+            
+            for genreData in genres {
+                genresStringBuilder.append("\(genreData.name ?? "")")
+                genresStringBuilder.append(", ")
+            }
+            
+            
+            genresStringBuilder = String(genresStringBuilder.dropLast())
+            genresStringBuilder = String(genresStringBuilder.dropLast())
+            
+            if genresStringBuilder.count == 0 {
+                genresStringBuilder = "-"
+            }
+        }
         
     }
 }

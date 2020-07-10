@@ -20,13 +20,15 @@ class HomeScreenWireFrame: HomeScreenWireFrameProtocol {
         let interactor: HomeScreenInteractorInputProtocol & HomeRemoteDataManagerOutputProtocol = HomeScreenInteractor()
         let homeRemoteDataManager: HomeRemoteDataManagerInputProtocol = HomeRemoteDataManager()
         let wireFrame: HomeScreenWireFrameProtocol = HomeScreenWireFrame()
-        
+        let favoriteLocalDataManager: FavoriteLocalDataManagerInputProtocol = FavoriteLocalDataManager()
+
         homeScreenRef.presenter = presenter
         presenter.view = homeScreenRef
         presenter.wireFrame = wireFrame
         presenter.interactor = interactor
         interactor.presenter = presenter
         interactor.homeRemoteDataManager = homeRemoteDataManager
+        interactor.favoriteDataManager = favoriteLocalDataManager
         homeRemoteDataManager.remoteRequestHandler = interactor
         
     }
@@ -52,7 +54,6 @@ class HomeScreenWireFrame: HomeScreenWireFrameProtocol {
             sourceView.navigationController?.pushViewController(detailScreenViewController, animated: true)
         }
         
-        
     }
         
     func presentSearchScreen(from view: HomeScreenViewProtocol) {
@@ -62,6 +63,49 @@ class HomeScreenWireFrame: HomeScreenWireFrameProtocol {
         hostingController.rootView.onDismiss = {
             hostingController.dismiss(animated: true, completion: nil)
         }
+        hostingController.rootView.onGameDidTap = { dataReturned in
+            hostingController.dismiss(animated: true, completion: nil)
+            self.presentDetailScreen(from: view, games: dataReturned)
+        }
+        
+        if let sourceView = view as? UIViewController {
+            hostingController.modalPresentationStyle = .fullScreen
+            sourceView.navigationController?.present(hostingController, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func presentFavoriteScreen(from view: HomeScreenViewProtocol) {
+        
+        let hostingController = FavoriteScreenWireframe.createFavoriteScreenModule()
+
+        hostingController.rootView.onDismiss = {
+            hostingController.dismiss(animated: true, completion: nil)
+        }
+        
+        hostingController.rootView.onGameDidTap = { dataReturned in
+            hostingController.dismiss(animated: true, completion: nil)
+            self.presentDetailScreen(from: view, games: dataReturned)
+        }
+        
+        if let sourceView = view as? UIViewController {
+            hostingController.modalPresentationStyle = .fullScreen
+            sourceView.navigationController?.present(hostingController, animated: true, completion: nil)
+        }
+        
+    }
+    
+
+    func presentGameListScreen(from view: HomeScreenViewProtocol) {
+        
+        let parameters = ["dates":"\(getDateWithYearModify(year: -1)),\(getDateWithYearModify(year:0))", "ordering":"-released","page_size":"10"]
+
+        let hostingController = GameListScreenWireframe.createGameListScreenModule(title: "New Releases", query: parameters)
+        
+        hostingController.rootView.onDismiss = {
+            hostingController.dismiss(animated: true, completion: nil)
+        }
+        
         hostingController.rootView.onGameDidTap = { dataReturned in
             hostingController.dismiss(animated: true, completion: nil)
             self.presentDetailScreen(from: view, games: dataReturned)

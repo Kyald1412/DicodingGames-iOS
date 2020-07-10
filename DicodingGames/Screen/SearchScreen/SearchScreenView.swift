@@ -14,14 +14,14 @@ import Combine
 import SDWebImageSwiftUI
 import imageOptClient
 
-typealias gameData = (_ gameId :Int) ->()
-typealias onDismiss = () ->()
+typealias onSearchScreenGameData = (_ gameId :Int) ->()
+typealias onSearchScreenDismiss = () ->()
 
 struct SearchScreenView: View {
     
     @ObservedObject var presenter: SearchScreenPresenter
-    var onGameDidTap:gameData?
-    var onDismiss: onDismiss?
+    var onGameDidTap: onSearchScreenGameData?
+    var onDismiss:  onSearchScreenDismiss?
     
     @State var gameName: String = ""
     

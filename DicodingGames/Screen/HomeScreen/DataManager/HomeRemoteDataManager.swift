@@ -15,12 +15,15 @@ protocol HomeRemoteDataManagerInputProtocol: class {
     func retrieveGamesData(size: Int)
     func retrieveUpcomingGamesData()
     func retrievePopularNowGamesData()
+    func retrieveNewReleaseGamesData()
 }
 
 protocol HomeRemoteDataManagerOutputProtocol: class {
     func onGamesRetrieved(_ gameModel: GameModel)
     func onUpcomingGamesRetrieved(_ gameModel: GameModel)
     func onRetrievePopularNowGamesData(_ gameModel: GameModel)
+    func onRetrieveNewReleaseGamesData(_ gameModel: GameModel)
+    
     func onError()
 }
 
@@ -47,11 +50,12 @@ class HomeRemoteDataManager:HomeRemoteDataManagerInputProtocol {
                 }
         }
     }
+
     
     func retrievePopularNowGamesData() {
-        
+                
         let parameters = ["dates":"\(getDateWithYearModify(year: -1)),\(getDateWithYearModify(year:0))", "ordering":"-rating,released","page_size":"10"]
-        
+
         AF.request(Endpoints.Games.allgames.url, method: .get, parameters: parameters)
             .validate()
             .responseDecodable(of: GameModel.self) { (response) in
@@ -66,6 +70,25 @@ class HomeRemoteDataManager:HomeRemoteDataManagerInputProtocol {
                 }
         }
     }
+    
+    func retrieveNewReleaseGamesData() {
+                   
+           let parameters = ["dates":"\(getDateWithYearModify(year: -1)),\(getDateWithYearModify(year:0))", "ordering":"-released","page_size":"10"]
+
+           AF.request(Endpoints.Games.allgames.url, method: .get, parameters: parameters)
+               .validate()
+               .responseDecodable(of: GameModel.self) { (response) in
+                   
+                   switch response.result {
+                   case .success(let games):
+                       self.remoteRequestHandler?.onRetrieveNewReleaseGamesData(games)
+                   case .failure(let error):
+                       print(error.localizedDescription)
+                       self.remoteRequestHandler?.onError()
+                       
+                   }
+           }
+       }
     
     func retrieveGamesData(size: Int) {
         

@@ -16,6 +16,9 @@ protocol ProfileScreenViewProtocol: class {
 
 protocol ProfileScreenWireFrameProtocol: class {
     static func createProfileScreenModule() -> UIViewController
+    
+    func presentProfileEditScreen(from view: ProfileScreenViewProtocol)
+    func presentAcademyScreen(from view: ProfileScreenViewProtocol)
 }
 
 protocol ProfileScreenPresenterProtocol: class {
@@ -23,4 +26,7 @@ protocol ProfileScreenPresenterProtocol: class {
     var wireFrame: ProfileScreenWireFrameProtocol? { get set }
     
     func viewDidLoad()
+    func showProfileEditScreen()
+    func showAcademyAddScreen()
+    
 }

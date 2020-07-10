@@ -14,6 +14,10 @@ class SearchScreenInteractor: SearchScreenInteractorInputProtocol {
     var searchRemoteDataManager: SearchRemoteDataManagerInputProtocol?
     
     func retrieveGameSearchData(gameName: String, page: Int) {
+        
+//        print("PRESENETE \(presenter)")
+//        print("favorite \(searchRemoteDataManager)")
+
         searchRemoteDataManager?.retrieveGameSearchData(gameName: gameName, page: page)
     }
     

@@ -16,6 +16,7 @@ class HomeBannerCell: UITableViewCell {
     
     @IBOutlet weak var viewGradient: UIView!
     @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var icFavorite: UIButton!
     
     let gradientLayer = CAGradientLayer()
 

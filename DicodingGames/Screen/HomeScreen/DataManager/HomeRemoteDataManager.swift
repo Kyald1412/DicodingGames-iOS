@@ -16,6 +16,7 @@ protocol HomeRemoteDataManagerInputProtocol: class {
     func retrieveUpcomingGamesData()
     func retrievePopularNowGamesData()
     func retrieveNewReleaseGamesData()
+    func compareNewReleasedGameData(completion: @escaping(_ isNewRelease: Bool) -> ())
 }
 
 protocol HomeRemoteDataManagerOutputProtocol: class {
@@ -50,12 +51,12 @@ class HomeRemoteDataManager:HomeRemoteDataManagerInputProtocol {
                 }
         }
     }
-
+    
     
     func retrievePopularNowGamesData() {
-                
+        
         let parameters = ["dates":"\(getDateWithYearModify(year: -1)),\(getDateWithYearModify(year:0))", "ordering":"-rating,released","page_size":"10"]
-
+        
         AF.request(Endpoints.Games.allgames.url, method: .get, parameters: parameters)
             .validate()
             .responseDecodable(of: GameModel.self) { (response) in
@@ -72,26 +73,60 @@ class HomeRemoteDataManager:HomeRemoteDataManagerInputProtocol {
     }
     
     func retrieveNewReleaseGamesData() {
-                   
-           let parameters = ["dates":"\(getDateWithYearModify(year: -1)),\(getDateWithYearModify(year:0))", "ordering":"-released","page_size":"10"]
-
-           AF.request(Endpoints.Games.allgames.url, method: .get, parameters: parameters)
-               .validate()
-            .responseJSON(completionHandler: { (data) in
-                print("RESOONSE JSON \(data.result)")
-            })
-               .responseDecodable(of: GameModel.self) { (response) in
-                   
-                   switch response.result {
-                   case .success(let games):
-                       self.remoteRequestHandler?.onRetrieveNewReleaseGamesData(games)
-                   case .failure(let error):
-                       print(error.localizedDescription)
-                       self.remoteRequestHandler?.onError()
-                       
-                   }
-           }
-       }
+        
+        let parameters = ["dates":"\(getDateWithYearModify(year: -1)),\(getDateWithYearModify(year:0))", "ordering":"-released","page_size":"10"]
+        
+        AF.request(Endpoints.Games.allgames.url, method: .get, parameters: parameters)
+            .validate()
+            .responseDecodable(of: GameModel.self) { (response) in
+                
+                switch response.result {
+                case .success(let games):
+                    self.remoteRequestHandler?.onRetrieveNewReleaseGamesData(games)
+                    if(games.results?.count ?? 0 > 0){
+                        HomeLocalDataManager().saveNewGames(id: games.results?[0].id ?? 0)
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.remoteRequestHandler?.onError()
+                    
+                }
+        }
+    }
+    
+    
+    func compareNewReleasedGameData(completion: @escaping(_ isNewRelease: Bool) -> ())  {
+        
+        let parameters = ["dates":"\(getDateWithYearModify(year: -1)),\(getDateWithYearModify(year:0))", "ordering":"-released","page_size":"10"]
+        
+        AF.request(Endpoints.Games.allgames.url, method: .get, parameters: parameters)
+            .validate()
+            .responseDecodable(of: GameModel.self) { (response) in
+                
+                switch response.result {
+                case .success(let games):
+                    
+                    if(games.results?.count ?? 0 > 0){
+                        HomeLocalDataManager().retrieveCurrentNewRelease { (NewGames) in
+                            
+                            if(Int(NewGames.game_id) != games.results?[0].id){
+                                HomeLocalDataManager().saveNewGames(id: games.results?[0].id ?? 0)
+                                completion(true)
+                            }
+                        }
+                    }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    completion(false)
+                }
+        }
+        completion(false)
+        
+    }
+    
+    
+    
     
     func retrieveGamesData(size: Int) {
         

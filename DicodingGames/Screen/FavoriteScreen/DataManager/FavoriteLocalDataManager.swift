@@ -25,8 +25,6 @@ class FavoriteLocalDataManager:FavoriteLocalDataManagerInputProtocol {
 
         let request: NSFetchRequest<FavoriteGames> = NSFetchRequest(entityName: String(describing: FavoriteGames.self))
 
-        print("data \(try managedOC.fetch(request))")
-
         if try managedOC.fetch(request).count > 0 {
             return true
         }
@@ -44,8 +42,6 @@ class FavoriteLocalDataManager:FavoriteLocalDataManagerInputProtocol {
         let request: NSFetchRequest<FavoriteGames> = NSFetchRequest(entityName: String(describing: FavoriteGames.self))
         request.predicate = NSPredicate(format: "game_id = %d", Int32(gameId))
 
-        print("data \(try managedOC.fetch(request))")
-
         if try managedOC.fetch(request).count > 0 {
             return true
         }
@@ -54,17 +50,13 @@ class FavoriteLocalDataManager:FavoriteLocalDataManagerInputProtocol {
     }
     
     func retrieveFavoriteGamesList() throws -> [FavoriteGames]   {
-        
-        print("FAVORITE LIST")
-        
+                
         guard let managedOC = CoreDataStore.managedObjectContext else {
             throw PersistenceError.managedObjectContextNotFound
         }
 
         let request: NSFetchRequest<FavoriteGames> = NSFetchRequest(entityName: String(describing: FavoriteGames.self))
         
-        print("data \(try managedOC.fetch(request))")
-
         return try managedOC.fetch(request)
     }
 
@@ -73,13 +65,9 @@ class FavoriteLocalDataManager:FavoriteLocalDataManagerInputProtocol {
             throw PersistenceError.managedObjectContextNotFound
         }
         
-        print("FAVORITE ADDED")
-
         if let newFavoriteGames = NSEntityDescription.entity(forEntityName: "FavoriteGames",
                                                            in: managedOC) {
-            
-            print("data \(newFavoriteGames)")
-        
+                    
             let favoriteGames = FavoriteGames(entity: newFavoriteGames, insertInto: managedOC)
             
             

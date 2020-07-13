@@ -33,7 +33,6 @@ struct FavoriteScreenView: View {
     
     var body: some View {
         
-        print("Here I am \(presenter.gameFavorites)")
 
         return VStack(alignment: .leading, spacing: 0) {
             
@@ -53,28 +52,6 @@ struct FavoriteScreenView: View {
                     .padding(EdgeInsets(top: 0, leading: -40, bottom: 0, trailing: 0))
                 
             }
-            
-            HStack {
-                Button(action: {
-                    self.performFavorite()
-                }) {
-                    Image("ic_search")
-                        .resizable()
-                        .foregroundColor(.white)
-                        .frame(width: 20, height: 20)
-                }
-                
-                
-                TextField("Find a Game", text: $gameName)
-                    .frame(height: 50, alignment: .center)
-                    .font(Font.custom("Roboto-Regular",size: 12))
-                    .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
-                
-                
-            }.padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 10))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 4)
-                        .stroke(Color.white, lineWidth: 0.3)).padding(EdgeInsets(top: 0, leading: 10, bottom: 30, trailing: 15))
             
             List(presenter.gameFavorites){ games in
                 VStack(alignment: .leading, spacing: 10) {
@@ -131,10 +108,6 @@ struct FavoriteScreenView: View {
         
     }
     
-    func performFavorite(){
-        self.presenter.onGameFavorite()
-        
-    }
     func performShowDetailScreen(gameId: Int){
            guard let onGameTap = onGameDidTap else {return}
            onGameTap(gameId)

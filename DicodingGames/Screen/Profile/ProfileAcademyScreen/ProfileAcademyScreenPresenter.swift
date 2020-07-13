@@ -64,7 +64,7 @@ extension ProfileAcademyScreenPresenter: ProfileAcademyScreenInteractorOutputPro
         self.title = academy.name
         self.desc = academy.desc
         self.image = Image(uiImage: UIImage.init(data: academy.photo) ?? image )
-        
+         self.inputImage = UIImage.init(data: academy.photo) ?? image
     }
 
 

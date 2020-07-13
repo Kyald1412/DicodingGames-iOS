@@ -23,8 +23,6 @@ class UserLocalDataManager:UserLocalDataManagerInputProtocol {
 
         let request: NSFetchRequest<Profile> = NSFetchRequest(entityName: String(describing: Profile.self))
         
-        print("data \(try managedOC.fetch(request))")
-
         return try managedOC.fetch(request)[0]
     }
     

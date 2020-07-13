@@ -9,20 +9,97 @@
 import UIKit
 import AlamofireEasyLogger
 import CoreData
+import BackgroundTasks
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let alamofireLogger = FancyAppAlamofireLogger(
-        logFunction: {
-            print($0)
+        logFunction: {data in
+//            print(data)
     }
     )
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        #if targetEnvironment(simulator)
+        application.setMinimumBackgroundFetchInterval(720)
+        #else
+        BGTaskScheduler.shared.register(
+            forTaskWithIdentifier: "id.kyald.DicodingGames.refresh",
+            using: nil) { (task) in
+                self.handleAppRefreshTask(task: task as! BGAppRefreshTask)
+        }
+        #endif
+        
+        UNUserNotificationCenter.current().delegate = self
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+            if granted {
+                print("Mendapatkan izin dari pengguna untuk local notifications")
+            } else {
+                print("Tidak mendapatkan izin dari pengguna untuk local notifications")
+            }
+        }
+
+        
         return true
+    }
+    
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        HomeRemoteDataManager().compareNewReleasedGameData { (isNewRelease) in
+            if isNewRelease {
+                self.notificaiton()
+            }
+        }
+    }
+    
+    func scheduleBackgroundFetch() {
+        let fetchTask = BGAppRefreshTaskRequest(identifier: "id.kyald.DicodingGames.refresh")
+        fetchTask.earliestBeginDate = Date(timeIntervalSinceNow: 60)
+        do {
+          try BGTaskScheduler.shared.submit(fetchTask)
+        } catch {
+          print("Unable to submit task: \(error.localizedDescription)")
+        }
+    }
+
+    func handleAppRefreshTask(task: BGAppRefreshTask) {
+        task.expirationHandler = {
+            HomeRemoteDataManager().compareNewReleasedGameData { (isNewRelease) in
+                if isNewRelease {
+                    self.notificaiton()
+                }
+            }
+        }
+    }
+    
+    private func notificaiton(){
+        let fixedString = "Dicoding Games"
+        let dynamicString = "New game has been released!"
+        
+        let content = UNMutableNotificationContent()
+        content.title = fixedString
+        content.body = dynamicString
+        content.sound = .default
+        content.userInfo = ["value": "Data dengan local notification"]
+        
+        let fireDate = Calendar.current.dateComponents([.day, .month, .year, .hour, .minute, .second], from: Date().addingTimeInterval(1))
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: fireDate, repeats: false)
+      
+        let request = UNNotificationRequest(identifier: "message", content: content, trigger: trigger)
+        
+        let center = UNUserNotificationCenter.current()
+        center.add(request) { (error) in
+            if error != nil {
+                print("Error = \(error?.localizedDescription ?? "Terjadi kesalahan dalam local notification")")
+            }
+        }
+        
+    }
+    func applicationDidEnterBackground(_ application: UIApplication) {
+//        scheduleAppRefresh()
     }
     
     // MARK: UISceneSession Lifecycle
@@ -88,3 +165,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 }
 
+
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        completionHandler([.alert, .badge, .sound])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("UserInfo yang terkait dengan notifikasi == \(response.notification.request.content.userInfo)")
+        
+        completionHandler()
+    }
+}

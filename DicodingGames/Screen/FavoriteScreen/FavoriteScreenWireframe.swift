@@ -18,7 +18,6 @@ class FavoriteScreenWireframe {
         let favoriteLocalDataManager: FavoriteLocalDataManagerInputProtocol = FavoriteLocalDataManager()
         let presenter: FavoriteScreenPresenter = FavoriteScreenPresenter(interactor: interactor)
 
-        print("LOCAL \(favoriteLocalDataManager)")
         
         interactor.presenter = presenter
         interactor.favoriteLocalDataManager = favoriteLocalDataManager

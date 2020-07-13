@@ -58,6 +58,9 @@
 		BC36C65524BC37C600C576F0 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC36C65424BC37C600C576F0 /* ImagePicker.swift */; };
 		BC3A79D124B19D89008E374D /* FavoriteGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3A79D024B19D89008E374D /* FavoriteGames.swift */; };
 		BC4C767724ACA4DF00E574C0 /* Publishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4C767624ACA4DF00E574C0 /* Publishers.swift */; };
+		BC4CD67524BC9F1E007D0649 /* HomeLocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4CD67424BC9F1E007D0649 /* HomeLocalDataManager.swift */; };
+		BC4CD67724BC9FEE007D0649 /* NewGames+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4CD67624BC9FEE007D0649 /* NewGames+CoreDataProperties.swift */; };
+		BC4CD67B24BCA016007D0649 /* NewGames.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4CD67A24BCA016007D0649 /* NewGames.swift */; };
 		BC4CE0E924B1880B00C8EE74 /* FavoriteScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4CE0E824B187B400C8EE74 /* FavoriteScreenView.swift */; };
 		BC4CE0EA24B1880B00C8EE74 /* FavoriteScreenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4CE0E424B187B400C8EE74 /* FavoriteScreenInteractor.swift */; };
 		BC4CE0EB24B1880B00C8EE74 /* FavoriteScreenProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4CE0E724B187B400C8EE74 /* FavoriteScreenProtocol.swift */; };
@@ -183,6 +186,9 @@
 		BC36C65424BC37C600C576F0 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		BC3A79D024B19D89008E374D /* FavoriteGames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGames.swift; sourceTree = "<group>"; };
 		BC4C767624ACA4DF00E574C0 /* Publishers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Publishers.swift; sourceTree = "<group>"; };
+		BC4CD67424BC9F1E007D0649 /* HomeLocalDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLocalDataManager.swift; sourceTree = "<group>"; };
+		BC4CD67624BC9FEE007D0649 /* NewGames+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewGames+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		BC4CD67A24BCA016007D0649 /* NewGames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGames.swift; sourceTree = "<group>"; };
 		BC4CE0E424B187B400C8EE74 /* FavoriteScreenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteScreenInteractor.swift; sourceTree = "<group>"; };
 		BC4CE0E524B187B400C8EE74 /* FavoriteScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteScreenPresenter.swift; sourceTree = "<group>"; };
 		BC4CE0E624B187B400C8EE74 /* FavoriteScreenWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteScreenWireframe.swift; sourceTree = "<group>"; };
@@ -284,6 +290,7 @@
 		BC016EF324ACD6BF0061132D /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
+				BC4CD67424BC9F1E007D0649 /* HomeLocalDataManager.swift */,
 				BC0C905D24AB729F00E77BCF /* HomeRemoteDataManager.swift */,
 			);
 			path = DataManager;
@@ -511,8 +518,10 @@
 				BCE6EF9024B1957A008E7E66 /* FavoriteGames+CoreDataProperties.swift */,
 				BCAF857424B8CD540039000B /* Academy+CoreDataProperties.swift */,
 				BCAF857624B8CD660039000B /* Profile+CoreDataProperties.swift */,
+				BC4CD67624BC9FEE007D0649 /* NewGames+CoreDataProperties.swift */,
 				BCD0995D24B754F200E41CE3 /* Academy.swift */,
 				BCD0995F24B754F300E41CE3 /* Profile.swift */,
+				BC4CD67A24BCA016007D0649 /* NewGames.swift */,
 				BC3A79D024B19D89008E374D /* FavoriteGames.swift */,
 			);
 			path = Entities;
@@ -822,6 +831,7 @@
 				BC98322A24ACFA040003FC87 /* SearchScreenInteractor.swift in Sources */,
 				BC0C909B24AB792700E77BCF /* Years.swift in Sources */,
 				BCB653F024B85EBA00708DD8 /* DetailSuggestedCell.swift in Sources */,
+				BC4CD67724BC9FEE007D0649 /* NewGames+CoreDataProperties.swift in Sources */,
 				BCB653C924B8111300708DD8 /* ProfileAcademyScreenView.swift in Sources */,
 				BCFC180E24ACC5D5001401B4 /* GameDetailScreenshots.swift in Sources */,
 				BC98322E24ACFB180003FC87 /* GameSearch.swift in Sources */,
@@ -848,6 +858,7 @@
 				BC0C909724AB792700E77BCF /* RequirementsEn.swift in Sources */,
 				BC0C907224AB735700E77BCF /* DetailScreenView.swift in Sources */,
 				BC59DADA24AD00CE008A774E /* SearchRemoteDataManager.swift in Sources */,
+				BC4CD67B24BCA016007D0649 /* NewGames.swift in Sources */,
 				BCB653CA24B8111300708DD8 /* ProfileAcademyScreenInteractor.swift in Sources */,
 				BCB653C024B7629F00708DD8 /* ProfileEditScreenInteractor.swift in Sources */,
 				BC15543B24AB8B3D006B4E46 /* ProfileScreenPresenter.swift in Sources */,
@@ -866,6 +877,7 @@
 				BCAF857524B8CD540039000B /* Academy+CoreDataProperties.swift in Sources */,
 				BCAF857924B8CE040039000B /* UserLocalDataManager.swift in Sources */,
 				BC3A79D124B19D89008E374D /* FavoriteGames.swift in Sources */,
+				BC4CD67524BC9F1E007D0649 /* HomeLocalDataManager.swift in Sources */,
 				BC15543E24AB8B3D006B4E46 /* ProfileScreenWireframe.swift in Sources */,
 				BCB653EA24B858C700708DD8 /* DetailContentCell.swift in Sources */,
 				BCD0996024B754F300E41CE3 /* Profile.swift in Sources */,

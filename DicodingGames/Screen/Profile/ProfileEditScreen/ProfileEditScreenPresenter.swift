@@ -47,23 +47,20 @@ class ProfileEditScreenPresenter: ObservableObject {
 
 extension ProfileEditScreenPresenter: ProfileEditScreenInteractorOutputProtocol {
     func didSuccessUpdateData() {
-        print("asdsadasd")
         
         guard let dismiss = onDismiss else {return}
         dismiss()
     }
     
     func didReceiveProfileData(profile: Profile){
-        
-        print("rpsdasdsadiohas \(profile)")
-        
+                
         guard let image = UIImage(named: "me") else { return }
 
         self.name = profile.name
         self.category = profile.category
         self.bio = profile.bio
         self.image = Image(uiImage: UIImage.init(data: profile.photo) ?? image )
-        print(self.name)
+        self.inputImage = UIImage.init(data: profile.photo) ?? image
 
     }
     

@@ -76,7 +76,7 @@ struct RepositoriesList: View {
             List{
                 
                 ForEach(repos) { repo in
-                    RepositoryRow(games: repo).onAppear {
+                    GameRow(games: repo).onAppear {
                         if self.repos.last == repo {
                             self.onScrolledAtBottom()
                         }
@@ -122,23 +122,16 @@ struct RepositoriesList: View {
         }
     }
     
-    func performGameList(){
-        //        self.presenter.onGameGameList(gameName: gameName)
-    }
     func performShowDetailScreen(gameId: Int){
-        //        guard let onGameTap = onGameDidTap else {return}
-        //        onGameTap(gameId)
         
         onGameDidTap(gameId)
     }
     func performDismiss(){
-        //        guard let dismiss = onDismiss else {return}
-        //        dismiss()
         onDismiss()
     }
 }
 
-struct RepositoryRow: View {
+struct GameRow: View {
     let games: Results
     
     var body: some View {

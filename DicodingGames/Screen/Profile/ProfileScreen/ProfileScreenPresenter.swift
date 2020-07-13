@@ -28,7 +28,6 @@ class ProfileScreenPresenter: ProfileScreenPresenterProtocol {
             guard let data = try academyDataManager?.retrieveAcademyGamesList() else {
                 return
             }
-            print("adasdsaads \(data)")
             view?.showAcademyData(academy: data)
         } catch {
             

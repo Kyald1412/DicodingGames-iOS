@@ -53,8 +53,7 @@ class AcademyLocalDataManager:AcademyLocalDataManagerInputProtocol {
 
         let request: NSFetchRequest<Academy> = NSFetchRequest(entityName: String(describing: Academy.self))
         
-        print("data \(try managedOC.fetch(request))")
-
+        
         return try managedOC.fetch(request)
     }
     

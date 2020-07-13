@@ -153,7 +153,6 @@ extension HomeScreenView: HomeScreenViewProtocol {
 extension HomeScreenView: ImageSlideshowDelegate {
     func imageSlideshow(_ imageSlideshow: ImageSlideshow, didChangeCurrentPageTo page: Int) {
         
-        print("PAGE CHANGED \(page)")
         if let gameList = self.bannerGameList {
             let cell = tableView.cellForRow(at: IndexPath.init(item: 0, section: 0)) as? HomeBannerCell
             cell?.lblTitle.text = gameList[page].name
@@ -273,10 +272,7 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
             cell.viewSlider.pageIndicatorPosition = PageIndicatorPosition(horizontal: .left(padding: 20), vertical: .customBottom(padding: 8))
             
             cell.viewSlider.addTapGesture { (tap) in
-                
-                print("asdasd \(cell.viewSlider.currentPage)")
-                print("asdasd \(cell.viewSlider.currentPage)")
-
+    
                 guard let results = self.bannerGameList else { return }
                 
                 if(results.count > 0){
@@ -347,8 +343,15 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
                 cell.lblGenre.text = self.newReleaseGameList?[indexPath.row].genresStringBuilder
                 
                 let url = URL(string: self.newReleaseGameList?[indexPath.row].backgroundImage ?? "_")
+                
                 cell.img.sd_imageIndicator = SDWebImageProgressIndicator.default;
-                cell.img.sd_setImage(with: url)
+                cell.img.sd_setImage(with: url) { (image, error, cache, url) in
+                    if (error != nil) {
+                           cell.img.image = UIImage(named: "dicoding_logo")
+                    } else {
+                           cell.img.image = image
+                    }
+                }
                 
             }
             

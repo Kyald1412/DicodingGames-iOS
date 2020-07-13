@@ -30,7 +30,6 @@ class ProfileEditScreenInteractor: ProfileEditScreenInteractorInputProtocol {
     func updateProfileData(name: String, bio: String, category: String,photo:Data) {
         do {
             
-            print("updatedata")
             try userDataManager?.updateUserData(id: 0, name: name, bio: bio, category: category, photo: photo)
         } catch {
             

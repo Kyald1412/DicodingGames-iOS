@@ -19,9 +19,14 @@ class ProfileScreenWireFrame: ProfileScreenWireFrameProtocol {
             
             let presenter: ProfileScreenPresenterProtocol = ProfileScreenPresenter()
             let wireFrame: ProfileScreenWireFrameProtocol = ProfileScreenWireFrame()
-            
+            let userDataManager: UserLocalDataManagerInputProtocol = UserLocalDataManager()
+           let academyDataManager: AcademyLocalDataManagerInputProtocol = AcademyLocalDataManager()
+
+
             view.presenter = presenter
             presenter.view = view
+            presenter.academyDataManager = academyDataManager
+            presenter.userDataManager = userDataManager
             presenter.wireFrame = wireFrame
 
             return viewController
@@ -35,6 +40,22 @@ class ProfileScreenWireFrame: ProfileScreenWireFrameProtocol {
     
     func presentAcademyScreen(from view: ProfileScreenViewProtocol) {
         let hostingController = ProfileAcademyScreenWireframe.createProfileAcademyScreenModule()
+        
+        hostingController.rootView.onDismiss = {
+            hostingController.dismiss(animated: true, completion: nil)
+        }
+        DispatchQueue.main.async { //make sure all UI updates are on the main thread.
+            if let sourceView = view as? UIViewController {
+                //                sourceView.navigationController?.view.layer.add(CATransition().segueFromLeft(), forKey: nil)
+                hostingController.modalPresentationStyle = .fullScreen
+                sourceView.navigationController?.present(hostingController, animated: true, completion: nil)
+            }
+            
+        }
+    }
+    
+    func presentAcademyEditScreen(from view: ProfileScreenViewProtocol, id: Int) {
+        let hostingController = ProfileAcademyScreenWireframe.createProfileAcademyEditScreenModule(id: id)
         
         hostingController.rootView.onDismiss = {
             hostingController.dismiss(animated: true, completion: nil)

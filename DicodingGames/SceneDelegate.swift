@@ -19,13 +19,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
         
-//        if !UserDefaults.standard.bool(forKey: "first"){
-//            MemberProvider().addMemberDummy(){
-//                UserDefaults.standard.set(true, forKey: "first")
-//            }
-//        }
+        if !UserDefaults.standard.bool(forKey: "first"){
+            DispatchQueue.main.async {
+                Profile().initData{
+                    UserDefaults.standard.set(true, forKey: "first")
+                }
+            }
+            
+            DispatchQueue.main.async {
+                Academy().initData{
+                    UserDefaults.standard.set(true, forKey: "first")
+                }
+                
+            }
+        }
     }
-
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.

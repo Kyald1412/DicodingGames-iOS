@@ -17,13 +17,32 @@ class ProfileAcademyScreenWireframe {
         let interactor: ProfileAcademyScreenInteractorInputProtocol = ProfileAcademyScreenInteractor()
         let presenter: ProfileAcademyScreenPresenter = ProfileAcademyScreenPresenter(interactor: interactor)
 
+        let academyDataManager: AcademyLocalDataManagerInputProtocol = AcademyLocalDataManager()
+
         interactor.presenter = presenter
+        interactor.academyDataManager = academyDataManager
         
         let hostingController = UIHostingController(rootView: ProfileAcademyScreenView(presenter: presenter))
 
         return hostingController
     }
+   
+    class func createProfileAcademyEditScreenModule(id: Int) -> UIHostingController<ProfileAcademyScreenView>  {
+                   
+           let interactor: ProfileAcademyScreenInteractorInputProtocol = ProfileAcademyScreenInteractor()
+        let presenter: ProfileAcademyScreenPresenter = ProfileAcademyScreenPresenter(interactor: interactor)
+        
+        let academyDataManager: AcademyLocalDataManagerInputProtocol = AcademyLocalDataManager()
+        
+        presenter.academyId = id
+        presenter.isEditAcademy = true
+        interactor.presenter = presenter
+        interactor.academyDataManager = academyDataManager
+        
+        let hostingController = UIHostingController(rootView: ProfileAcademyScreenView(presenter: presenter))
+        
+        return hostingController
+    }
     
- 
     
 }

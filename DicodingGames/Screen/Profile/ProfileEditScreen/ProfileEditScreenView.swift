@@ -19,14 +19,13 @@ typealias onProfileEditScreenDismiss = () ->()
 struct ProfileEditScreenView: View {
     
     @ObservedObject var presenter: ProfileEditScreenPresenter
-    var onDismiss: onFavoriteScreenDismiss?
-
-    @State var name: String = ""
-    @State var category: String = ""
-    @State var bio: String = ""
+    var onDismiss: onProfileEditScreenDismiss?
 
     init(presenter: ProfileEditScreenPresenter) {
         self.presenter = presenter
+        self.presenter.onDismiss = onDismiss
+        
+        self.presenter.onShowProfileData()
     }
     
     var body: some View {
@@ -49,6 +48,7 @@ struct ProfileEditScreenView: View {
                     .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
                 
                 Button(action: {
+                    self.presenter.onUpdateProfileData()
                     self.performDismiss()
                 }) {
                     Image("ic_confirm")
@@ -60,13 +60,22 @@ struct ProfileEditScreenView: View {
             
             VStack {
                 
-               Image("placeholder_gta")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 150, height: 150, alignment: .center)
-                .clipShape(Circle())
-//                .border(Color.blue, width:1)
-
+                if presenter.image != nil {
+                    presenter.image!
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 150, height: 150, alignment: .center)
+                        .clipShape(Circle())
+                        .onTapGesture {  self.presenter.showImagePicker.toggle() }
+                } else {
+                    Image("dicoding_logo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 150, height: 150, alignment: .center)
+                        .clipShape(Circle())
+                        .onTapGesture {  self.presenter.showImagePicker.toggle() }
+                }
+                
                 Text("Change Profile Photo")
                     .font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .center).foregroundColor(Color.blue)
                     
@@ -75,19 +84,19 @@ struct ProfileEditScreenView: View {
             
             VStack(alignment: .leading) {
                 Text("Name").font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .leading).padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)).foregroundColor(Color.gray)
-                TextField("Your name ...", text:  $name).accentColor(Color.white).foregroundColor(Color.white)
+                TextField("Your name ...", text:  $presenter.name).accentColor(Color.white).foregroundColor(Color.white)
                 Divider().background(Color.white)
             }.padding()
             
             VStack(alignment: .leading) {
                 Text("Category").font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .leading).padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)).foregroundColor(Color.gray)
-                TextField("Category ...", text:  $category).accentColor(Color.white).foregroundColor(Color.white)
+                TextField("Category ...", text:  $presenter.category).accentColor(Color.white).foregroundColor(Color.white)
                 Divider().background(Color.white)
             }.padding()
             
             VStack(alignment: .leading) {
                 Text("Bio").font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .leading).padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)).foregroundColor(Color.gray)
-                TextField("Your Bio ...", text:  $bio).accentColor(Color.white).foregroundColor(Color.white)
+                TextField("Your Bio ...", text:  $presenter.bio).accentColor(Color.white).foregroundColor(Color.white)
                 Divider().background(Color.white)
             }.padding()
             
@@ -98,13 +107,21 @@ struct ProfileEditScreenView: View {
                 
             ))
         
+            .sheet(isPresented: $presenter.showImagePicker, onDismiss: loadImage) { ImagePicker(image: self.$presenter.inputImage) }
+        
 
     }
+    
+    func loadImage() {
+        guard let inputImage = presenter.inputImage else { return }
+          presenter.image = Image(uiImage: inputImage)
+      }
     
     func performDismiss(){
           guard let dismiss = onDismiss else {return}
           dismiss()
-      }
+    }
+    
 }
 
 struct ProfileEditScreenView_Previews: PreviewProvider {

@@ -18,6 +18,10 @@ class ProfileScreenView: UIViewController {
     
     private var isListView = false
     
+    private var profileData: Profile?
+    
+    private var academies: [Academy] = []
+
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -25,6 +29,11 @@ class ProfileScreenView: UIViewController {
         
         presenter?.viewDidLoad()
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.presenter?.viewDidLoad()
     }
     
     override func viewWillLayoutSubviews() {
@@ -47,6 +56,21 @@ class ProfileScreenView: UIViewController {
 }
 
 extension ProfileScreenView: ProfileScreenViewProtocol {
+    func showProfileData(profile: Profile) {        
+        profileData = profile
+        self.collectionView.reloadData()
+    }
+    
+    func showAcademyData(academy: [Academy]) {
+        self.academies = academy
+        self.collectionView.reloadData()
+    }
+    
+    func onDeleteAcademyData(academy: [Academy]) {
+        self.academies = academy
+        self.collectionView.reloadData()
+    }
+    
     
 }
 
@@ -69,13 +93,13 @@ extension ProfileScreenView: UICollectionViewDelegate, UICollectionViewDataSourc
             let editAction = UIAction(
                 title: "Edit",
                 image: UIImage(systemName: "square.and.pencil")) { _ in
-                    // copy the task content
+                    self.presenter?.showAcademyEditScreen(id: Int(academy.id))
             }
             let deleteAction = UIAction(
                 title: "Delete",
                 image: UIImage(systemName: "trash"),
                 attributes: .destructive) { _ in
-                    // delete the task
+                    self.presenter?.deleteAcademy(id: Int(academy.id))
             }
             return UIMenu(title: "", children: [editAction, deleteAction])
         }
@@ -90,7 +114,7 @@ extension ProfileScreenView: UICollectionViewDelegate, UICollectionViewDataSourc
                     preconditionFailure("Invalid cell type")
             }
             
-            cell.imageView.image =  UIImage.init(named:academies[indexPath.row].photo)
+            cell.imageView.image =  UIImage.init(data: self.academies[indexPath.row].photo)
             cell.imageView.translatesAutoresizingMaskIntoConstraints = false
             cell.title.text = academies[indexPath.row].name
             
@@ -104,7 +128,7 @@ extension ProfileScreenView: UICollectionViewDelegate, UICollectionViewDataSourc
                     preconditionFailure("Invalid cell type")
             }
             
-            cell.imageView.image =  UIImage.init(named:academies[indexPath.row].photo)
+            cell.imageView.image =  UIImage.init(data: self.academies[indexPath.row].photo)
             cell.imageView.translatesAutoresizingMaskIntoConstraints = false
 
             return cell
@@ -122,6 +146,14 @@ extension ProfileScreenView: UICollectionViewDelegate, UICollectionViewDataSourc
                 for: indexPath) as? ProfileHeaderCell
                 else {
                     fatalError("Invalid view type")
+            }
+            
+            if let profileData = self.profileData {
+                headerView.lblBio.text = profileData.bio
+                headerView.lblName.text = profileData.name
+                headerView.lblCategory.text = profileData.category
+                headerView.imgProfile.image =  UIImage.init(data: profileData.photo)
+
             }
             
             headerView.imgList.addTapGesture { (tap) in

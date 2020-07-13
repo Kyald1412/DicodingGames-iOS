@@ -11,15 +11,38 @@ import Foundation
 
 class ProfileEditScreenInteractor: ProfileEditScreenInteractorInputProtocol {
     
-    weak var presenter: ProfileEditScreenInteractorOutputProtocol?
     
-    func retrieveGameProfileEditData() {
-
+    weak var presenter: ProfileEditScreenInteractorOutputProtocol?
+    var userDataManager: UserLocalDataManagerInputProtocol?
+    
+    func retrieveProfileData() {
+        do {
+            
+            guard let data = try userDataManager?.retrieveUserData() else {
+                return
+            }
+            self.presenter?.didReceiveProfileData(profile: data)
+        } catch {
+            
+        }
+    }
+    
+    func updateProfileData(name: String, bio: String, category: String,photo:Data) {
+        do {
+            
+            print("updatedata")
+            try userDataManager?.updateUserData(id: 0, name: name, bio: bio, category: category, photo: photo)
+        } catch {
+            
+        }
+        
+        self.presenter?.didSuccessUpdateData()
+        
     }
     
     func deleteGameProfileEditData(gameId: Int) {
-
-      
+        
+        
     }
     
     

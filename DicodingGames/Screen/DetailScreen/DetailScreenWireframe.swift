@@ -52,7 +52,7 @@ class DetailScreenWireFrame: DetailScreenWireFrameProtocol {
     
     func presentGameListScreen(from view: DetailScreenViewProtocol, gameId: Int) {
 
-        let parameters = ["url":"\(Endpoints.Games.detail.url)\(gameId)/suggested"]
+        let parameters = ["url":"\(Endpoints.Games.detail.url)\(gameId)/suggested?page_size=10"]
 
         let hostingController = GameListScreenWireframe.createGameListScreenModule(title: "You might also like", query: parameters)
         

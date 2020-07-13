@@ -171,9 +171,7 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? HomeGameCell {
-            
-            print("HOMEGAME \(cell.subCategoryLabel.text)")
-            
+                        
             if(cell.cellIdentifier == HOME_UPCOMING_GAME) {
                 cachedUpcomingPosition[indexPath] = cell.collectionView.contentOffset
             }
@@ -259,7 +257,6 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
             cell.viewSlider.activityIndicator = DefaultActivityIndicator()
             
             if self.bannerGameList?.count ?? 0 > 0 {
-//                cell.lblTitle.text = self.bannerGameList?[0].name
                 cell.lblTitle.text = self.bannerGameList?[self.cachedBannerPosition].name
                 cell.indicator.currentPage = self.cachedBannerPosition
                 cell.viewSlider.setCurrentPage(self.cachedBannerPosition, animated: true)

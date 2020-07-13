@@ -49,8 +49,8 @@ final class Results {
         rating = try container.decodeIfPresent(Float.self, forKey: .rating)
         //    ratings = try container.decodeIfPresent([Ratings].self, forKey: .ratings)
         dominantColor = try container.decodeIfPresent(String.self, forKey: .dominantColor)
-        backgroundImage = try container.decode(String.self, forKey: .backgroundImage)
-        name = try container.decode(String.self, forKey: .name)
+        backgroundImage = try container.decodeIfPresent(String.self, forKey: .backgroundImage) ?? ""
+        name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
         playtime = try container.decodeIfPresent(Int.self, forKey: .playtime)
         saturatedColor = try container.decodeIfPresent(String.self, forKey: .saturatedColor)
         id = try container.decode(Int.self, forKey: .id)

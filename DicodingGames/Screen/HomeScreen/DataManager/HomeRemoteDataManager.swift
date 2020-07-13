@@ -77,6 +77,9 @@ class HomeRemoteDataManager:HomeRemoteDataManagerInputProtocol {
 
            AF.request(Endpoints.Games.allgames.url, method: .get, parameters: parameters)
                .validate()
+            .responseJSON(completionHandler: { (data) in
+                print("RESOONSE JSON \(data.result)")
+            })
                .responseDecodable(of: GameModel.self) { (response) in
                    
                    switch response.result {

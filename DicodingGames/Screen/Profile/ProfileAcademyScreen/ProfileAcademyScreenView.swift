@@ -20,16 +20,18 @@ struct ProfileAcademyScreenView: View {
     
     @ObservedObject var presenter: ProfileAcademyScreenPresenter
     var onDismiss: onFavoriteScreenDismiss?
-
-    @State var title: String = ""
-    @State var description: String = ""
-
+    
+    
     init(presenter: ProfileAcademyScreenPresenter) {
         self.presenter = presenter
+        
+        if(self.presenter.isEditAcademy){
+            self.presenter.onAcademyEdit()
+        }
     }
     
     var body: some View {
-                
+        
         return VStack(alignment: .leading, spacing: 0) {
             
             HStack {
@@ -48,26 +50,53 @@ struct ProfileAcademyScreenView: View {
                     .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
                 
                 Button(action: {
+                    
+                    if(self.presenter.isEditAcademy){
+                        
+                        self.presenter.editAcademyData()
+                    } else {
+                        self.presenter.addAcademyData()
+                        
+                    }
                     self.performDismiss()
+                    
                 }) {
-                    Image("ic_confirm")
-                        .resizable()
-                        .foregroundColor(.white)
-                        .frame(width: 30, height: 30)
+                    if(presenter.isEditAcademy){
+                        Image("ic_confirm")
+                            .resizable()
+                            .foregroundColor(.white)
+                            .frame(width: 30, height: 30)
+                    } else {
+                        Image("ic_add_circle")
+                            .resizable()
+                            .foregroundColor(.white)
+                            .frame(width: 30, height: 30)
+                    }
+                    
                 }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
             }
             
             VStack {
                 
-               Image("placeholder_gta")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 150, height: 150, alignment: .center)
-                .clipped()
-                .cornerRadius(8)
-//                .clipShape(Circle())
-//                .border(Color.blue, width:1)
-
+                if presenter.image != nil {
+                    presenter.image!
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 150, height: 150, alignment: .center)
+                        .clipped()
+                        .cornerRadius(8)
+                        .scaledToFit()
+                        .onTapGesture { self.presenter.showImagePicker.toggle() }
+                } else {
+                    Image("dicoding_logo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 150, height: 150, alignment: .center)
+                        .clipped()
+                        .cornerRadius(8)
+                        .onTapGesture {  self.presenter.showImagePicker.toggle() }
+                }
+                
                 Text("Change Image")
                     .font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .center).foregroundColor(Color.blue)
                     
@@ -76,38 +105,42 @@ struct ProfileAcademyScreenView: View {
             
             VStack(alignment: .leading) {
                 Text("Title").font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .leading).padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)).foregroundColor(Color.gray)
-                TextField("Academy title ...", text:  $title).accentColor(Color.white).foregroundColor(Color.white)
+                TextField("Academy title ...", text:  $presenter.title).accentColor(Color.white).foregroundColor(Color.white)
                 Divider().background(Color.white)
             }.padding()
             
             VStack(alignment: .leading) {
                 Text("Description").font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .leading).padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)).foregroundColor(Color.gray)
-                TextField("Academy description ...", text:  $description).accentColor(Color.white).foregroundColor(Color.white)
+                TextField("Academy description ...", text:  $presenter.desc).accentColor(Color.white).foregroundColor(Color.white)
                 Divider().background(Color.white)
             }.padding()
             
             Spacer()
-
+            
             
         }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)).background(Color.init(UIColor(red: 0.03, green: 0.03, blue: 0.07, alpha: 1.00)
-                
-            ))
+            
+        ))
+            
+            .sheet(isPresented: $presenter.showImagePicker, onDismiss: loadImage) { ImagePicker(image: self.$presenter.inputImage) }
         
-
+        
     }
     
+    func loadImage() {
+        guard let inputImage = presenter.inputImage else { return }
+        presenter.image = Image(uiImage: inputImage)
+    }
     func performDismiss(){
-          guard let dismiss = onDismiss else {return}
-          dismiss()
-      }
+        guard let dismiss = onDismiss else {return}
+        dismiss()
+    }
 }
 
 struct ProfileAcademyScreenView_Previews: PreviewProvider {
     static var previews: some View {
         
         let interactor: ProfileAcademyScreenInteractorInputProtocol = ProfileAcademyScreenInteractor()
-        //        let profileAcademyLocalDataManager: ProfileAcademyLocalDataManagerInputProtocol = ProfileAcademyLocalDataManager()
-        //        interactor.profileAcademyLocalDataManager = profileAcademyLocalDataManager
         
         let presenter: ProfileAcademyScreenPresenter = ProfileAcademyScreenPresenter(interactor: interactor)
         

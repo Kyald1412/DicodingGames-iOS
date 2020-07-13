@@ -16,9 +16,12 @@ class ProfileEditScreenWireframe {
                 
         let interactor: ProfileEditScreenInteractorInputProtocol = ProfileEditScreenInteractor()
         let presenter: ProfileEditScreenPresenter = ProfileEditScreenPresenter(interactor: interactor)
-
-        interactor.presenter = presenter
         
+        let userDataManager: UserLocalDataManagerInputProtocol = UserLocalDataManager()
+
+        interactor.userDataManager = userDataManager
+        interactor.presenter = presenter
+
         let hostingController = UIHostingController(rootView: ProfileEditScreenView(presenter: presenter))
 
         return hostingController

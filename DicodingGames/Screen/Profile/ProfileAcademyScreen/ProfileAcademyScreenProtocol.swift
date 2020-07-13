@@ -12,7 +12,7 @@ import UIKit
 protocol ProfileAcademyScreenViewProtocol: class {
     var presenter: ProfileAcademyScreenPresenterProtocol? { get set }
     
-        func showError()
+    func showError()
 }
 
 protocol ProfileAcademyScreenWireFrameProtocol: class {
@@ -23,16 +23,24 @@ protocol ProfileAcademyScreenPresenterProtocol: class {
     var view: ProfileAcademyScreenViewProtocol? { get set }
     var interactor: ProfileAcademyScreenInteractorInputProtocol? { get set }
     var wireFrame: ProfileAcademyScreenWireFrameProtocol? { get set }
-        
+    
+    
     func viewDidLoad()
+    func addAcademyData()
 }
 
 protocol ProfileAcademyScreenInteractorInputProtocol: class {
     var presenter: ProfileAcademyScreenInteractorOutputProtocol? { get set }
+    var academyDataManager: AcademyLocalDataManagerInputProtocol?  { get set }
+    
+    func addAcademyData(title: String, description: String, photo: Data)
+    func editAcademyData(id: Int,title: String, description: String, photo: Data)
+    func retrieveAcademyDataById(id: Int)
     
 }
 
 protocol ProfileAcademyScreenInteractorOutputProtocol: class {
-
+    
+    func didReceiveAcademyData(academy: Academy)
     func onError()
 }

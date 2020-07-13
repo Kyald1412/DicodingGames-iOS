@@ -39,7 +39,7 @@ protocol GameListScreenInteractorInputProtocol: class {
     var presenter: GameListScreenInteractorOutputProtocol? { get set }
     var gameListRemoteDataManager: GameListRemoteDataManagerInputProtocol? { get set }
     
-    func retrieveGameListData(query: [String:String], page: Int)
+    func retrieveGameListData(query: [String:String])
 }
 
 protocol GameListScreenInteractorOutputProtocol: class {

@@ -18,9 +18,6 @@ class FavoriteScreenPresenter: ObservableObject {
     
     init(interactor: FavoriteScreenInteractorInputProtocol) {
         self.interactor = interactor
-        
-        
-        onGameFavorite()
     }
     
     func onGameFavorite() {

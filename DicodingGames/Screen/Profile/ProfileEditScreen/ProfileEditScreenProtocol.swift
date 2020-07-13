@@ -12,7 +12,7 @@ import UIKit
 protocol ProfileEditScreenViewProtocol: class {
     var presenter: ProfileEditScreenPresenterProtocol? { get set }
     
-        func showError()
+    func showError()
 }
 
 protocol ProfileEditScreenWireFrameProtocol: class {
@@ -25,14 +25,23 @@ protocol ProfileEditScreenPresenterProtocol: class {
     var wireFrame: ProfileEditScreenWireFrameProtocol? { get set }
         
     func viewDidLoad()
+    func onUpdateProfileData(name: String, bio: String, category: String,photo:Data)
+    func onShowProfileData()
+
 }
 
 protocol ProfileEditScreenInteractorInputProtocol: class {
     var presenter: ProfileEditScreenInteractorOutputProtocol? { get set }
+    var userDataManager: UserLocalDataManagerInputProtocol? { get set }    
+    
+    func retrieveProfileData()
+    func updateProfileData(name: String, bio: String, category: String,photo:Data)
     
 }
 
 protocol ProfileEditScreenInteractorOutputProtocol: class {
 
+    func didReceiveProfileData(profile: Profile)
+    func didSuccessUpdateData()
     func onError()
 }

@@ -14,6 +14,8 @@ class GameListScreenPresenter: ObservableObject {
     
     @Published var gameList : [Results] = []
     @Published var title: String = ""
+    @Published var isLoading: Bool = false
+    @Published var nextPageUrl: String = ""
     var query: [String:String] = [:]
 
     private var cancellables = Set<AnyCancellable>()
@@ -23,18 +25,30 @@ class GameListScreenPresenter: ObservableObject {
     }
     
     func onGameList(query: [String:String]) {
-        interactor.retrieveGameListData(query: query, page: 1)
+        interactor.retrieveGameListData(query: query)
+    }
+    
+    func onNextPage(){
+        self.isLoading = true
+        interactor.retrieveGameListData(query: ["url":nextPageUrl])
     }
     
 }
 
 extension GameListScreenPresenter: GameListScreenInteractorOutputProtocol {
     func didRetrieveGameList(_ gameList: GameModel) {
-        self.gameList = gameList.results!
+//        self.gameList = gameList.results!
+        self.isLoading = false
+        self.gameList.append(contentsOf: gameList.results!)
+        if(self.nextPageUrl == gameList.next){
+            self.nextPageUrl = ""
+        } else {
+            self.nextPageUrl = gameList.next ?? ""
+        }
     }
     
     func onError() {
-        
+        self.isLoading = false
     }
     
 

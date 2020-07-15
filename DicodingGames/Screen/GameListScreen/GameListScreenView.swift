@@ -73,8 +73,10 @@ struct RepositoriesList: View {
                     .padding(EdgeInsets(top: 0, leading: -40, bottom: 0, trailing: 0))
                 
             }
+            
+            
             List{
-                
+
                 ForEach(repos) { repo in
                     GameRow(games: repo).onAppear {
                         if self.repos.last == repo {
@@ -85,13 +87,13 @@ struct RepositoriesList: View {
                         self.performShowDetailScreen(gameId: repo.id)
                     }.listRowBackground(Color.init(UIColor(red: 0.03, green: 0.03, blue: 0.07, alpha: 1.00)))
                 }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    
+
                     .onAppear { UITableView.appearance().separatorStyle = .none
                         UITableView.appearance().backgroundColor = UIColor(red: 0.03, green: 0.03, blue: 0.07, alpha: 1.00)
                         UITableViewCell.appearance().backgroundColor = UIColor(red: 0.03, green: 0.03, blue: 0.07, alpha: 1.00)
-                        
+
                 }
-                    
+
                 .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
                 if isLoading {
                     loadingIndicator
@@ -135,9 +137,10 @@ struct GameRow: View {
     let games: Results
     
     var body: some View {
+        
         VStack(alignment: .leading, spacing: 10) {
             VStack(alignment: .center, spacing: 0) {
-                
+
                 WebImage(url:
                     imageOptClient.constructURL(
                         imageURL: games.backgroundImage,
@@ -147,18 +150,58 @@ struct GameRow: View {
                     .indicator(.progress)
                     .aspectRatio(2, contentMode: .fit)
                     .transition(.fade)
+                    .overlay(GameListTextOverlay(games: games))
             }
-            
+
             Text(games.name)
                 .font(Font.custom("Roboto-Regular", size: 14))
-            
+
             Spacer()
                 .frame(height: 10)
-            
-            
+
+
         }
     }
 }
+
+struct GameListTextOverlay: View {
+    var games: Results
+
+    var gradient: LinearGradient {
+        LinearGradient(
+            gradient: Gradient(
+                colors: [Color.black.opacity(0.6), Color.black.opacity(0)]),
+            startPoint: .bottom,
+            endPoint: .center)
+    }
+    
+    var body: some View {
+        VStack(alignment: .center, spacing: 0) {
+            Spacer()
+            HStack(alignment: .bottom, spacing: 5) {
+                HStack(alignment: .center, spacing: 5) {
+                    Image("ic_star")
+                        .resizable()
+                        .foregroundColor(.white)
+                        .frame(width: 20, height: 20)
+                    Text("\(games.ratingBuilder)")
+                        .font(Font.custom("Roboto-Regular", size: 14))
+                }.padding(5).background(Color.init(UIColor(red: 0.13, green: 0.13, blue: 0.13, alpha: 1.00)
+                    
+                ))
+                Spacer()
+                HStack(alignment: .center, spacing: 5) {
+                    Text("\(games.released ?? "-")")
+                        .font(Font.custom("Roboto-Regular", size: 14))
+                }.padding(5).background(Color.init(UIColor(red: 0.13, green: 0.13, blue: 0.13, alpha: 1.00)
+                ))
+                
+            }.padding(10)
+        }
+        
+    }
+}
+
 
 struct GameListScreenView_Previews: PreviewProvider {
     static var previews: some View {

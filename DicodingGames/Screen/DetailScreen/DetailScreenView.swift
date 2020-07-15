@@ -69,7 +69,7 @@ class DetailScreenView: UIViewController {
                 self.presenter?.interactor?.deleteGameFavoriteData(gameId: gameData.id ?? 0)
                 self.checkMyFavorite(with: false)
             } else {
-                self.presenter?.interactor?.saveFavoriteGame(id: gameData.id ?? 0, title: gameData.name ?? "", desc: gameData.descriptionRaw ?? "", rating: "\(gameData.ratingsCount ?? 0)", imageUrl: gameData.backgroundImage ?? "")
+                self.presenter?.interactor?.saveFavoriteGame(id: gameData.id ?? 0, title: gameData.name ?? "", desc: gameData.descriptionRaw ?? "", rating: "\(gameData.ratingBuilder)",release_date: gameData.released ?? "", imageUrl: gameData.backgroundImage ?? "")
                 self.checkMyFavorite(with: true)
             }
             
@@ -178,7 +178,7 @@ extension DetailScreenView: UITableViewDelegate, UITableViewDataSource, DetailSu
                 
                 cell.lblPublisher.text = gameData.publishersStringBuilder
                 cell.lblTitle.text = gameData.name
-                cell.lblRating.text = "\(gameData.ratingsCount ?? 0)"
+                cell.lblRating.text = "\(gameData.ratingBuilder)"
                 cell.imgView.sd_imageIndicator = SDWebImageProgressIndicator.default;
                 cell.imgView.sd_setImage(with: URL(string: gameData.backgroundImage ?? "_")!)
                 cell.imgEsrb?.image = UIImage(named: gameData.esrbImageName)

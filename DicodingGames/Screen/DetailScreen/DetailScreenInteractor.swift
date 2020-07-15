@@ -15,9 +15,9 @@ class DetailScreenInteractor: DetailScreenInteractorInputProtocol {
     var detailRemoteDataManager: DetailRemoteDataManagerInputProtocol?
     var favoriteDataManager: FavoriteLocalDataManagerInputProtocol?
     
-    func saveFavoriteGame(id: Int, title: String, desc: String, rating: String, imageUrl: String){
+    func saveFavoriteGame(id: Int, title: String, desc: String, rating: String,release_date: String, imageUrl: String){
         do {
-            try favoriteDataManager?.saveFavoriteGame(id: id, title: title, desc: desc, rating: rating, imageUrl: imageUrl)
+            try favoriteDataManager?.saveFavoriteGame(id: id, title: title, desc: desc, rating: rating,release_date: release_date, imageUrl: imageUrl)
         } catch  {
             
         }

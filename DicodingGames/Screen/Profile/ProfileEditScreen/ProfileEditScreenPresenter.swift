@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Combine
+import Foundation
 import UIKit
 
 class ProfileEditScreenPresenter: ObservableObject {
@@ -23,9 +24,32 @@ class ProfileEditScreenPresenter: ObservableObject {
     @Published var image: Image?
     @Published var showImagePicker = false
     @Published var inputImage: UIImage?
+        
+    lazy var nameValidation: ValidationPublisher = {
+        $name.nonEmptyValidator("Name must be provided")
+    }()
     
+    lazy var categoryValidation: ValidationPublisher = {
+        $category.nonEmptyValidator("Category must be provided")
+    }()
+    
+    lazy var bioValidation: ValidationPublisher = {
+        $bio.nonEmptyValidator("Bio must be provided")
+    }()
+    
+    lazy var allValidation: ValidationPublisher = {
+                
+        Combine.Publishers.Merge3(
+            nameValidation,
+            categoryValidation,
+            bioValidation
+        ).map { v1 in
+            return [v1].allSatisfy { $0.isSuccess } ? .success : .failure(message: "")
+        }.eraseToAnyPublisher()
+    }()
+        
 
-    private var cancellables = Set<AnyCancellable>()
+    var cancellables = Set<AnyCancellable>()
     
     init(interactor: ProfileEditScreenInteractorInputProtocol) {
         self.interactor = interactor        
@@ -55,7 +79,7 @@ extension ProfileEditScreenPresenter: ProfileEditScreenInteractorOutputProtocol 
     func didReceiveProfileData(profile: Profile){
                 
         guard let image = UIImage(named: "me") else { return }
-
+        
         self.name = profile.name
         self.category = profile.category
         self.bio = profile.bio

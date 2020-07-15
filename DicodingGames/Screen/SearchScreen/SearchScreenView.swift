@@ -22,7 +22,7 @@ struct SearchScreenView: View {
     @ObservedObject var presenter: SearchScreenPresenter
     var onGameDidTap: onSearchScreenGameData?
     var onDismiss:  onSearchScreenDismiss?
-    
+
     @State var gameName: String = ""
     
     var body: some View {
@@ -57,16 +57,31 @@ struct SearchScreenView: View {
                 }
                 
                 
-                TextField("Find a Game", text: $gameName)
+                TextField("Find a Game", text: $gameName, onCommit: {
+                    self.performSearch()
+                }).modifier(ClearButton(text:$gameName))
                     .frame(height: 50, alignment: .center)
                     .font(Font.custom("Roboto-Regular",size: 12))
                     .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
+                
                 
                 
             }.padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 10))
                 .overlay(
                     RoundedRectangle(cornerRadius: 4)
                         .stroke(Color.white, lineWidth: 0.3)).padding(EdgeInsets(top: 0, leading: 10, bottom: 30, trailing: 15))
+            
+            if presenter.isLoading {
+                loadingIndicator
+            }
+            
+            if presenter.isEmpty {
+                VStack(alignment: .center, spacing: 10) {
+                    Divider()
+                    Text("--- Empty results ---")
+                        .font(Font.custom("Roboto-Regular", size: 14))
+                }
+            }
             
             List(presenter.gameSearch) { games in
                 VStack(alignment: .leading, spacing: 10) {
@@ -81,6 +96,7 @@ struct SearchScreenView: View {
                             .indicator(.progress)
                             .aspectRatio(2, contentMode: .fit)
                             .transition(.fade)
+                            .overlay(SearchTextOverlay(games: games))
                     }
                     
                     Text(games.name)
@@ -122,6 +138,72 @@ struct SearchScreenView: View {
     func performDismiss(){
         guard let dismiss = onDismiss else {return}
         dismiss()
+    }
+    
+    private var loadingIndicator: some View {
+          HStack(alignment: .center, spacing: 0) {
+              Spinner(style: .medium)
+                  .frame(idealWidth: .infinity, maxWidth: .infinity, alignment: .center)
+          }
+      }
+}
+
+public struct ClearButton: ViewModifier {
+    @Binding var text: String
+
+    public init(text: Binding<String>) {
+        self._text = text
+    }
+
+    public func body(content: Content) -> some View {
+        HStack {
+            content
+            Spacer()
+            // onTapGesture is better than a Button here when adding to a form
+            Image(systemName: "multiply.circle.fill")
+                .foregroundColor(.secondary)
+                .opacity(text == "" ? 0 : 1)
+                .onTapGesture { self.text = "" }
+        }
+    }
+}
+
+
+struct SearchTextOverlay: View {
+    var games: Results
+
+    var gradient: LinearGradient {
+        LinearGradient(
+            gradient: Gradient(
+                colors: [Color.black.opacity(0.6), Color.black.opacity(0)]),
+            startPoint: .bottom,
+            endPoint: .center)
+    }
+    
+    var body: some View {
+        VStack(alignment: .center, spacing: 0) {
+            Spacer()
+            HStack(alignment: .bottom, spacing: 5) {
+                HStack(alignment: .center, spacing: 5) {
+                    Image("ic_star")
+                        .resizable()
+                        .foregroundColor(.white)
+                        .frame(width: 20, height: 20)
+                    Text("\(games.ratingBuilder)")
+                        .font(Font.custom("Roboto-Regular", size: 14))
+                }.padding(5).background(Color.init(UIColor(red: 0.13, green: 0.13, blue: 0.13, alpha: 1.00)
+                    
+                ))
+                Spacer()
+                HStack(alignment: .center, spacing: 5) {
+                    Text("\(games.released ?? "-")")
+                        .font(Font.custom("Roboto-Regular", size: 14))
+                }.padding(5).background(Color.init(UIColor(red: 0.13, green: 0.13, blue: 0.13, alpha: 1.00)
+                ))
+                
+            }.padding(10)
+        }
+        
     }
 }
 

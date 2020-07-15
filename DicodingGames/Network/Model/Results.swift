@@ -36,6 +36,7 @@ final class Results {
     //  var platforms: [Platforms]?
     var ratingsCount: Int?
     var genresStringBuilder: String = ""
+    var ratingBuilder: String = ""
     
     
     init() {
@@ -71,6 +72,16 @@ final class Results {
         //    platforms = try container.decodeIfPresent([Platforms].self, forKey: .platforms)
         ratingsCount = try container.decodeIfPresent(Int.self, forKey: .ratingsCount)
         
+        if let rating = rating {
+            ratingBuilder = ""
+             
+            if rating == 0 {
+                ratingBuilder = "-"
+            } else {
+                ratingBuilder = "\(rating)"
+            }
+        }
+
         if let genres = genres {
             genresStringBuilder = ""
             

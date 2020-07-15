@@ -11,6 +11,7 @@
         <attribute name="game_id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="game_img_url" optional="YES" attributeType="String"/>
         <attribute name="game_ratings" optional="YES" attributeType="String"/>
+        <attribute name="game_release_date" optional="YES" attributeType="String"/>
         <attribute name="game_title" optional="YES" attributeType="String"/>
     </entity>
     <entity name="NewGames" representedClassName=".NewGames" syncable="YES">
@@ -26,8 +27,8 @@
     </entity>
     <elements>
         <element name="Academy" positionX="-54" positionY="27" width="128" height="103"/>
-        <element name="FavoriteGames" positionX="-63" positionY="-18" width="128" height="118"/>
-        <element name="Profile" positionX="-63" positionY="18" width="128" height="118"/>
+        <element name="FavoriteGames" positionX="-63" positionY="-18" width="128" height="133"/>
         <element name="NewGames" positionX="-54" positionY="36" width="128" height="73"/>
+        <element name="Profile" positionX="-63" positionY="18" width="128" height="118"/>
     </elements>
 </model>

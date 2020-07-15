@@ -16,7 +16,7 @@ class HomeGameContentCell: UICollectionViewCell {
     @IBOutlet weak var imgGame: UIImageView!
 
     func set(forGames games: Results) {
-        lblRating?.text = "\(games.ratingsCount ?? 0)"
+        lblRating?.text = "\(games.ratingBuilder)"
         lblGame?.text = games.name
             
         let url = URL(string: games.backgroundImage)

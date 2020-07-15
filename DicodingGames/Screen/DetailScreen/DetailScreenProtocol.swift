@@ -54,7 +54,7 @@ protocol DetailScreenInteractorInputProtocol: class {
     var detailRemoteDataManager: DetailRemoteDataManagerInputProtocol? { get set }
     var favoriteDataManager: FavoriteLocalDataManagerInputProtocol? { get set }
     
-    func saveFavoriteGame(id: Int, title: String, desc: String, rating: String, imageUrl: String)
+    func saveFavoriteGame(id: Int, title: String, desc: String, rating: String,release_date:String, imageUrl: String)
     func retrieveLocalFavorite(gameId: Int) -> Bool
     func deleteGameFavoriteData(gameId: Int)
     func retrieveGameDetailData(gameId: Int)

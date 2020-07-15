@@ -22,8 +22,27 @@ class ProfileAcademyScreenPresenter: ObservableObject {
     
     var academyId = 0
     var isEditAcademy = false
-
-    private var cancellables = Set<AnyCancellable>()
+    
+    lazy var titleValidation: ValidationPublisher = {
+        $title.nonEmptyValidator("Title must be provided")
+    }()
+    
+    lazy var descValidation: ValidationPublisher = {
+        $desc.nonEmptyValidator("Desc must be provided")
+    }()
+    
+    
+    lazy var allValidation: ValidationPublisher = {
+                
+        Combine.Publishers.Merge(
+            titleValidation,
+            descValidation
+        ).map { v1 in
+            return [v1].allSatisfy { $0.isSuccess } ? .success : .failure(message: "")
+        }.eraseToAnyPublisher()
+    }()
+        
+    var cancellables = Set<AnyCancellable>()
     
     init(interactor: ProfileAcademyScreenInteractorInputProtocol) {
         self.interactor = interactor

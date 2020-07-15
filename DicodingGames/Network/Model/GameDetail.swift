@@ -127,7 +127,8 @@ struct GameDetail: Codable {
     var genresStringBuilder: String = ""
     var publishersStringBuilder: String = ""
     var esrbImageName: String = ""
-    
+    var ratingBuilder: String = ""
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decodeIfPresent(Int.self, forKey: .id)
@@ -184,6 +185,16 @@ struct GameDetail: Codable {
         gameSeriesCount = try container.decodeIfPresent(Int.self, forKey: .gameSeriesCount)
         redditCount = try container.decodeIfPresent(Int.self, forKey: .redditCount)
         
+        
+        if let rating = rating {
+                  ratingBuilder = ""
+                   
+                  if rating == 0 {
+                      ratingBuilder = "-"
+                  } else {
+                      ratingBuilder = "\(rating)"
+                  }
+              }
         
         if let genres = genres {
             genresStringBuilder = ""

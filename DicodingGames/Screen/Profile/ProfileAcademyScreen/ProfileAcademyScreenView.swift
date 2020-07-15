@@ -21,6 +21,7 @@ struct ProfileAcademyScreenView: View {
     @ObservedObject var presenter: ProfileAcademyScreenPresenter
     var onDismiss: onFavoriteScreenDismiss?
     
+    @State var isSaveDisabled = true
     
     init(presenter: ProfileAcademyScreenPresenter) {
         self.presenter = presenter
@@ -28,6 +29,7 @@ struct ProfileAcademyScreenView: View {
         if(self.presenter.isEditAcademy){
             self.presenter.onAcademyEdit()
         }
+        
     }
     
     var body: some View {
@@ -62,24 +64,40 @@ struct ProfileAcademyScreenView: View {
                     
                 }) {
                     if(presenter.isEditAcademy){
-                        Image("ic_confirm")
-                            .resizable()
-                            .foregroundColor(.white)
-                            .frame(width: 30, height: 30)
+                        if !self.isSaveDisabled {
+                            Image("ic_confirm")
+                                .resizable()
+                                .foregroundColor(.white)
+                                .frame(width: 30, height: 30)
+                        } else {
+                            Image("ic_confirm")
+                                .resizable()
+                                .foregroundColor(.white)
+                                .frame(width: 30, height: 30).opacity(0.3)
+                        }
+                        
                     } else {
-                        Image("ic_add_circle")
-                            .resizable()
-                            .foregroundColor(.white)
-                            .frame(width: 30, height: 30)
+                        if !self.isSaveDisabled {
+                            Image("ic_add_circle")
+                                .resizable()
+                                .foregroundColor(.white)
+                                .frame(width: 30, height: 30)
+                        } else {
+                            Image("ic_add_circle")
+                                .resizable()
+                                .foregroundColor(.white)
+                                .frame(width: 30, height: 30).opacity(0.3)
+                        }
                     }
                     
-                }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)).disabled(self.isSaveDisabled)
+                
             }
             
             VStack {
                 
                 if presenter.image != nil {
-                    presenter.image!
+                    presenter.image?
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 150, height: 150, alignment: .center)
@@ -105,13 +123,13 @@ struct ProfileAcademyScreenView: View {
             
             VStack(alignment: .leading) {
                 Text("Title").font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .leading).padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)).foregroundColor(Color.gray)
-                TextField("Academy title ...", text:  $presenter.title).accentColor(Color.white).foregroundColor(Color.white)
+                TextField("Academy title ...", text:  $presenter.title).validation(presenter.titleValidation).accentColor(Color.white).foregroundColor(Color.white)
                 Divider().background(Color.white)
             }.padding()
             
             VStack(alignment: .leading) {
                 Text("Description").font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .leading).padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)).foregroundColor(Color.gray)
-                TextField("Academy description ...", text:  $presenter.desc).accentColor(Color.white).foregroundColor(Color.white)
+                TextField("Academy description ...", text:  $presenter.desc).validation(presenter.descValidation).accentColor(Color.white).foregroundColor(Color.white)
                 Divider().background(Color.white)
             }.padding()
             
@@ -120,7 +138,9 @@ struct ProfileAcademyScreenView: View {
             
         }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)).background(Color.init(UIColor(red: 0.03, green: 0.03, blue: 0.07, alpha: 1.00)
             
-        ))
+        )).onReceive(presenter.allValidation) { validation in
+            self.isSaveDisabled = !validation.isSuccess}
+            
             
             .sheet(isPresented: $presenter.showImagePicker, onDismiss: loadImage) { ImagePicker(image: self.$presenter.inputImage) }
         

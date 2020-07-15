@@ -10,7 +10,7 @@ import CoreData
 
 protocol FavoriteLocalDataManagerInputProtocol: class {
     func retrieveFavoriteGamesList() throws -> [FavoriteGames]
-    func saveFavoriteGame(id: Int, title: String, desc: String, rating: String, imageUrl: String) throws
+    func saveFavoriteGame(id: Int, title: String, desc: String, rating: String,release_date: String, imageUrl: String) throws
     func deleteFavoriteGame(id: Int) throws
     func retrieveFavoriteGamesById(gameId: Int) throws -> Bool
     func retrieveFavoriteGamesCount() throws -> Bool
@@ -60,7 +60,7 @@ class FavoriteLocalDataManager:FavoriteLocalDataManagerInputProtocol {
         return try managedOC.fetch(request)
     }
 
-    func saveFavoriteGame(id: Int, title: String, desc: String, rating: String, imageUrl: String) throws {
+    func saveFavoriteGame(id: Int, title: String, desc: String, rating: String, release_date: String, imageUrl: String) throws {
         guard let managedOC = CoreDataStore.managedObjectContext else {
             throw PersistenceError.managedObjectContextNotFound
         }
@@ -73,6 +73,7 @@ class FavoriteLocalDataManager:FavoriteLocalDataManagerInputProtocol {
             
             favoriteGames.game_id = Int32(id)
             favoriteGames.game_desc = desc
+            favoriteGames.game_release_date = release_date
             favoriteGames.game_title = title
             favoriteGames.game_img_url = imageUrl
             favoriteGames.game_ratings = rating

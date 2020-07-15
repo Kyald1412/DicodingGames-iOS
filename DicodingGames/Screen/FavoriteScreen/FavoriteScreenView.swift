@@ -33,7 +33,7 @@ struct FavoriteScreenView: View {
     
     var body: some View {
         
-
+        
         return VStack(alignment: .leading, spacing: 0) {
             
             HStack {
@@ -52,45 +52,29 @@ struct FavoriteScreenView: View {
                     .padding(EdgeInsets(top: 0, leading: -40, bottom: 0, trailing: 0))
                 
             }
-            
-            List(presenter.gameFavorites){ games in
-                VStack(alignment: .leading, spacing: 10) {
-                    VStack(alignment: .center, spacing: 0) {
+            List{
+                ForEach(presenter.gameFavorites) { games in
+                    VStack(alignment: .leading, spacing: 20) {
                         
-                        WebImage(url:
-                            imageOptClient.constructURL(
-                                imageURL: games.game_img_url,
-                                imageSize: CGSize(width: UIScreen.main.bounds.width, height: 170),
-                                crop: true))
-                            .resizable()
-                            .indicator(.progress)
-                            .aspectRatio(2, contentMode: .fit)
-                            .transition(.fade)
+                        FavoriteRow(games: games).frame(minWidth: 0, maxWidth: .infinity, minHeight: 170, maxHeight: 170)
+                        
                     }
-                    
-                    Text(games.game_title)
-                        .font(Font.custom("Roboto-Regular", size: 14))
-                    
-                    Spacer()
-                        .frame(height: 10)
-                    
-                    
-                }.onTapGesture {
-                    self.performShowDetailScreen(gameId: Int(games.game_id))
-                    
-                }.listRowBackground(Color.init(UIColor(red: 0.03, green: 0.03, blue: 0.07, alpha: 1.00)))
-                 
-                
-                .contextMenu {
-                               Button(action: {
-                                   // change country setting
+                        
+                    .onTapGesture {
+                        self.performShowDetailScreen(gameId: Int(games.game_id))
+                        
+                    }.listRowBackground(Color.init(UIColor(red: 0.03, green: 0.03, blue: 0.07, alpha: 1.00)))
+                        
+                        
+                        .contextMenu {
+                            Button(action: {
                                 self.presenter.onGameDelete(id: Int(games.game_id))
-                               }) {
-                                   Text("Delete this item?")
-                                   Image(systemName: "globe")
-                               }
-
-                           }
+                            }) {
+                                Text("Delete this item?")
+                                Image(systemName: "globe")
+                            }
+                            
+                    }}
                 
             }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 
@@ -109,14 +93,15 @@ struct FavoriteScreenView: View {
     }
     
     func performShowDetailScreen(gameId: Int){
-           guard let onGameTap = onGameDidTap else {return}
-           onGameTap(gameId)
-       }
+        guard let onGameTap = onGameDidTap else {return}
+        onGameTap(gameId)
+    }
     func performDismiss(){
         guard let dismiss = onDismiss else {return}
         dismiss()
     }
 }
+
 
 struct FavoriteScreenView_Previews: PreviewProvider {
     static var previews: some View {

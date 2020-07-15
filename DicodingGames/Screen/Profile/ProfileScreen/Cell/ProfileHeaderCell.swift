@@ -9,7 +9,6 @@
 import UIKit
 
 class ProfileHeaderCell: UICollectionReusableView {
-        @IBOutlet weak var label: UILabel!
 
     @IBOutlet weak var labelAcademy: UILabel!
     @IBOutlet weak var labelChallenge: UILabel!

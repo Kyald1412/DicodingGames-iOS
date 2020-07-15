@@ -13,5 +13,6 @@ extension FavoriteGames: Identifiable  {
     @NSManaged public var game_title: String
     @NSManaged public var game_desc: String
     @NSManaged public var game_ratings: String
+    @NSManaged public var game_release_date: String
 
 }

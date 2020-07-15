@@ -7,6 +7,7 @@ target 'DicodingGames' do
 
   # Pods for DicodingGames
 
+  pod 'CrossroadRegex'
   pod 'ImageSlideshow'
   pod 'Closures'
   pod 'Alamofire'

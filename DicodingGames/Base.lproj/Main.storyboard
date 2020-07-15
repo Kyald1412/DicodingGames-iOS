@@ -455,7 +455,7 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ovq-sm-nBP">
                                                             <rect key="frame" x="128" y="0.0" width="118" height="82"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="500" verticalCompressionResistancePriority="500" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iHO-Bb-gtx">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="500" verticalCompressionResistancePriority="500" text="Genres" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iHO-Bb-gtx">
                                                                     <rect key="frame" x="0.0" y="0.0" width="118" height="82"/>
                                                                     <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="15"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -466,7 +466,7 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="B82-le-LUR">
                                                             <rect key="frame" x="256" y="0.0" width="118" height="82"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="500" verticalCompressionResistancePriority="500" text="Platform" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ESO-Io-46g">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="500" verticalCompressionResistancePriority="500" text="Platforms" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ESO-Io-46g">
                                                                     <rect key="frame" x="0.0" y="0.0" width="118" height="82"/>
                                                                     <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="15"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1004,7 +1004,6 @@
                                         <outlet property="imgGrid" destination="Yoq-ru-Egb" id="81Z-It-4kt"/>
                                         <outlet property="imgList" destination="rk8-Ni-Tdy" id="8fV-de-O8u"/>
                                         <outlet property="imgProfile" destination="8fl-lM-YHJ" id="5Ea-4q-wid"/>
-                                        <outlet property="label" destination="OsB-pe-Xnd" id="S5h-pM-Zes"/>
                                         <outlet property="labelAcademy" destination="OsB-pe-Xnd" id="Hty-JD-MNg"/>
                                         <outlet property="labelChallenge" destination="qnJ-Ar-3dp" id="cXl-6B-fPv"/>
                                         <outlet property="labelEvents" destination="3LO-zb-CwL" id="uJS-9g-m81"/>

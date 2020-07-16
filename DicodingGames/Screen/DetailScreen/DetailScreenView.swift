@@ -69,7 +69,7 @@ class DetailScreenView: UIViewController {
                 self.presenter?.interactor?.deleteGameFavoriteData(gameId: gameData.id ?? 0)
                 self.checkMyFavorite(with: false)
             } else {
-                self.presenter?.interactor?.saveFavoriteGame(id: gameData.id ?? 0, title: gameData.name ?? "", desc: gameData.descriptionRaw ?? "", rating: "\(gameData.ratingBuilder)",release_date: gameData.released ?? "", imageUrl: gameData.backgroundImage ?? "")
+                self.presenter?.interactor?.saveFavoriteGame(id: gameData.id ?? 0, title: gameData.name ?? "", desc: gameData.descriptionRaw?.withoutHtmlTags ?? "", rating: "\(gameData.ratingBuilder)",release_date: gameData.released ?? "", imageUrl: gameData.backgroundImage ?? "")
                 self.checkMyFavorite(with: true)
             }
             
@@ -211,7 +211,7 @@ extension DetailScreenView: UITableViewDelegate, UITableViewDataSource, DetailSu
             
             if let gameData = self.gameDetail {
                 
-                cell.lblDescription.text = gameData.descriptionRaw
+                cell.lblDescription.text = gameData.descriptionRaw?.withoutHtmlTags
                 cell.lblDescription.addInterlineSpacing(spacingValue: 2)
                 
             }

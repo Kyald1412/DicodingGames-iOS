@@ -26,7 +26,7 @@ class SearchRemoteDataManager:SearchRemoteDataManagerInputProtocol {
     
     func retrieveGameSearchData(gameName: String, page: Int) {
         
-        let parameters = ["page":"\(page)","search":"\(gameName)","ordering":"-rating","page_size":"10"]
+        let parameters = ["page":"\(page)","search":"\(gameName)","page_size":"10"]
         
         AF.request(Endpoints.Games.allgames.url, method: .get, parameters: parameters)
             .validate()

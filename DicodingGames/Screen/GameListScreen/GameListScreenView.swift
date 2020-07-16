@@ -37,8 +37,8 @@ struct GameListScreenView: View {
             repos: self.presenter.gameList,
             isLoading: self.presenter.isLoading,
             onScrolledAtBottom: self.presenter.onNextPage,
-            onDismiss: self.onDismiss!,
-            onGameDidTap: self.onGameDidTap!
+            onDismiss: self.onDismiss ,
+            onGameDidTap: self.onGameDidTap
         ).padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
             .background(Color.init(UIColor(red: 0.03, green: 0.03, blue: 0.07, alpha: 1.00)).edgesIgnoringSafeArea(.top))
             .onAppear(perform: self.presenter.onNextPage)
@@ -50,10 +50,9 @@ struct RepositoriesList: View {
     let repos: [Results]
     let isLoading: Bool
     let onScrolledAtBottom: () -> Void
-    let onDismiss: () ->()
-    let onGameDidTap: (_ gameId :Int) ->()
-    
-    
+    var onDismiss:  onGameListScreenDismiss?
+    var onGameDidTap: onGameListScreenGameData?
+
     var body: some View {
         
         VStack(alignment: .leading, spacing: 0) {
@@ -125,11 +124,12 @@ struct RepositoriesList: View {
     }
     
     func performShowDetailScreen(gameId: Int){
-        
-        onGameDidTap(gameId)
+        guard let gameTap = onGameDidTap else { return }
+        gameTap(gameId)
     }
     func performDismiss(){
-        onDismiss()
+        guard let dismiss = onDismiss else { return }
+        dismiss()
     }
 }
 

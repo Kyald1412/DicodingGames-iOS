@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let alamofireLogger = FancyAppAlamofireLogger(
         logFunction: {data in
-//            print(data)
+            print(data)
     }
     )
     

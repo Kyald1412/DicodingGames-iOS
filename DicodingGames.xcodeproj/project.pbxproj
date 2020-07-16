@@ -55,6 +55,7 @@
 		BC15544624AB996A006B4E46 /* ProfileHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC15544524AB996A006B4E46 /* ProfileHeaderCell.swift */; };
 		BC15544824AB9CF6006B4E46 /* ProfileAcademyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC15544724AB9CF6006B4E46 /* ProfileAcademyCell.swift */; };
 		BC15544A24ABA4A6006B4E46 /* ProfileAcademyCellList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC15544924ABA4A6006B4E46 /* ProfileAcademyCellList.swift */; };
+		BC19C13324C016940077CC72 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC19C13224C016940077CC72 /* String+Extensions.swift */; };
 		BC1BA5AE24BF7A05008B9B96 /* FavoriteRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1BA5AD24BF7A05008B9B96 /* FavoriteRow.swift */; };
 		BC24FFA624BECB580072C8C5 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC24FFA524BECB580072C8C5 /* Dummy.swift */; };
 		BC36C65524BC37C600C576F0 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC36C65424BC37C600C576F0 /* ImagePicker.swift */; };
@@ -189,6 +190,7 @@
 		BC15544524AB996A006B4E46 /* ProfileHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderCell.swift; sourceTree = "<group>"; };
 		BC15544724AB9CF6006B4E46 /* ProfileAcademyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAcademyCell.swift; sourceTree = "<group>"; };
 		BC15544924ABA4A6006B4E46 /* ProfileAcademyCellList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAcademyCellList.swift; sourceTree = "<group>"; };
+		BC19C13224C016940077CC72 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		BC1BA5AD24BF7A05008B9B96 /* FavoriteRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRow.swift; sourceTree = "<group>"; };
 		BC24FFA524BECB580072C8C5 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
 		BC36C65424BC37C600C576F0 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -575,6 +577,7 @@
 			children = (
 				BC7EC13D24AC35E5009F52C0 /* CommonFunction.swift */,
 				BCF054DD24AE0441000CE43E /* UILabel+Extension.swift */,
+				BC19C13224C016940077CC72 /* String+Extensions.swift */,
 				BC4CE0FB24B18F3100C8EE74 /* CoreDataStore.swift */,
 				BC4CE0FD24B18F4600C8EE74 /* PersistenceError.swift */,
 				BC36C65424BC37C600C576F0 /* ImagePicker.swift */,
@@ -886,6 +889,7 @@
 				BC15543C24AB8B3D006B4E46 /* ProfileScreenProtocol.swift in Sources */,
 				BCB653C224B7629F00708DD8 /* ProfileEditScreenPresenter.swift in Sources */,
 				BC15543424AB849D006B4E46 /* FontAssets.swift in Sources */,
+				BC19C13324C016940077CC72 /* String+Extensions.swift in Sources */,
 				BC4CE0E924B1880B00C8EE74 /* FavoriteScreenView.swift in Sources */,
 				BC4CE0FE24B18F4600C8EE74 /* PersistenceError.swift in Sources */,
 				BCB653DE24B81A4F00708DD8 /* GameListScreenInteractor.swift in Sources */,

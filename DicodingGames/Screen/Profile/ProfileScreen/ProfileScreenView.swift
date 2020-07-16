@@ -149,7 +149,7 @@ extension ProfileScreenView: UICollectionViewDelegate, UICollectionViewDataSourc
             }
             
             if let profileData = self.profileData {
-                headerView.labelAcademy.text = "\(self.academies.count ?? 0)"
+                headerView.labelAcademy.text = "\(self.academies.count)"
                 headerView.lblBio.text = profileData.bio
                 headerView.lblName.text = profileData.name
                 headerView.lblCategory.text = profileData.category

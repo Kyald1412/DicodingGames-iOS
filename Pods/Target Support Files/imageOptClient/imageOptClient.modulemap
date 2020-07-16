@@ -1,0 +1,6 @@
+framework module imageOptClient {
+  umbrella header "imageOptClient-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -9,13 +9,13 @@
 import CoreData
 
 protocol HomeLocalDataManagerInputProtocol: class {
-    func retrieveCurrentNewRelease(completion: @escaping(_ games: NewGames) -> ())
+    func retrieveCurrentNewRelease(completion: @escaping(_ games: NewGames) -> Void)
     func saveNewGames(id: Int) throws
 }
 
-class HomeLocalDataManager:HomeLocalDataManagerInputProtocol {
+class HomeLocalDataManager: HomeLocalDataManagerInputProtocol {
   
-    func retrieveCurrentNewRelease(completion: @escaping(_ games: NewGames) -> ())  {
+    func retrieveCurrentNewRelease(completion: @escaping(_ games: NewGames) -> Void) {
                 
         guard let managedOC = CoreDataStore.managedObjectContext else {
             return
@@ -26,7 +26,7 @@ class HomeLocalDataManager:HomeLocalDataManagerInputProtocol {
         do {
             let data = try managedOC.fetch(request)
             
-            if(data.count > 0){
+            if(data.count > 0) {
                 completion(data[0])
                 
             }
@@ -43,12 +43,11 @@ class HomeLocalDataManager:HomeLocalDataManagerInputProtocol {
         let request: NSFetchRequest<NewGames> = NSFetchRequest(entityName: String(describing: NewGames.self))
         request.predicate = NSPredicate(format: "id = %d", Int32(0))
         
-        
         do {
             
             let data = try managedOC.fetch(request)
             
-            if(data.count > 0){
+            if(data.count > 0) {
                 
                 let dataToUpdate = data[0] as NSManagedObject
                 
@@ -63,12 +62,12 @@ class HomeLocalDataManager:HomeLocalDataManagerInputProtocol {
                     let games = NewGames(entity: newGames, insertInto: managedOC)
                     
                     games.id = Int32(0)
-                    games.game_id = Int32(id)
+                    games.gameId = Int32(id)
                     try managedOC.save()
                     
                 }
             }
-        }catch let error as NSError {
+        } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }

@@ -11,7 +11,7 @@ import UIKit
 
 class ProfileScreenWireFrame: ProfileScreenWireFrameProtocol {
     
-    class func createProfileScreenModule() -> UIViewController  {
+    class func createProfileScreenModule() -> UIViewController {
         
         let viewController = mainStoryboard.instantiateViewController(withIdentifier: "ProfileScreenView")
         
@@ -21,7 +21,6 @@ class ProfileScreenWireFrame: ProfileScreenWireFrameProtocol {
             let wireFrame: ProfileScreenWireFrameProtocol = ProfileScreenWireFrame()
             let userDataManager: UserLocalDataManagerInputProtocol = UserLocalDataManager()
            let academyDataManager: AcademyLocalDataManagerInputProtocol = AcademyLocalDataManager()
-
 
             view.presenter = presenter
             presenter.view = view

@@ -12,7 +12,7 @@ import SwiftUI
 
 class GameListScreenWireframe {
     
-    class func createGameListScreenModule(title: String, query: [String:String]) -> UIHostingController<GameListScreenView>  {
+    class func createGameListScreenModule(title: String, query: [String: String]) -> UIHostingController<GameListScreenView> {
                 
         let interactor: GameListScreenInteractorInputProtocol & GameListRemoteDataManagerOutputProtocol = GameListScreenInteractor()
         let gameListRemoteDataManager: GameListRemoteDataManagerInputProtocol = GameListRemoteDataManager()
@@ -28,7 +28,5 @@ class GameListScreenWireframe {
 
         return hostingController
     }
-    
- 
     
 }

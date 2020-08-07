@@ -13,9 +13,9 @@ protocol UserLocalDataManagerInputProtocol: class {
     func updateUserData(id: Int, name: String, bio: String, category: String, photo: Data) throws
 }
 
-class UserLocalDataManager:UserLocalDataManagerInputProtocol {
+class UserLocalDataManager: UserLocalDataManagerInputProtocol {
   
-    func retrieveUserData() throws -> Profile   {
+    func retrieveUserData() throws -> Profile {
                         
         guard let managedOC = CoreDataStore.managedObjectContext else {
             throw PersistenceError.managedObjectContextNotFound
@@ -26,8 +26,7 @@ class UserLocalDataManager:UserLocalDataManagerInputProtocol {
         return try managedOC.fetch(request)[0]
     }
     
-    
-    func createUserData(id: Int, name: String, bio: String, category: String, photo: Data, completion: @escaping() -> ())  {
+    func createUserData(id: Int, name: String, bio: String, category: String, photo: Data, completion: @escaping() -> Void) {
         guard let managedOC = CoreDataStore.managedObjectContext else {
             print("Failure OC")
             return
@@ -63,7 +62,6 @@ class UserLocalDataManager:UserLocalDataManagerInputProtocol {
         let request: NSFetchRequest<Profile> = NSFetchRequest(entityName: String(describing: Profile.self))
         request.predicate = NSPredicate(format: "id = %d", Int32(id))
         
-        
         let dataToUpdate = try managedOC.fetch(request)[0] as NSManagedObject
         
         dataToUpdate.setValue(name, forKey: "name")
@@ -77,5 +75,4 @@ class UserLocalDataManager:UserLocalDataManagerInputProtocol {
 
     }
    
-
 }

@@ -12,7 +12,7 @@ import Combine
 class FavoriteScreenPresenter: ObservableObject {
     private let interactor: FavoriteScreenInteractorInputProtocol
     
-    @Published var gameFavorites : [FavoriteGames] = []
+    @Published var gameFavorites: [FavoriteGames] = []
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -37,6 +37,5 @@ extension FavoriteScreenPresenter: FavoriteScreenInteractorOutputProtocol {
     func onError() {
         
     }
-    
 
 }

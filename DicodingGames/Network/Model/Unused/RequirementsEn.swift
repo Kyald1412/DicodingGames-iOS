@@ -17,8 +17,6 @@ struct RequirementsEn: Codable {
   var recommended: String?
   var minimum: String?
 
-
-
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     recommended = try container.decodeIfPresent(String.self, forKey: .recommended)

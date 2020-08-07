@@ -30,7 +30,7 @@ protocol GameListScreenPresenterProtocol: class {
     var interactor: GameListScreenInteractorInputProtocol? { get set }
     var wireFrame: GameListScreenWireFrameProtocol? { get set }
     
-    var gameId : Int? { get set }
+    var gameId: Int? { get set }
     
     func viewDidLoad()
 }
@@ -39,7 +39,7 @@ protocol GameListScreenInteractorInputProtocol: class {
     var presenter: GameListScreenInteractorOutputProtocol? { get set }
     var gameListRemoteDataManager: GameListRemoteDataManagerInputProtocol? { get set }
     
-    func retrieveGameListData(query: [String:String])
+    func retrieveGameListData(query: [String: String])
 }
 
 protocol GameListScreenInteractorOutputProtocol: class {

@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 func getDateWithYearModify(year: Int) -> String {
     let today = Date()
     let formatter = DateFormatter()

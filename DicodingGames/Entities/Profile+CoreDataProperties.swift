@@ -7,7 +7,7 @@
 //
 
 import CoreData
-extension Profile: Identifiable  {
+extension Profile: Identifiable {
 
     @NSManaged public var id: Int32
     @NSManaged public var name: String

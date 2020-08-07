@@ -10,47 +10,29 @@ import Foundation
 import UIKit
 
 enum AssetsFont {
-    case ProximaNova_Extrabold
-    case ProximaNova_Light
-    case ProximaNova_Black
-    case ProximaNova_Semibold
-    case ProximaNova_Bold
-    case ProximaNova_Regular
-    case Roboto_Black
-    case Roboto_Bold
-    case Roboto_BoldItalic
-    case Roboto_Medium
-    case Roboto_MediumItalic
-    case Roboto_Regular
+    case robotoBlack
+    case robotoBold
+    case robotoBoldItalic
+    case robotoMedium
+    case robotoMediumItalic
+    case robotoRegular
 }
 extension UIFont {
     
     static func appFont(_ name: AssetsFont, size: CGFloat) -> UIFont? {
         switch name {
-        case .Roboto_Black:
+        case .robotoBlack:
             return UIFont.init(name: "Roboto-Black", size: size)
-        case .Roboto_Bold:
+        case .robotoBold:
             return UIFont.init(name: "Roboto-Bold", size: size)
-        case .Roboto_BoldItalic:
+        case .robotoBoldItalic:
             return UIFont.init(name: "Roboto-BoldItalic", size: size)
-        case .Roboto_Medium:
+        case .robotoMedium:
             return UIFont.init(name: "Roboto-Medium", size: size)
-        case .Roboto_MediumItalic:
+        case .robotoMediumItalic:
             return UIFont.init(name: "Roboto-MediumItalic", size: size)
-        case .Roboto_Regular:
+        case .robotoRegular:
             return UIFont.init(name: "Roboto-Regular", size: size)
-        case .ProximaNova_Extrabold:
-            return UIFont.init(name: "ProximaNova-Extrabold", size: size)
-        case .ProximaNova_Light:
-            return UIFont.init(name: "ProximaNova-Light", size: size)
-        case .ProximaNova_Black:
-            return UIFont.init(name: "ProximaNova-Black", size: size)
-        case .ProximaNova_Semibold:
-            return UIFont.init(name: "ProximaNova-Semibold", size: size)
-        case .ProximaNova_Bold:
-            return UIFont.init(name: "ProximaNova-Bold", size: size)
-        case .ProximaNova_Regular:
-            return UIFont.init(name: "ProximaNova-Regular", size: size)
         }
     }
 }

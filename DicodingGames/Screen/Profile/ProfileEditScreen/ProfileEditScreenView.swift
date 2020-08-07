@@ -15,12 +15,12 @@ import SDWebImageSwiftUI
 import imageOptClient
 import Foundation
 
-typealias onProfileEditScreenDismiss = () ->()
+typealias OnProfileEditScreenDismiss = () -> Void
 
 struct ProfileEditScreenView: View {
     
     @ObservedObject var presenter: ProfileEditScreenPresenter
-    var onDismiss: onProfileEditScreenDismiss?
+    var onDismiss: OnProfileEditScreenDismiss?
     
     @State var isSaveDisabled = false
 
@@ -90,34 +90,34 @@ struct ProfileEditScreenView: View {
                 }
                 
                 VStack(alignment: .leading) {
-                    Text("Name").font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .leading).padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)).foregroundColor(Color.gray)
-                    TextField("Your name ...", text:  $presenter.name).validation(presenter.nameValidation).accentColor(Color.white).foregroundColor(Color.white)
+                    Text("Name").font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .leading)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)).foregroundColor(Color.gray)
+                    TextField("Your name ...", text: $presenter.name).validation(presenter.nameValidation).accentColor(Color.white).foregroundColor(Color.white)
                     Divider().background(Color.white)
                 }.padding()
                 
                 VStack(alignment: .leading) {
-                    Text("Category").font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .leading).padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)).foregroundColor(Color.gray)
-                    TextField("Category ...", text:  $presenter.category).validation(presenter.categoryValidation).accentColor(Color.white).foregroundColor(Color.white)
+                    Text("Category").font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .leading)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)).foregroundColor(Color.gray)
+                    TextField("Category ...", text: $presenter.category).validation(presenter.categoryValidation).accentColor(Color.white).foregroundColor(Color.white)
                     Divider().background(Color.white)
                 }.padding()
                 
                 VStack(alignment: .leading) {
-                    Text("Bio").font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .leading).padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)).foregroundColor(Color.gray)
-                    TextField("Your Bio ...", text:  $presenter.bio).validation(presenter.bioValidation).accentColor(Color.white).foregroundColor(Color.white)
+                    Text("Bio").font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .leading)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)).foregroundColor(Color.gray)
+                    TextField("Your Bio ...", text: $presenter.bio).validation(presenter.bioValidation).accentColor(Color.white).foregroundColor(Color.white)
                     Divider().background(Color.white)
                 }.padding()
                 
                 Spacer()
                 
-                
             }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)).background(Color.init(UIColor(red: 0.03, green: 0.03, blue: 0.07, alpha: 1.00)
                 
             )).onReceive(presenter.allValidation) { validation in
                 self.isSaveDisabled = !validation.isSuccess}
-
             
         .sheet(isPresented: $presenter.showImagePicker, onDismiss: loadImage) { ImagePicker(image: self.$presenter.inputImage) }
-        
         
     }
     
@@ -126,13 +126,12 @@ struct ProfileEditScreenView: View {
         presenter.image = Image(uiImage: inputImage)
     }
     
-    func performDismiss(){
+    func performDismiss() {
         guard let dismiss = onDismiss else {return}
         dismiss()
     }
     
 }
-
 
 struct ProfileEditScreenView_Previews: PreviewProvider {
     static var previews: some View {

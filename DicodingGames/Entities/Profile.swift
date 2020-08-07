@@ -12,15 +12,14 @@ import UIKit
 
 public class Profile: NSManagedObject {
     
-    func initData(completion: @escaping() -> ()){
+    func initData(completion: @escaping() -> Void) {
         
         guard let image = UIImage(named: "me") else { return }
         let jpegData = image.jpegData(compressionQuality: 1.0)!
 
-        UserLocalDataManager().createUserData(id: 0, name: "Dhiky Aldwiansyah", bio: "\"I love turning great ideas into reality\"", category: "Dicoding Member", photo: jpegData){
+        UserLocalDataManager().createUserData(id: 0, name: "Dhiky Aldwiansyah", bio: "\"I love turning great ideas into reality\"", category: "Dicoding Member", photo: jpegData) {
             completion()
         }
-        
         
     }
     

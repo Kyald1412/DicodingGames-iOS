@@ -21,8 +21,6 @@ struct Stores: Codable {
   var urlRu: String?
   var id: Int?
 
-
-
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     store = try container.decodeIfPresent(Store.self, forKey: .store)

@@ -706,6 +706,7 @@
 				BC0C903E24AB453300E77BCF /* Frameworks */,
 				BC0C903F24AB453300E77BCF /* Resources */,
 				6E52097878ED9778CC00D71A /* [CP] Embed Pods Frameworks */,
+				BCF03F3824DC38E20017CB70 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -794,6 +795,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DicodingGames/Pods-DicodingGames-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		BCF03F3824DC38E20017CB70 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\n";
 		};
 		EA3EC35D773B91A868DDED62 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

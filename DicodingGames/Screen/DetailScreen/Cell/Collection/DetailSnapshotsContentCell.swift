@@ -16,9 +16,9 @@ class DetailSnapshotsContentCell: UICollectionViewCell {
     func set(forScreenshots screenshotsData: ShortScreenshots) {
         let url = URL(string: screenshotsData.image ?? "")!
         
-        imgGame.sd_imageIndicator = SDWebImageProgressIndicator.default;
+        imgGame.sd_imageIndicator = SDWebImageProgressIndicator.default
         let thumbnailSize = CGSize(width: 500, height: 500)
-        imgGame?.sd_setImage(with: url, placeholderImage: nil, context: [.imageThumbnailPixelSize : thumbnailSize])
+        imgGame?.sd_setImage(with: url, placeholderImage: nil, context: [.imageThumbnailPixelSize: thumbnailSize])
 
     }
 }

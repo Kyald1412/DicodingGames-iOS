@@ -11,7 +11,6 @@ import Foundation
 
 class ProfileEditScreenInteractor: ProfileEditScreenInteractorInputProtocol {
     
-    
     weak var presenter: ProfileEditScreenInteractorOutputProtocol?
     var userDataManager: UserLocalDataManagerInputProtocol?
     
@@ -27,7 +26,7 @@ class ProfileEditScreenInteractor: ProfileEditScreenInteractorInputProtocol {
         }
     }
     
-    func updateProfileData(name: String, bio: String, category: String,photo:Data) {
+    func updateProfileData(name: String, bio: String, category: String, photo: Data) {
         do {
             
             try userDataManager?.updateUserData(id: 0, name: name, bio: bio, category: category, photo: photo)
@@ -41,9 +40,6 @@ class ProfileEditScreenInteractor: ProfileEditScreenInteractorInputProtocol {
     
     func deleteGameProfileEditData(gameId: Int) {
         
-        
     }
-    
-    
     
 }

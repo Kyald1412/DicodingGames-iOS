@@ -16,7 +16,7 @@ protocol HomeRemoteDataManagerInputProtocol: class {
     func retrieveUpcomingGamesData()
     func retrievePopularNowGamesData()
     func retrieveNewReleaseGamesData()
-    func compareNewReleasedGameData(completion: @escaping(_ isNewRelease: Bool) -> ())
+    func compareNewReleasedGameData(completion: @escaping(_ isNewRelease: Bool) -> Void)
 }
 
 protocol HomeRemoteDataManagerOutputProtocol: class {
@@ -28,14 +28,13 @@ protocol HomeRemoteDataManagerOutputProtocol: class {
     func onError()
 }
 
-
-class HomeRemoteDataManager:HomeRemoteDataManagerInputProtocol {
+class HomeRemoteDataManager: HomeRemoteDataManagerInputProtocol {
     
     var remoteRequestHandler: HomeRemoteDataManagerOutputProtocol?
     
     func retrieveUpcomingGamesData() {
         
-        let parameters = ["dates":"\(getDateWithYearModify(year: 0)),\(getDateWithYearModify(year:5))", "ordering":"-added","page_size":"10"]
+        let parameters = ["dates": "\(getDateWithYearModify(year: 0)),\(getDateWithYearModify(year: 5))", "ordering": "-added", "page_size": "10"]
         
         AF.request(Endpoints.Games.allgames.url, method: .get, parameters: parameters)
             .validate()
@@ -52,10 +51,9 @@ class HomeRemoteDataManager:HomeRemoteDataManagerInputProtocol {
         }
     }
     
-    
     func retrievePopularNowGamesData() {
         
-        let parameters = ["dates":"\(getDateWithYearModify(year: -1)),\(getDateWithYearModify(year:0))", "ordering":"-rating,released","page_size":"10"]
+        let parameters = ["dates": "\(getDateWithYearModify(year: -1)),\(getDateWithYearModify(year: 0))", "ordering": "-rating,released", "page_size": "10"]
         
         AF.request(Endpoints.Games.allgames.url, method: .get, parameters: parameters)
             .validate()
@@ -74,7 +72,7 @@ class HomeRemoteDataManager:HomeRemoteDataManagerInputProtocol {
     
     func retrieveNewReleaseGamesData() {
         
-        let parameters = ["dates":"\(getDateWithYearModify(year: -1)),\(getDateWithYearModify(year:0))", "ordering":"-released","page_size":"10"]
+        let parameters = ["dates": "\(getDateWithYearModify(year: -1)),\(getDateWithYearModify(year: 0))", "ordering": "-released", "page_size": "10"]
         
         AF.request(Endpoints.Games.allgames.url, method: .get, parameters: parameters)
             .validate()
@@ -83,7 +81,7 @@ class HomeRemoteDataManager:HomeRemoteDataManagerInputProtocol {
                 switch response.result {
                 case .success(let games):
                     self.remoteRequestHandler?.onRetrieveNewReleaseGamesData(games)
-                    if(games.results?.count ?? 0 > 0){
+                    if(games.results?.count ?? 0 > 0) {
                         HomeLocalDataManager().saveNewGames(id: games.results?[0].id ?? 0)
                     }
                 case .failure(let error):
@@ -94,10 +92,9 @@ class HomeRemoteDataManager:HomeRemoteDataManagerInputProtocol {
         }
     }
     
-    
-    func compareNewReleasedGameData(completion: @escaping(_ isNewRelease: Bool) -> ())  {
+    func compareNewReleasedGameData(completion: @escaping(_ isNewRelease: Bool) -> Void) {
         
-        let parameters = ["dates":"\(getDateWithYearModify(year: -1)),\(getDateWithYearModify(year:0))", "ordering":"-released","page_size":"10"]
+        let parameters = ["dates": "\(getDateWithYearModify(year: -1)),\(getDateWithYearModify(year: 0))", "ordering": "-released", "page_size": "10"]
         
         AF.request(Endpoints.Games.allgames.url, method: .get, parameters: parameters)
             .validate()
@@ -106,15 +103,19 @@ class HomeRemoteDataManager:HomeRemoteDataManagerInputProtocol {
                 switch response.result {
                 case .success(let games):
                     
-                    if(games.results?.count ?? 0 > 0){
-                        HomeLocalDataManager().retrieveCurrentNewRelease { (NewGames) in
+//                    guard let count = games.results?.count else {
+//                        return
+//                    }
+                    
+//                    if(count > 0) {
+                        HomeLocalDataManager().retrieveCurrentNewRelease { (newGames) in
                             
-                            if(Int(NewGames.game_id) != games.results?[0].id){
+                            if(Int(newGames.gameId) != games.results?[0].id) {
                                 HomeLocalDataManager().saveNewGames(id: games.results?[0].id ?? 0)
                                 completion(true)
                             }
                         }
-                    }
+//                    }
                     
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -125,12 +126,9 @@ class HomeRemoteDataManager:HomeRemoteDataManagerInputProtocol {
         
     }
     
-    
-    
-    
     func retrieveGamesData(size: Int) {
         
-        let parameters = ["page_size":"\(size)"]
+        let parameters = ["page_size": "\(size)"]
         
         AF.request(Endpoints.Games.allgames.url, method: .get, parameters: parameters)
             .validate()

@@ -12,7 +12,7 @@ import SwiftUI
 
 class ProfileEditScreenWireframe {
     
-    class func createProfileEditScreenModule() -> UIHostingController<ProfileEditScreenView>  {
+    class func createProfileEditScreenModule() -> UIHostingController<ProfileEditScreenView> {
                 
         let interactor: ProfileEditScreenInteractorInputProtocol = ProfileEditScreenInteractor()
         let presenter: ProfileEditScreenPresenter = ProfileEditScreenPresenter(interactor: interactor)
@@ -26,7 +26,5 @@ class ProfileEditScreenWireframe {
 
         return hostingController
     }
-    
- 
     
 }

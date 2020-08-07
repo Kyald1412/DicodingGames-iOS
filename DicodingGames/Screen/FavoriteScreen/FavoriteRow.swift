@@ -11,7 +11,6 @@ import Combine
 import SDWebImage
 import UIKit
 
-
 struct FavoriteRow: UIViewRepresentable {
     
     let games: FavoriteGames
@@ -23,10 +22,10 @@ struct FavoriteRow: UIViewRepresentable {
         view.backgroundColor = UIColor(red: 0.03, green: 0.03, blue: 0.07, alpha: 1.00)
         let imgGame: UIImageView = UIImageView.init(frame: CGRect(x: 0, y: 0, width: 130, height: 170))
         
-        let url = URL(string: games.game_img_url)
-        imgGame.sd_imageIndicator = SDWebImageProgressIndicator.default;
+        let url = URL(string: games.gameImgUrl)
+        imgGame.sd_imageIndicator = SDWebImageProgressIndicator.default
         let thumbnailSize = CGSize(width: 500, height: 500) // Thumbnail will bounds to (200,200)
-        imgGame.sd_setImage(with: url, placeholderImage: nil, context: [.imageThumbnailPixelSize : thumbnailSize])
+        imgGame.sd_setImage(with: url, placeholderImage: nil, context: [.imageThumbnailPixelSize: thumbnailSize])
         
 //        imgGame.image = UIImage.init(named: "placeholder_gta")
         imgGame.contentMode = .scaleAspectFill
@@ -34,34 +33,33 @@ struct FavoriteRow: UIViewRepresentable {
         
         view.addSubview(imgGame)
         
-        
         //Title View
         let lblTitle: UILabel = UILabel.init()
-        lblTitle.text = games.game_title
+        lblTitle.text = games.gameTitle
         lblTitle.numberOfLines = 2
         lblTitle.adjustsFontSizeToFitWidth = true
         lblTitle.minimumScaleFactor = 0.5
         lblTitle.textColor = UIColor.white
-        lblTitle.font = UIFont.appFont(.ProximaNova_Bold, size: 20)
+        lblTitle.font = UIFont.appFont(.robotoBold, size: 20)
         
         view.addSubview(lblTitle)
         
         //Date View
         let lblDate: UILabel = UILabel.init()
-        lblDate.text = games.game_release_date
+        lblDate.text = games.gameReleaseDate
         lblDate.textColor = UIColor.white
-        lblDate.font = UIFont.appFont(.ProximaNova_Regular, size: 14)
+        lblDate.font = UIFont.appFont(.robotoRegular, size: 14)
 
         view.addSubview(lblDate)
         
         //Desc View
         let lblDesc: UILabel = UILabel.init()
-        lblDesc.text = games.game_desc
+        lblDesc.text = games.gameDesc
         lblDesc.textColor = UIColor.white
         lblDesc.numberOfLines = 4
         lblDesc.textAlignment = .justified
         lblDesc.lineBreakMode = .byTruncatingTail
-        lblDesc.font = UIFont.appFont(.ProximaNova_Regular, size: 14)
+        lblDesc.font = UIFont.appFont(.robotoRegular, size: 14)
         view.addSubview(lblDesc)
         
         //Star View
@@ -75,21 +73,17 @@ struct FavoriteRow: UIViewRepresentable {
         
         //Rating View
         let lblRating: UILabel = UILabel.init()
-        lblRating.text = games.game_ratings
+        lblRating.text = games.gameRatings
         lblRating.textColor = UIColor.white
-        lblRating.font = UIFont.appFont(.ProximaNova_Bold, size: 14)
+        lblRating.font = UIFont.appFont(.robotoBold, size: 14)
 
         view.addSubview(lblRating)
-        
-        
-        
-        
+
         // Title Constraint
         lblTitle.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: lblTitle, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: NSLayoutConstraint.Relation.equal, toItem: imgGame, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: 16).isActive = true
         NSLayoutConstraint(item: lblTitle, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1, constant: 8).isActive = true
         NSLayoutConstraint(item: lblTitle, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: -16).isActive = true
-        
         
         // Date Constraint
         lblDate.translatesAutoresizingMaskIntoConstraints = false
@@ -97,13 +91,11 @@ struct FavoriteRow: UIViewRepresentable {
         NSLayoutConstraint(item: lblDate, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: lblTitle, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 10).isActive = true
         NSLayoutConstraint(item: lblDate, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: -16).isActive = true
         
-        
         // Desc Constraint
         lblDesc.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: lblDesc, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: NSLayoutConstraint.Relation.equal, toItem: imgGame, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: 16).isActive = true
         NSLayoutConstraint(item: lblDesc, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: lblDate, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 10).isActive = true
         NSLayoutConstraint(item: lblDesc, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: -16).isActive = true
-        
         
         // Icon Constraint
         icStar.translatesAutoresizingMaskIntoConstraints = false
@@ -118,7 +110,6 @@ struct FavoriteRow: UIViewRepresentable {
         NSLayoutConstraint(item: lblRating, attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, toItem: icStar, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: lblRating, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: -16).isActive = true
         
-        
         return view
     }
     
@@ -126,7 +117,6 @@ struct FavoriteRow: UIViewRepresentable {
         
     }
 }
-
 
 struct FavoriteRow_Previews: PreviewProvider {
     static var previews: some View {

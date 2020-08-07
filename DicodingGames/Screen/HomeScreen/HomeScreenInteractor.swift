@@ -10,7 +10,6 @@ import Foundation
 
 class HomeScreenInteractor: HomeScreenInteractorInputProtocol {
 
-    
     weak var presenter: HomeScreenInteractorOutputProtocol?
     var homeRemoteDataManager: HomeRemoteDataManagerInputProtocol?
     var favoriteDataManager: FavoriteLocalDataManagerInputProtocol?
@@ -24,7 +23,7 @@ class HomeScreenInteractor: HomeScreenInteractorInputProtocol {
                 
                 self.presenter?.didRetrieveFavoriteGamesCount(isFavorite)
                 return
-            } catch  {
+            } catch {
                 
             }
             

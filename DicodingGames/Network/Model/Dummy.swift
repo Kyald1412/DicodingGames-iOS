@@ -8,8 +8,7 @@
 
 import Foundation
 
-
 struct Dummy: Identifiable {
-    var id : Int
+    var id: Int
     var title: String
 }

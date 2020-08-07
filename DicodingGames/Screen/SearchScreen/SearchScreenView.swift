@@ -14,14 +14,14 @@ import Combine
 import SDWebImageSwiftUI
 import imageOptClient
 
-typealias onSearchScreenGameData = (_ gameId :Int) ->()
-typealias onSearchScreenDismiss = () ->()
+typealias OnSearchScreenGameData = (_ gameId: Int) -> Void
+typealias OnSearchScreenDismiss = () -> Void
 
 struct SearchScreenView: View {
     
     @ObservedObject var presenter: SearchScreenPresenter
-    var onGameDidTap: onSearchScreenGameData?
-    var onDismiss:  onSearchScreenDismiss?
+    var onGameDidTap: OnSearchScreenGameData?
+    var onDismiss: OnSearchScreenDismiss?
 
     @State var gameName: String = ""
     
@@ -56,15 +56,12 @@ struct SearchScreenView: View {
                         .frame(width: 20, height: 20)
                 }
                 
-                
                 TextField("Find a Game", text: $gameName, onCommit: {
                     self.performSearch()
-                }).modifier(ClearButton(text:$gameName))
+                }).modifier(ClearButton(text: $gameName))
                     .frame(height: 50, alignment: .center)
-                    .font(Font.custom("Roboto-Regular",size: 12))
+                    .font(Font.custom("Roboto-Regular", size: 12))
                     .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
-                
-                
                 
             }.padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 10))
                 .overlay(
@@ -110,8 +107,6 @@ struct SearchScreenView: View {
                     self.performShowDetailScreen(gameId: games.id)
                 }.listRowBackground(Color.init(UIColor(red: 0.03, green: 0.03, blue: 0.07, alpha: 1.00)))
                 
-                
-                
             }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 
                 .onAppear { UITableView.appearance().separatorStyle = .none
@@ -128,14 +123,15 @@ struct SearchScreenView: View {
         
     }
     
-    func performSearch(){
+    func performSearch() {
         self.presenter.onGameSearch(gameName: gameName)
     }
-    func performShowDetailScreen(gameId: Int){
+    func performShowDetailScreen(gameId: Int) {
         guard let onGameTap = onGameDidTap else {return}
         onGameTap(gameId)
     }
-    func performDismiss(){
+    
+    func performDismiss() {
         guard let dismiss = onDismiss else {return}
         dismiss()
     }
@@ -167,7 +163,6 @@ public struct ClearButton: ViewModifier {
         }
     }
 }
-
 
 struct SearchTextOverlay: View {
     var games: Results

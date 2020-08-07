@@ -6,13 +6,13 @@
 //  Copyright © 2020 Dhiky Aldwiansyah. All rights reserved.
 //
 
-extension FavoriteGames: Identifiable  {
+extension FavoriteGames: Identifiable {
 
-    @NSManaged public var game_id: Int32
-    @NSManaged public var game_img_url: String
-    @NSManaged public var game_title: String
-    @NSManaged public var game_desc: String
-    @NSManaged public var game_ratings: String
-    @NSManaged public var game_release_date: String
+    @NSManaged public var gameId: Int32
+    @NSManaged public var gameImgUrl: String
+    @NSManaged public var gameTitle: String
+    @NSManaged public var gameDesc: String
+    @NSManaged public var gameRatings: String
+    @NSManaged public var gameReleaseDate: String
 
 }

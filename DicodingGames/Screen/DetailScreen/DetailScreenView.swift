@@ -13,11 +13,11 @@ import SDWebImage
 class DetailScreenView: UIViewController {
     var presenter: DetailScreenPresenterProtocol?
     
-    let DETAIL_HEADER = "detail_header"
-    let DETAIL_CONTENT_HEAD = "detail_head_content"
-    let DETAIL_CONTENT = "detail_content"
-    let DETAIL_SNAPSHOT = "detail_snapshot"
-    let DETAIL_SUGGESTED = "detail_suggested"
+    let detailHeader = "detail_header"
+    let detailContentHead = "detail_head_content"
+    let detailContent = "detail_content"
+    let detailSnapshot = "detail_snapshot"
+    let detailSuggested = "detail_suggested"
     
     var gameDetail: GameDetail?
     var gameSuggested: [Results] = []
@@ -36,7 +36,7 @@ class DetailScreenView: UIViewController {
         tableViewSetup()
     }
     
-    func tableViewSetup(){
+    func tableViewSetup() {
         
         self.tableView.contentInset.bottom = 50
         
@@ -65,11 +65,19 @@ class DetailScreenView: UIViewController {
         
         if let gameData = self.gameDetail {
             
-            if(self.isMyFavorite){
+            if(self.isMyFavorite) {
                 self.presenter?.interactor?.deleteGameFavoriteData(gameId: gameData.id ?? 0)
                 self.checkMyFavorite(with: false)
             } else {
-                self.presenter?.interactor?.saveFavoriteGame(id: gameData.id ?? 0, title: gameData.name ?? "", desc: gameData.descriptionRaw?.withoutHtmlTags ?? "", rating: "\(gameData.ratingBuilder)",release_date: gameData.released ?? "", imageUrl: gameData.backgroundImage ?? "")
+                
+                let gameName = gameData.name ?? ""
+                let gameId = gameData.id ?? 0
+                let gameDate = gameData.released ?? ""
+                let gameBgImage = gameData.backgroundImage ?? ""
+                let gameDescription = gameData.descriptionRaw?.withoutHtmlTags ?? ""
+                let gameRating = "\(gameData.ratingBuilder)"
+
+                self.presenter?.interactor?.saveFavoriteGame(id: gameId, title: gameName, desc: gameDescription, rating: gameRating, releaseDate: gameDate, imageUrl: gameBgImage)
                 self.checkMyFavorite(with: true)
             }
             
@@ -78,7 +86,7 @@ class DetailScreenView: UIViewController {
     
 }
 
-extension DetailScreenView: DetailScreenViewProtocol{
+extension DetailScreenView: DetailScreenViewProtocol {
     func showGameSuggested(with gameDetail: GameModel) {
         self.gameSuggested = gameDetail.results ?? []
         
@@ -90,7 +98,7 @@ extension DetailScreenView: DetailScreenViewProtocol{
     func checkMyFavorite(with isMyFavorite: Bool) {
         self.isMyFavorite = isMyFavorite
         
-        if(isMyFavorite){
+        if(isMyFavorite) {
             self.icFavorite.image = UIImage(named: "heart_white_fill")
         } else {
             self.icFavorite.image = UIImage(named: "heart_white")
@@ -126,7 +134,6 @@ extension DetailScreenView: DetailScreenViewProtocol{
     
 }
 
-
 extension DetailScreenView: UITableViewDelegate, UITableViewDataSource, DetailSuggestedDelegate {
     func collectionView(collectionviewcell: DetailSuggestedContentCell?, index: Int, didTappedInTableViewCell: DetailSuggestedCell) {
         
@@ -134,14 +141,13 @@ extension DetailScreenView: UITableViewDelegate, UITableViewDataSource, DetailSu
         
     }
     
-    
     func identifierConvert(fromFacility facility: String?) -> String? {
         //Add facility&identifier dependance here.
-        let identifiersDic = [DETAIL_HEADER: "DetailHeaderCell",
-                              DETAIL_CONTENT_HEAD: "DetailContentHeadCell",
-                              DETAIL_CONTENT: "DetailContentCell",
-                              DETAIL_SNAPSHOT: "DetailSnapshotsCell",
-                              DETAIL_SUGGESTED: "DetailSuggestedCell"]
+        let identifiersDic = [detailHeader: "DetailHeaderCell",
+                              detailContentHead: "DetailContentHeadCell",
+                              detailContent: "DetailContentCell",
+                              detailSnapshot: "DetailSnapshotsCell",
+                              detailSuggested: "DetailSuggestedCell"]
         
         return identifiersDic[facility!]
     }
@@ -149,11 +155,11 @@ extension DetailScreenView: UITableViewDelegate, UITableViewDataSource, DetailSu
     func tableviewDataModel(withStatus obj: Int?) -> [AnyHashable]? {
         
         var model = [AnyHashable]()
-        model.append(DETAIL_HEADER)
-        model.append(DETAIL_CONTENT_HEAD)
-        model.append(DETAIL_SNAPSHOT)
-        model.append(DETAIL_CONTENT)
-        model.append(DETAIL_SUGGESTED)
+        model.append(detailHeader)
+        model.append(detailContentHead)
+        model.append(detailSnapshot)
+        model.append(detailContent)
+        model.append(detailSuggested)
         
         return model
     }
@@ -171,7 +177,7 @@ extension DetailScreenView: UITableViewDelegate, UITableViewDataSource, DetailSu
         
         cell?.selectionStyle = .none
         
-        if (facility == DETAIL_HEADER){
+        if (facility == detailHeader) {
             let cell: DetailHeaderCell = (tableView.dequeueReusableCell(withIdentifier: identifierConvert(fromFacility: facility)!) as? DetailHeaderCell)!
             
             if let gameData = self.gameDetail {
@@ -179,7 +185,7 @@ extension DetailScreenView: UITableViewDelegate, UITableViewDataSource, DetailSu
                 cell.lblPublisher.text = gameData.publishersStringBuilder
                 cell.lblTitle.text = gameData.name
                 cell.lblRating.text = "\(gameData.ratingBuilder)"
-                cell.imgView.sd_imageIndicator = SDWebImageProgressIndicator.default;
+                cell.imgView.sd_imageIndicator = SDWebImageProgressIndicator.default
                 cell.imgView.sd_setImage(with: URL(string: gameData.backgroundImage ?? "_")!)
                 cell.imgEsrb?.image = UIImage(named: gameData.esrbImageName)
                 
@@ -190,7 +196,7 @@ extension DetailScreenView: UITableViewDelegate, UITableViewDataSource, DetailSu
             return cell
         }
         
-        if (facility == DETAIL_CONTENT_HEAD){
+        if (facility == detailContentHead) {
             let cell: DetailContentHeadCell = (tableView.dequeueReusableCell(withIdentifier: identifierConvert(fromFacility: facility)!) as? DetailContentHeadCell)!
             
             if let gameData = self.gameDetail {
@@ -206,7 +212,7 @@ extension DetailScreenView: UITableViewDelegate, UITableViewDataSource, DetailSu
             return cell
         }
         
-        if (facility == DETAIL_CONTENT){
+        if (facility == detailContent) {
             let cell: DetailContentCell = (tableView.dequeueReusableCell(withIdentifier: identifierConvert(fromFacility: facility)!) as? DetailContentCell)!
             
             if let gameData = self.gameDetail {
@@ -221,7 +227,7 @@ extension DetailScreenView: UITableViewDelegate, UITableViewDataSource, DetailSu
             return cell
         }
         
-        if (facility == DETAIL_SNAPSHOT){
+        if (facility == detailSnapshot) {
             let cell: DetailSnapshotsCell = (tableView.dequeueReusableCell(withIdentifier: identifierConvert(fromFacility: facility)!) as? DetailSnapshotsCell)!
             
             cell.subCategoryLabel.text = "Snapshots"
@@ -235,12 +241,12 @@ extension DetailScreenView: UITableViewDelegate, UITableViewDataSource, DetailSu
             return cell
         }
                
-        if (facility == DETAIL_SUGGESTED){
+        if (facility == detailSuggested) {
             let cell: DetailSuggestedCell = (tableView.dequeueReusableCell(withIdentifier: identifierConvert(fromFacility: facility)!) as? DetailSuggestedCell)!
             
             cell.subCategoryLabel.text = "You might also like"
             
-            cell.seeAllSuggestedView.addTapGesture { (tap) in
+            cell.seeAllSuggestedView.addTapGesture { _ in
                 self.presenter?.showSuggestedGameList(gameId: self.presenter?.gameId ?? 0)
             }
             
@@ -253,28 +259,25 @@ extension DetailScreenView: UITableViewDelegate, UITableViewDataSource, DetailSu
             return cell
         }
         
-        
         return cell!
         
     }
     
-    
     // MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         
         let model = tableviewDataModel(withStatus: 0)
         let facility = model![indexPath.row] as? String
         
-        if (facility == DETAIL_HEADER) {
+        if (facility == detailHeader) {
             return 400
         }
         
-        if (facility == DETAIL_SNAPSHOT) {
+        if (facility == detailSnapshot) {
             return 200
         }
         
-        if (facility == DETAIL_SUGGESTED) {
+        if (facility == detailSuggested) {
             return 220
         }
         

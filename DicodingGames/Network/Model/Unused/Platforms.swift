@@ -19,8 +19,6 @@ struct Platforms: Codable {
   var requirementsEn: RequirementsEn?
   var platform: Platform?
 
-
-
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     releasedAt = try container.decodeIfPresent(String.self, forKey: .releasedAt)

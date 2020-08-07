@@ -13,17 +13,15 @@ import SwiftUI
 import Combine
 import SDWebImageSwiftUI
 import imageOptClient
-import Combine
 
-typealias onGameListScreenGameData = (_ gameId :Int) ->()
-typealias onGameListScreenDismiss = () ->()
+typealias OnGameListScreenGameData = (_ gameId: Int) -> Void
+typealias OnGameListScreenDismiss = () -> Void
 
 struct GameListScreenView: View {
     @ObservedObject var presenter: GameListScreenPresenter
     
-    var onGameDidTap: onGameListScreenGameData?
-    var onDismiss:  onGameListScreenDismiss?
-    
+    var onGameDidTap: OnGameListScreenGameData?
+    var onDismiss: OnGameListScreenDismiss?
     
     init(presenter: GameListScreenPresenter) {
         self.presenter = presenter
@@ -50,8 +48,8 @@ struct RepositoriesList: View {
     let repos: [Results]
     let isLoading: Bool
     let onScrolledAtBottom: () -> Void
-    var onDismiss:  onGameListScreenDismiss?
-    var onGameDidTap: onGameListScreenGameData?
+    var onDismiss: OnGameListScreenDismiss?
+    var onGameDidTap: OnGameListScreenGameData?
 
     var body: some View {
         
@@ -73,8 +71,7 @@ struct RepositoriesList: View {
                 
             }
             
-            
-            List{
+            List {
 
                 ForEach(repos) { repo in
                     GameRow(games: repo).onAppear {
@@ -110,7 +107,6 @@ struct RepositoriesList: View {
             }
         }
         
-        
     }
     
     private var loadingIndicator: some View {
@@ -123,11 +119,11 @@ struct RepositoriesList: View {
         }
     }
     
-    func performShowDetailScreen(gameId: Int){
+    func performShowDetailScreen(gameId: Int) {
         guard let gameTap = onGameDidTap else { return }
         gameTap(gameId)
     }
-    func performDismiss(){
+    func performDismiss() {
         guard let dismiss = onDismiss else { return }
         dismiss()
     }
@@ -158,7 +154,6 @@ struct GameRow: View {
 
             Spacer()
                 .frame(height: 10)
-
 
         }
     }
@@ -202,7 +197,6 @@ struct GameListTextOverlay: View {
     }
 }
 
-
 struct GameListScreenView_Previews: PreviewProvider {
     static var previews: some View {
         
@@ -218,9 +212,6 @@ struct GameListScreenView_Previews: PreviewProvider {
         }
     }
 }
-
-
-
 
 struct Spinner: UIViewRepresentable {
     let style: UIActivityIndicatorView.Style

@@ -14,19 +14,19 @@ import Combine
 import SDWebImageSwiftUI
 import imageOptClient
 
-typealias onProfileAcademyScreenDismiss = () ->()
+typealias OnProfileAcademyScreenDismiss = () -> Void
 
 struct ProfileAcademyScreenView: View {
     
     @ObservedObject var presenter: ProfileAcademyScreenPresenter
-    var onDismiss: onFavoriteScreenDismiss?
+    var onDismiss: OnFavoriteScreenDismiss?
     
     @State var isSaveDisabled = true
     
     init(presenter: ProfileAcademyScreenPresenter) {
         self.presenter = presenter
         
-        if(self.presenter.isEditAcademy){
+        if(self.presenter.isEditAcademy) {
             self.presenter.onAcademyEdit()
         }
         
@@ -53,7 +53,7 @@ struct ProfileAcademyScreenView: View {
                 
                 Button(action: {
                     
-                    if(self.presenter.isEditAcademy){
+                    if(self.presenter.isEditAcademy) {
                         
                         self.presenter.editAcademyData()
                     } else {
@@ -63,7 +63,7 @@ struct ProfileAcademyScreenView: View {
                     self.performDismiss()
                     
                 }) {
-                    if(presenter.isEditAcademy){
+                    if(presenter.isEditAcademy) {
                         if !self.isSaveDisabled {
                             Image("ic_confirm")
                                 .resizable()
@@ -122,28 +122,27 @@ struct ProfileAcademyScreenView: View {
             }
             
             VStack(alignment: .leading) {
-                Text("Title").font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .leading).padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)).foregroundColor(Color.gray)
-                TextField("Academy title ...", text:  $presenter.title).validation(presenter.titleValidation).accentColor(Color.white).foregroundColor(Color.white)
+                Text("Title").font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .leading)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)).foregroundColor(Color.gray)
+                TextField("Academy title ...", text: $presenter.title).validation(presenter.titleValidation).accentColor(Color.white).foregroundColor(Color.white)
                 Divider().background(Color.white)
             }.padding()
             
             VStack(alignment: .leading) {
-                Text("Description").font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .leading).padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)).foregroundColor(Color.gray)
-                TextField("Academy description ...", text:  $presenter.desc).validation(presenter.descValidation).accentColor(Color.white).foregroundColor(Color.white)
+                Text("Description").font(Font.custom("Roboto-Regular", size: 14)).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 0, alignment: .leading)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)).foregroundColor(Color.gray)
+                TextField("Academy description ...", text: $presenter.desc).validation(presenter.descValidation).accentColor(Color.white).foregroundColor(Color.white)
                 Divider().background(Color.white)
             }.padding()
             
             Spacer()
-            
             
         }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)).background(Color.init(UIColor(red: 0.03, green: 0.03, blue: 0.07, alpha: 1.00)
             
         )).onReceive(presenter.allValidation) { validation in
             self.isSaveDisabled = !validation.isSuccess}
             
-            
             .sheet(isPresented: $presenter.showImagePicker, onDismiss: loadImage) { ImagePicker(image: self.$presenter.inputImage) }
-        
         
     }
     
@@ -151,7 +150,7 @@ struct ProfileAcademyScreenView: View {
         guard let inputImage = presenter.inputImage else { return }
         presenter.image = Image(uiImage: inputImage)
     }
-    func performDismiss(){
+    func performDismiss() {
         guard let dismiss = onDismiss else {return}
         dismiss()
     }

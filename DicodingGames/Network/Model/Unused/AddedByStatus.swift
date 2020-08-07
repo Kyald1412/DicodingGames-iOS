@@ -25,8 +25,6 @@ struct AddedByStatus: Codable {
   var owned: Int?
   var toplay: Int?
 
-
-
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     playing = try container.decodeIfPresent(Int.self, forKey: .playing)

@@ -12,12 +12,11 @@ import SwiftUI
 
 class FavoriteScreenWireframe {
     
-    class func createFavoriteScreenModule() -> UIHostingController<FavoriteScreenView>  {
+    class func createFavoriteScreenModule() -> UIHostingController<FavoriteScreenView> {
                 
         let interactor: FavoriteScreenInteractorInputProtocol = FavoriteScreenInteractor()
         let favoriteLocalDataManager: FavoriteLocalDataManagerInputProtocol = FavoriteLocalDataManager()
         let presenter: FavoriteScreenPresenter = FavoriteScreenPresenter(interactor: interactor)
-
         
         interactor.presenter = presenter
         interactor.favoriteLocalDataManager = favoriteLocalDataManager
@@ -26,7 +25,5 @@ class FavoriteScreenWireframe {
 
         return hostingController
     }
-    
- 
     
 }

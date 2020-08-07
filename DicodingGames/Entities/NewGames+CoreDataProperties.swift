@@ -7,9 +7,9 @@
 //
 
 import CoreData
-extension NewGames: Identifiable  {
+extension NewGames: Identifiable {
 
     @NSManaged public var id: Int32
-    @NSManaged public var game_id: Int32
+    @NSManaged public var gameId: Int32
 
 }

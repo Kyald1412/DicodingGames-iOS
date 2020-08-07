@@ -6,7 +6,6 @@
 //  Copyright © 2020 Dhiky Aldwiansyah. All rights reserved.
 //
 
-
 class HomeScreenPresenter: HomeScreenPresenterProtocol {
 
     weak var view: HomeScreenViewProtocol?
@@ -61,7 +60,6 @@ extension HomeScreenPresenter: HomeScreenInteractorOutputProtocol {
         view?.hideLoading()
         view?.showUpcomingGames(with: games)
     }
-    
     
     func didRetrieveGames(_ games: GameModel) {
         view?.hideLoading()

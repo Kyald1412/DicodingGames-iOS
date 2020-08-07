@@ -38,5 +38,4 @@ protocol ProfileScreenPresenterProtocol: class {
     func showAcademyEditScreen(id: Int)
     func deleteAcademy(id: Int)
 
-
 }

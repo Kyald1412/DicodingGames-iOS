@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 class DetailScreenWireFrame: DetailScreenWireFrameProtocol {
-
     
     class func createDetailScreenModule(forGames gameId: Int?) -> UIViewController {
         let viewController = mainStoryboard.instantiateViewController(withIdentifier: "DetailScreenView")
@@ -39,8 +38,7 @@ class DetailScreenWireFrame: DetailScreenWireFrameProtocol {
     static var mainStoryboard: UIStoryboard {
         return UIStoryboard(name: "Main", bundle: Bundle.main)
     }
-    
-    
+        
     func presentDetailScreen(from view: DetailScreenViewProtocol, games: Int) {
         let detailScreenViewController = DetailScreenWireFrame.createDetailScreenModule(forGames: games)
         
@@ -52,7 +50,7 @@ class DetailScreenWireFrame: DetailScreenWireFrameProtocol {
     
     func presentGameListScreen(from view: DetailScreenViewProtocol, gameId: Int) {
 
-        let parameters = ["url":"\(Endpoints.Games.detail.url)\(gameId)/suggested?page_size=10"]
+        let parameters = ["url": "\(Endpoints.Games.detail.url)\(gameId)/suggested?page_size=10"]
 
         let hostingController = GameListScreenWireframe.createGameListScreenModule(title: "You might also like", query: parameters)
         

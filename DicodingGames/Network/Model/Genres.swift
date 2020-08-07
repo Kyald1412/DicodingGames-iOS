@@ -23,8 +23,6 @@ struct Genres: Codable {
   var gamesCount: Int?
   var slug: String?
 
-
-
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     imageBackground = try container.decodeIfPresent(String.self, forKey: .imageBackground)

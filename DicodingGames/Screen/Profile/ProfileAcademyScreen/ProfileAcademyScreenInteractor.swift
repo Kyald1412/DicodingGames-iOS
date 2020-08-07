@@ -26,7 +26,7 @@ class ProfileAcademyScreenInteractor: ProfileAcademyScreenInteractorInputProtoco
         }
     }
     
-    func addAcademyData(title: String, description: String, photo: Data){
+    func addAcademyData(title: String, description: String, photo: Data) {
         do {
             try academyDataManager?.saveAcademyGame(title: title, desc: description, imageUrl: photo)
         } catch {
@@ -34,14 +34,12 @@ class ProfileAcademyScreenInteractor: ProfileAcademyScreenInteractorInputProtoco
         }
     }
     
-    func editAcademyData(id: Int,title: String, description: String, photo: Data){
+    func editAcademyData(id: Int, title: String, description: String, photo: Data) {
           do {
-            try academyDataManager?.updateAcademy(id:id, name: title, desc: description, photo: photo)
+            try academyDataManager?.updateAcademy(id: id, name: title, desc: description, photo: photo)
           } catch {
               
           }
       }
-      
-    
     
 }

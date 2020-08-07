@@ -21,8 +21,6 @@ struct Ratings: Codable {
   var count: Int?
   var percent: Float?
 
-
-
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     id = try container.decodeIfPresent(Int.self, forKey: .id)

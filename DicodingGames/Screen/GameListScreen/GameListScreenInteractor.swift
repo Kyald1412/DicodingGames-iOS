@@ -13,7 +13,7 @@ class GameListScreenInteractor: GameListScreenInteractorInputProtocol {
     weak var presenter: GameListScreenInteractorOutputProtocol?
     var gameListRemoteDataManager: GameListRemoteDataManagerInputProtocol?
     
-    func retrieveGameListData(query: [String:String]) {
+    func retrieveGameListData(query: [String: String]) {
 
         gameListRemoteDataManager?.retrieveGameListData(query: query)
     }

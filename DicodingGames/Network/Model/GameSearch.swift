@@ -21,10 +21,7 @@ struct GameSearch: Codable {
   var previous: String?
   var results: [Results]?
 
-
-    init(){
-        
-    }
+  init() {}
     
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -36,7 +33,6 @@ struct GameSearch: Codable {
 
 }
 
-/// Extension for SwiftUI previews
 #if DEBUG
 extension GameSearch {
   static var sample: GameSearch {

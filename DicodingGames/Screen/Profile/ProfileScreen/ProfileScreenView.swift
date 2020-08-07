@@ -71,9 +71,7 @@ extension ProfileScreenView: ProfileScreenViewProtocol {
         self.collectionView.reloadData()
     }
     
-    
 }
-
 
 // MARK: - UICollectionViewDataSource
 extension ProfileScreenView: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -157,25 +155,23 @@ extension ProfileScreenView: UICollectionViewDelegate, UICollectionViewDataSourc
 
             }
             
-            headerView.imgList.addTapGesture { (tap) in
+            headerView.imgList.addTapGesture { _ in
                 self.isListView = true
                 
                 UIView.transition(with: self.collectionView,
                 duration: 0.35,
                 options: .curveEaseInOut,
                 animations: { self.collectionView.reloadData() }) // left out the unnecessary syntax in the completion block and the optional completion parameter
-
-                
+      
             }
             
-            headerView.imgGrid.addTapGesture { (tap) in
+            headerView.imgGrid.addTapGesture { _ in
                 self.isListView = false
                 UIView.transition(with: self.collectionView,
                               duration: 0.35,
                               options: .curveEaseInOut,
                               animations: { self.collectionView.reloadData() }) // le
             }
-            
             
             return headerView
         default:
@@ -187,28 +183,24 @@ extension ProfileScreenView: UICollectionViewDelegate, UICollectionViewDataSourc
 // MARK: - UICollectionViewDelegateFlowLayout
 extension ProfileScreenView: UICollectionViewDelegateFlowLayout {
     
-    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        
         if isListView {
             let width = view.frame.width
             return CGSize(width: width, height: 160)
-        }else {
+        } else {
             
             var itemsPerRow: CGFloat = 2
             var padding: CGFloat = 0
 
             let orientation = UIDevice.current.orientation
 
-            if(orientation == .landscapeLeft || orientation == .landscapeRight)
-            {
+            if(orientation == .landscapeLeft || orientation == .landscapeRight) {
                 itemsPerRow = 3
                 padding = 50
-            }
-            else{
+            } else {
                 itemsPerRow = 2
                 padding = 20
             }
@@ -243,4 +235,3 @@ extension ProfileScreenView: UICollectionViewDelegateFlowLayout {
         }
     }
 }
-

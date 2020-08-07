@@ -17,7 +17,6 @@ struct GameDetailScreenshots: Codable {
   var count: Int?
   var results: [ShortScreenshots]?
 
-
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     count = try container.decodeIfPresent(Int.self, forKey: .count)

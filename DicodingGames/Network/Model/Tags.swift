@@ -25,8 +25,6 @@ struct Tags: Codable {
   var imageBackground: String?
   var id: Int?
 
-
-
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     language = try container.decodeIfPresent(String.self, forKey: .language)

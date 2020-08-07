@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     )
     
+    @available(iOS, deprecated: 9.0)
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -29,19 +30,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         BGTaskScheduler.shared.register(
             forTaskWithIdentifier: "id.kyald.DicodingGames.refresh",
             using: nil) { (task) in
-                self.handleAppRefreshTask(task: task as! BGAppRefreshTask)
+                self.handleAppRefreshTask(task: task as? BGAppRefreshTask)
         }
         #endif
         
         UNUserNotificationCenter.current().delegate = self
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, _ in
             if granted {
                 print("Mendapatkan izin dari pengguna untuk local notifications")
             } else {
                 print("Tidak mendapatkan izin dari pengguna untuk local notifications")
             }
         }
-
         
         return true
     }
@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    private func notificaiton(){
+    private func notificaiton() {
         let fixedString = "Dicoding Games"
         let dynamicString = "New game has been released!"
         
@@ -116,7 +116,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
-    
     // MARK: - Core Data stack
     
     lazy var persistentContainer: NSPersistentContainer = {
@@ -127,7 +126,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          error conditions that could cause the creation of the store to fail.
          */
         let container = NSPersistentContainer(name: "Dicoding_Games")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -162,10 +161,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    
 }
-
-
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {

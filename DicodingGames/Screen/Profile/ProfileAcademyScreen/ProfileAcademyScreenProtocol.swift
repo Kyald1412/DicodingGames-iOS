@@ -24,17 +24,16 @@ protocol ProfileAcademyScreenPresenterProtocol: class {
     var interactor: ProfileAcademyScreenInteractorInputProtocol? { get set }
     var wireFrame: ProfileAcademyScreenWireFrameProtocol? { get set }
     
-    
     func viewDidLoad()
     func addAcademyData()
 }
 
 protocol ProfileAcademyScreenInteractorInputProtocol: class {
     var presenter: ProfileAcademyScreenInteractorOutputProtocol? { get set }
-    var academyDataManager: AcademyLocalDataManagerInputProtocol?  { get set }
+    var academyDataManager: AcademyLocalDataManagerInputProtocol? { get set }
     
     func addAcademyData(title: String, description: String, photo: Data)
-    func editAcademyData(id: Int,title: String, description: String, photo: Data)
+    func editAcademyData(id: Int, title: String, description: String, photo: Data)
     func retrieveAcademyDataById(id: Int)
     
 }

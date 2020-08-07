@@ -17,5 +17,6 @@ target 'DicodingGames' do
   pod "ImageSlideshow/SDWebImage"
   pod 'PKHUD'
   pod 'SwiftyJSON'
-  pod 'imageOptClient' 
+  pod 'imageOptClient'
+  pod 'SwiftLint'
 end

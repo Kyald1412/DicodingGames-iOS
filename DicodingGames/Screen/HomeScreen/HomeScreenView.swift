@@ -16,13 +16,13 @@ class HomeScreenView: UIViewController {
     
     var presenter: HomeScreenPresenterProtocol?
     
-    let HOME_BANNER = "home_banner"
-    let HOME_TOP_GAME_POPULAR = "home_top_game_popular"
-    let HOME_UPCOMING_GAME = "home_upcoming_game"
-    let HOME_NEW_RELEASE_HEADER = "home_new_releases_header"
-    let HOME_NEW_RELEASE = "home_new_releases"
+    let homeBanner = "homeBanner"
+    let homeTopGamePopular = "homeTopGamePopular"
+    let homeUpcomingGame = "homeUpcomingGame"
+    let homeNewReleaseHeader = "homeNewReleases_header"
+    let homeNewRelease = "homeNewReleases"
 
-    private var BANNER_PHOTO_LIST = [SDWebImageSource]()
+    private var bannerPhotoList = [SDWebImageSource]()
     
     private var bannerGameList: [Results]? = []
     private var upcomingGameList: [Results]? = []
@@ -32,8 +32,8 @@ class HomeScreenView: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    var cachedPopularNowPosition = Dictionary<IndexPath,CGPoint>()
-    var cachedUpcomingPosition = Dictionary<IndexPath,CGPoint>()
+    var cachedPopularNowPosition = Dictionary<IndexPath, CGPoint>()
+    var cachedUpcomingPosition = Dictionary<IndexPath, CGPoint>()
     var cachedBannerPosition = 0
     
     private let refreshControl = UIRefreshControl()
@@ -47,7 +47,7 @@ class HomeScreenView: UIViewController {
         tableViewSetup()
     }
     
-    func tableViewSetup(){
+    func tableViewSetup() {
         
         self.tableView.contentInset.bottom = 50
         
@@ -85,12 +85,11 @@ class HomeScreenView: UIViewController {
         self.presenter?.showProfileView()
     }
     
-    
 }
 
 extension HomeScreenView: HomeScreenViewProtocol {
     
-    func showFavoriteGamesCount(with favorite: Bool){
+    func showFavoriteGamesCount(with favorite: Bool) {
         self.isFavorite = favorite
         self.tableView.reloadSections(IndexSet.init(integer: 0), with: .none)
     }
@@ -106,10 +105,10 @@ extension HomeScreenView: HomeScreenViewProtocol {
     func showBannerGames(with games: GameModel) {
         guard let results = games.results  else { return }
         
-        BANNER_PHOTO_LIST.removeAll()
+        bannerPhotoList.removeAll()
         
         for data in results {
-            BANNER_PHOTO_LIST.append(SDWebImageSource(url: URL(string: data.backgroundImage)!))
+            bannerPhotoList.append(SDWebImageSource(url: URL(string: data.backgroundImage)!))
         }
         
         self.bannerGameList = results
@@ -171,54 +170,52 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? HomeGameCell {
                         
-            if(cell.cellIdentifier == HOME_UPCOMING_GAME) {
+            if(cell.cellIdentifier == homeUpcomingGame) {
                 cachedUpcomingPosition[indexPath] = cell.collectionView.contentOffset
             }
-            if(cell.cellIdentifier == HOME_TOP_GAME_POPULAR) {
+            if(cell.cellIdentifier == homeTopGamePopular) {
                 cachedPopularNowPosition[indexPath] = cell.collectionView.contentOffset
             }
-            
         }
     }
+    
     func identifierConvert(fromFacility facility: String?) -> String? {
         //Add facility&identifier dependance here.
-        let identifiersDic = [HOME_BANNER: "HomeBannerCell",
-                              HOME_TOP_GAME_POPULAR: "HomeGameCell",
-                              HOME_UPCOMING_GAME: "HomeGameCell",
-                              HOME_NEW_RELEASE_HEADER: "HomeNewReleaseHeadCell",
-                              HOME_NEW_RELEASE: "HomeNewReleaseCell"]
+        let identifiersDic = [homeBanner: "HomeBannerCell",
+                              homeTopGamePopular: "HomeGameCell",
+                              homeUpcomingGame: "HomeGameCell",
+                              homeNewReleaseHeader: "HomeNewReleaseHeadCell",
+                              homeNewRelease: "HomeNewReleaseCell"]
         
         return identifiersDic[facility!]
     }
-    
     
     func tableviewDataModel(with section: Int?) -> [AnyHashable]? {
         
         var model = [AnyHashable]()
         
-        if(section == 0){
-            model.append(HOME_BANNER)
+        if(section == 0) {
+            model.append(homeBanner)
         }
-        if(section == 1){
-            model.append(HOME_TOP_GAME_POPULAR)
+        if(section == 1) {
+            model.append(homeTopGamePopular)
         }
-        if(section == 2){
-            model.append(HOME_UPCOMING_GAME)
+        if(section == 2) {
+            model.append(homeUpcomingGame)
         }
-        if(section == 3){
-            model.append(HOME_NEW_RELEASE_HEADER)
+        if(section == 3) {
+            model.append(homeNewReleaseHeader)
         }
         if(section == 4) {
             if let newReleaseGameData = self.newReleaseGameList {
                 for _ in newReleaseGameData {
-                    model.append(HOME_NEW_RELEASE)
+                    model.append(homeNewRelease)
                 }
             }
         }
         
         return model
     }
-    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 5
@@ -238,7 +235,7 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
         
         cell?.selectionStyle = .none
         
-        if (facility == HOME_BANNER){
+        if (facility == homeBanner) {
             let cell: HomeBannerCell = (tableView.dequeueReusableCell(withIdentifier: identifierConvert(fromFacility: facility)!) as? HomeBannerCell)!
             
             cell.viewSlider.pageIndicator = nil
@@ -247,11 +244,10 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
             
             cell.viewSlider.contentScaleMode = .scaleAspectFill
             
-            cell.viewSlider.setImageInputs(BANNER_PHOTO_LIST)
+            cell.viewSlider.setImageInputs(bannerPhotoList)
             
-            cell.indicator.numberOfPages = BANNER_PHOTO_LIST.count
+            cell.indicator.numberOfPages = bannerPhotoList.count
             cell.indicator.currentPageIndicatorTintColor = UIColor(red: 0.71, green: 0.09, blue: 0.09, alpha: 1.00)
-            
             
             cell.viewSlider.activityIndicator = DefaultActivityIndicator()
             
@@ -259,7 +255,6 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
                 cell.lblTitle.text = self.bannerGameList?[self.cachedBannerPosition].name
                 cell.indicator.currentPage = self.cachedBannerPosition
                 cell.viewSlider.setCurrentPage(self.cachedBannerPosition, animated: true)
-                
             }
             
             if self.isFavorite {
@@ -271,11 +266,11 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
             cell.indicator.bringSubviewToFront(cell.contentView)
             cell.viewSlider.pageIndicatorPosition = PageIndicatorPosition(horizontal: .left(padding: 20), vertical: .customBottom(padding: 8))
             
-            cell.viewSlider.addTapGesture { (tap) in
+            cell.viewSlider.addTapGesture { _ in
     
                 guard let results = self.bannerGameList else { return }
                 
-                if(results.count > 0){
+                if(results.count > 0) {
                     self.presenter?.showDetailScreenView(results[cell.viewSlider.currentPage].id)
                 }
             }
@@ -285,7 +280,7 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
         
-        if (facility == HOME_TOP_GAME_POPULAR){
+        if (facility == homeTopGamePopular) {
             let cell: HomeGameCell = (tableView.dequeueReusableCell(withIdentifier: identifierConvert(fromFacility: facility)!) as? HomeGameCell)!
             
             cell.subCategoryLabel.text = "Popular"
@@ -294,7 +289,7 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
                 cell.updateCellWith(row: gameList)
             }
             
-            cell.cellIdentifier = HOME_TOP_GAME_POPULAR
+            cell.cellIdentifier = homeTopGamePopular
             
             cell.collectionView.contentOffset = cachedPopularNowPosition[indexPath] ?? .zero
 
@@ -305,7 +300,7 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
         
-        if (facility == HOME_UPCOMING_GAME){
+        if (facility == homeUpcomingGame) {
             let cell: HomeGameCell = (tableView.dequeueReusableCell(withIdentifier: identifierConvert(fromFacility: facility)!) as? HomeGameCell)!
             
             cell.subCategoryLabel.text = "Upcoming Games"
@@ -314,7 +309,7 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
                 cell.updateCellWith(row: gameList)
             }
             
-            cell.cellIdentifier = HOME_UPCOMING_GAME
+            cell.cellIdentifier = homeUpcomingGame
             
             cell.collectionView.contentOffset = cachedUpcomingPosition[indexPath] ?? .zero
 
@@ -325,7 +320,7 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
         
-        if (facility == HOME_NEW_RELEASE_HEADER){
+        if (facility == homeNewReleaseHeader) {
             let cell: HomeNewReleaseHeadCell = (tableView.dequeueReusableCell(withIdentifier: identifierConvert(fromFacility: facility)!) as? HomeNewReleaseHeadCell)!
             
             cell.lblTitle.text = "New Releases"
@@ -335,7 +330,7 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
         
-        if (facility == HOME_NEW_RELEASE){
+        if (facility == homeNewRelease) {
             let cell: HomeNewReleaseCell = (tableView.dequeueReusableCell(withIdentifier: identifierConvert(fromFacility: facility)!) as? HomeNewReleaseCell)!
             
             if self.newReleaseGameList?.count ?? 0 > 0 {
@@ -344,8 +339,8 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
                 
                 let url = URL(string: self.newReleaseGameList?[indexPath.row].backgroundImage ?? "_")
                 
-                cell.img.sd_imageIndicator = SDWebImageProgressIndicator.default;
-                cell.img.sd_setImage(with: url) { (image, error, cache, url) in
+                cell.img.sd_imageIndicator = SDWebImageProgressIndicator.default
+                cell.img.sd_setImage(with: url) { (image, error, _, _) in
                     if (error != nil) {
                            cell.img.image = UIImage(named: "dicoding_logo")
                     } else {
@@ -360,8 +355,6 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
         
-        
-        
         return cell!
         
     }
@@ -369,19 +362,14 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
     // MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        
         let model = tableviewDataModel(with: indexPath.section)
         let facility = model![indexPath.row] as? String
         
-        if (facility == HOME_BANNER) {
-            return 300
-        }
+        if (facility == homeBanner) { return 300 }
         
-        if (facility == HOME_NEW_RELEASE_HEADER) {
-            return 60
-        }
+        if (facility == homeNewReleaseHeader) { return 60 }
         
-        if (facility == HOME_NEW_RELEASE) {
+        if (facility == homeNewRelease) {
             return UITableView.automaticDimension
         }
         
@@ -393,11 +381,11 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
         let model = tableviewDataModel(with: indexPath.section)
         let facility = model![indexPath.row] as? String
         
-        if (facility == HOME_NEW_RELEASE_HEADER) {
+        if (facility == homeNewReleaseHeader) {
             self.presenter?.showGameListScreen()
         }
-        if (facility == HOME_NEW_RELEASE) {
-            if(self.newReleaseGameList?.count ?? 0 > 0){
+        if (facility == homeNewRelease) {
+            if(self.newReleaseGameList?.count ?? 0 > 0) {
                 self.presenter?.showDetailScreenView(self.newReleaseGameList?[indexPath.row].id ?? 0)
             }
             
@@ -406,11 +394,10 @@ extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-
 extension HomeScreenView: CollectionViewCellDelegate {
     func collectionView(collectionviewcell: HomeGameContentCell?, index: Int, didTappedInTableViewCell: HomeGameCell) {
         
-        if didTappedInTableViewCell.cellIdentifier == HOME_TOP_GAME_POPULAR {
+        if didTappedInTableViewCell.cellIdentifier == homeTopGamePopular {
             if let gameData = self.popularNowGameList?[index] {
                 self.presenter?.showDetailScreenView(gameData.id)
             }
@@ -420,7 +407,6 @@ extension HomeScreenView: CollectionViewCellDelegate {
                 self.presenter?.showDetailScreenView(gameData.id)
             }
         }
-        
         
     }
 }

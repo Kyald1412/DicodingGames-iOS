@@ -20,9 +20,9 @@ class HomeGameContentCell: UICollectionViewCell {
         lblGame?.text = games.name
             
         let url = URL(string: games.backgroundImage)
-        imgGame.sd_imageIndicator = SDWebImageProgressIndicator.default;
+        imgGame.sd_imageIndicator = SDWebImageProgressIndicator.default
         let thumbnailSize = CGSize(width: 500, height: 500) // Thumbnail will bounds to (200,200)
-        imgGame?.sd_setImage(with: url, placeholderImage: nil, context: [.imageThumbnailPixelSize : thumbnailSize])
+        imgGame?.sd_setImage(with: url, placeholderImage: nil, context: [.imageThumbnailPixelSize: thumbnailSize])
 
     }
 }

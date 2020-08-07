@@ -17,7 +17,7 @@ protocol AcademyLocalDataManagerInputProtocol: class {
     func updateAcademy(id: Int, name: String, desc: String, photo: Data) throws
 }
 
-class AcademyLocalDataManager:AcademyLocalDataManagerInputProtocol {    
+class AcademyLocalDataManager: AcademyLocalDataManagerInputProtocol {
     
        func createAcademyData(id: Int, name: String, desc: String, photo: Data) {
            guard let managedOC = CoreDataStore.managedObjectContext else {
@@ -45,7 +45,7 @@ class AcademyLocalDataManager:AcademyLocalDataManagerInputProtocol {
            
        }
     
-    func retrieveAcademyGamesList() throws -> [Academy]   {
+    func retrieveAcademyGamesList() throws -> [Academy] {
                 
         guard let managedOC = CoreDataStore.managedObjectContext else {
             throw PersistenceError.managedObjectContextNotFound
@@ -53,12 +53,10 @@ class AcademyLocalDataManager:AcademyLocalDataManagerInputProtocol {
 
         let request: NSFetchRequest<Academy> = NSFetchRequest(entityName: String(describing: Academy.self))
         
-        
         return try managedOC.fetch(request)
     }
     
-    
-    func retrieveAcademyById(id: Int) throws -> Academy   {
+    func retrieveAcademyById(id: Int) throws -> Academy {
         
         guard let managedOC = CoreDataStore.managedObjectContext else {
             throw PersistenceError.managedObjectContextNotFound
@@ -80,7 +78,6 @@ class AcademyLocalDataManager:AcademyLocalDataManagerInputProtocol {
         
         if let newAcademyGames = NSEntityDescription.entity(forEntityName: "Academy",
                                                            in: managedOC) {
-                    
             
             let favoriteGames = Academy(entity: newAcademyGames, insertInto: managedOC)
             
@@ -135,6 +132,5 @@ class AcademyLocalDataManager:AcademyLocalDataManagerInputProtocol {
         throw PersistenceError.couldNotSaveObject
         
     }
-    
 
 }

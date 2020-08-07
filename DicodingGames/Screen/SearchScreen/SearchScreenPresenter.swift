@@ -12,7 +12,7 @@ import Combine
 class SearchScreenPresenter: ObservableObject {
     private let interactor: SearchScreenInteractorInputProtocol
     
-    @Published var gameSearch : [Results] = []
+    @Published var gameSearch: [Results] = []
     @Published var isLoading: Bool = false
     @Published var isEmpty: Bool = false
 
@@ -42,6 +42,5 @@ extension SearchScreenPresenter: SearchScreenInteractorOutputProtocol {
     func onError() {
         isLoading = false
     }
-    
 
 }

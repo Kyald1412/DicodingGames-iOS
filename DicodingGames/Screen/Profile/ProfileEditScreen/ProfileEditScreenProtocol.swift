@@ -25,7 +25,7 @@ protocol ProfileEditScreenPresenterProtocol: class {
     var wireFrame: ProfileEditScreenWireFrameProtocol? { get set }
         
     func viewDidLoad()
-    func onUpdateProfileData(name: String, bio: String, category: String,photo:Data)
+    func onUpdateProfileData(name: String, bio: String, category: String, photo: Data)
     func onShowProfileData()
 
 }
@@ -35,7 +35,7 @@ protocol ProfileEditScreenInteractorInputProtocol: class {
     var userDataManager: UserLocalDataManagerInputProtocol? { get set }    
     
     func retrieveProfileData()
-    func updateProfileData(name: String, bio: String, category: String,photo:Data)
+    func updateProfileData(name: String, bio: String, category: String, photo: Data)
     
 }
 

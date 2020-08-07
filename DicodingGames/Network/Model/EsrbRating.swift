@@ -19,8 +19,6 @@ struct EsrbRating: Codable {
   var name: String?
   var slug: String?
 
-
-
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     id = try container.decodeIfPresent(Int.self, forKey: .id)

@@ -28,7 +28,7 @@ class DetailHeaderCell: UITableViewCell {
            super.layoutSubviews()
            
            gradientLayer.frame = viewGradient.bounds
-           gradientLayer.colors = [UIColor.clear,UIColor(red: 0.03, green: 0.03, blue: 0.07, alpha: 1.00).cgColor]
+           gradientLayer.colors = [UIColor.clear, UIColor(red: 0.03, green: 0.03, blue: 0.07, alpha: 1.00).cgColor]
            gradientLayer.locations = [0.0, 1.0]
            viewGradient.layer.addSublayer(gradientLayer)
        }

@@ -31,7 +31,6 @@ class ProfileAcademyScreenPresenter: ObservableObject {
         $desc.nonEmptyValidator("Desc must be provided")
     }()
     
-    
     lazy var allValidation: ValidationPublisher = {
                 
         Combine.Publishers.Merge(
@@ -49,24 +48,22 @@ class ProfileAcademyScreenPresenter: ObservableObject {
         
     }
     
-    func onAcademyEdit(){
+    func onAcademyEdit() {
         interactor.retrieveAcademyDataById(id: academyId)
     }
     
-    
-    func editAcademyData(){
+    func editAcademyData() {
         guard let image = UIImage(named: "dicoding_logo") else { return }
         let jpegData = image.jpegData(compressionQuality: 0.3)!
 
         interactor.editAcademyData(id: academyId, title: title, description: desc, photo: self.inputImage?.jpegData(compressionQuality: 0.3) ?? jpegData)
     }
     
-    func addAcademyData(){
+    func addAcademyData() {
         guard let image = UIImage(named: "dicoding_logo") else { return }
         let jpegData = image.jpegData(compressionQuality: 0.3)!
         interactor.addAcademyData(title: title, description: desc, photo: self.inputImage?.jpegData(compressionQuality: 0.3) ?? jpegData)
     }
-    
     
 }
 
@@ -76,7 +73,7 @@ extension ProfileAcademyScreenPresenter: ProfileAcademyScreenInteractorOutputPro
         
     }
     
-    func didReceiveAcademyData(academy: Academy){
+    func didReceiveAcademyData(academy: Academy) {
         
         guard let image = UIImage(named: "dicoding_logo") else { return }
 
@@ -85,6 +82,5 @@ extension ProfileAcademyScreenPresenter: ProfileAcademyScreenInteractorOutputPro
         self.image = Image(uiImage: UIImage.init(data: academy.photo) ?? image )
          self.inputImage = UIImage.init(data: academy.photo) ?? image
     }
-
 
 }

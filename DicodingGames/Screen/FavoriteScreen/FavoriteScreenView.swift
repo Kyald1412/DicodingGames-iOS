@@ -14,14 +14,14 @@ import Combine
 import SDWebImageSwiftUI
 import imageOptClient
 
-typealias onFavoriteScreenDismiss = () ->()
-typealias onFavoriteScreenGameData = (_ gameId :Int) ->()
+typealias OnFavoriteScreenDismiss = () -> Void
+typealias OnFavoriteScreenGameData = (_ gameId: Int) -> Void
 
 struct FavoriteScreenView: View {
     
     @ObservedObject var presenter: FavoriteScreenPresenter
-    var onGameDidTap: onFavoriteScreenGameData?
-    var onDismiss: onFavoriteScreenDismiss?
+    var onGameDidTap: OnFavoriteScreenGameData?
+    var onDismiss: OnFavoriteScreenDismiss?
     
     @State var gameName: String = ""
     
@@ -32,7 +32,6 @@ struct FavoriteScreenView: View {
     }
     
     var body: some View {
-        
         
         return VStack(alignment: .leading, spacing: 0) {
             
@@ -52,7 +51,7 @@ struct FavoriteScreenView: View {
                     .padding(EdgeInsets(top: 0, leading: -40, bottom: 0, trailing: 0))
                 
             }
-            List{
+            List {
                 ForEach(presenter.gameFavorites) { games in
                     VStack(alignment: .leading, spacing: 20) {
                         
@@ -61,14 +60,13 @@ struct FavoriteScreenView: View {
                     }
                         
                     .onTapGesture {
-                        self.performShowDetailScreen(gameId: Int(games.game_id))
+                        self.performShowDetailScreen(gameId: Int(games.gameId))
                         
                     }.listRowBackground(Color.init(UIColor(red: 0.03, green: 0.03, blue: 0.07, alpha: 1.00)))
                         
-                        
                         .contextMenu {
                             Button(action: {
-                                self.presenter.onGameDelete(id: Int(games.game_id))
+                                self.presenter.onGameDelete(id: Int(games.gameId))
                             }) {
                                 Text("Delete this item?")
                                 Image(systemName: "globe")
@@ -92,16 +90,15 @@ struct FavoriteScreenView: View {
         
     }
     
-    func performShowDetailScreen(gameId: Int){
+    func performShowDetailScreen(gameId: Int) {
         guard let onGameTap = onGameDidTap else {return}
         onGameTap(gameId)
     }
-    func performDismiss(){
+    func performDismiss() {
         guard let dismiss = onDismiss else {return}
         dismiss()
     }
 }
-
 
 struct FavoriteScreenView_Previews: PreviewProvider {
     static var previews: some View {

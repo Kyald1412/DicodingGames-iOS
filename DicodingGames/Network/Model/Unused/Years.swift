@@ -19,8 +19,6 @@ struct Years: Codable {
   var count: Int?
   var nofollow: Bool?
 
-
-
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     year = try container.decodeIfPresent(Int.self, forKey: .year)

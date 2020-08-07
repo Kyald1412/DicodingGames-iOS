@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-
 protocol DetailScreenViewProtocol: class {
     var presenter: DetailScreenPresenterProtocol? { get set }
     
@@ -41,7 +40,7 @@ protocol DetailScreenPresenterProtocol: class {
     var interactor: DetailScreenInteractorInputProtocol? { get set }
     var wireFrame: DetailScreenWireFrameProtocol? { get set }
     
-    var gameId : Int? { get set }
+    var gameId: Int? { get set }
     
     func viewDidLoad()
     func showDetailScreen(gameId: Int)
@@ -54,7 +53,7 @@ protocol DetailScreenInteractorInputProtocol: class {
     var detailRemoteDataManager: DetailRemoteDataManagerInputProtocol? { get set }
     var favoriteDataManager: FavoriteLocalDataManagerInputProtocol? { get set }
     
-    func saveFavoriteGame(id: Int, title: String, desc: String, rating: String,release_date:String, imageUrl: String)
+    func saveFavoriteGame(id: Int, title: String, desc: String, rating: String, releaseDate: String, imageUrl: String)
     func retrieveLocalFavorite(gameId: Int) -> Bool
     func deleteGameFavoriteData(gameId: Int)
     func retrieveGameDetailData(gameId: Int)

@@ -62,7 +62,6 @@ extension DetailSuggestedCell: UICollectionViewDelegate, UICollectionViewDataSou
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DetailSuggestedContentCell", for: indexPath) as? DetailSuggestedContentCell {
@@ -75,7 +74,6 @@ extension DetailSuggestedCell: UICollectionViewDelegate, UICollectionViewDataSou
         }
         return UICollectionViewCell()
     }
-    
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)

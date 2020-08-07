@@ -24,9 +24,7 @@ struct Store: Codable {
   var domain: String?
   var id: Int?
   var slug: String?
-
-
-
+    
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     gamesCount = try container.decodeIfPresent(Int.self, forKey: .gamesCount)

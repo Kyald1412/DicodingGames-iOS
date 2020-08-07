@@ -8,7 +8,7 @@
 
 import CoreData
 
-extension Academy: Identifiable  {
+extension Academy: Identifiable {
     
     @NSManaged public var id: Int32
     @NSManaged public var desc: String

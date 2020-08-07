@@ -12,7 +12,7 @@ import SwiftUI
 
 class ProfileAcademyScreenWireframe {
     
-    class func createProfileAcademyScreenModule() -> UIHostingController<ProfileAcademyScreenView>  {
+    class func createProfileAcademyScreenModule() -> UIHostingController<ProfileAcademyScreenView> {
                 
         let interactor: ProfileAcademyScreenInteractorInputProtocol = ProfileAcademyScreenInteractor()
         let presenter: ProfileAcademyScreenPresenter = ProfileAcademyScreenPresenter(interactor: interactor)
@@ -27,7 +27,7 @@ class ProfileAcademyScreenWireframe {
         return hostingController
     }
    
-    class func createProfileAcademyEditScreenModule(id: Int) -> UIHostingController<ProfileAcademyScreenView>  {
+    class func createProfileAcademyEditScreenModule(id: Int) -> UIHostingController<ProfileAcademyScreenView> {
                    
            let interactor: ProfileAcademyScreenInteractorInputProtocol = ProfileAcademyScreenInteractor()
         let presenter: ProfileAcademyScreenPresenter = ProfileAcademyScreenPresenter(interactor: interactor)
@@ -43,6 +43,5 @@ class ProfileAcademyScreenWireframe {
         
         return hostingController
     }
-    
     
 }

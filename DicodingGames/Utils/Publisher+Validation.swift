@@ -14,7 +14,6 @@ extension Published.Publisher where Value == String {
     
     func nonEmptyValidator(_ errorMessage: @autoclosure @escaping ValidationErrorClosure) -> ValidationPublisher {
         return ValidationPublishers.nonEmptyValidation(for: self, errorMessage: errorMessage())
-    }
-    
+    }    
     
 }

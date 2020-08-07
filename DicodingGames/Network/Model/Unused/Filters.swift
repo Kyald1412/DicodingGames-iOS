@@ -15,8 +15,6 @@ struct Filters: Codable {
 
   var years: [Years]?
 
-
-
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     years = try container.decodeIfPresent([Years].self, forKey: .years)

@@ -21,8 +21,6 @@ struct Clip: Codable {
   var clips: Clips?
   var video: String?
 
-
-
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     preview = try container.decodeIfPresent(String.self, forKey: .preview)

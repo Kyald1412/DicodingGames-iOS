@@ -25,8 +25,6 @@ struct Platform: Codable {
   var gamesCount: Int?
   var yearStart: Int?
 
-
-
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     slug = try container.decodeIfPresent(String.self, forKey: .slug)

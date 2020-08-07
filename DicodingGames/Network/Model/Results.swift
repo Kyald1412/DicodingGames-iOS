@@ -38,7 +38,6 @@ final class Results {
     var genresStringBuilder: String = ""
     var ratingBuilder: String = ""
     
-    
     init() {
         
     }
@@ -89,7 +88,6 @@ final class Results {
                 genresStringBuilder.append("\(genreData.name ?? "")")
                 genresStringBuilder.append(", ")
             }
-            
             
             genresStringBuilder = String(genresStringBuilder.dropLast())
             genresStringBuilder = String(genresStringBuilder.dropLast())
@@ -164,7 +162,6 @@ extension Results: Codable {
     }
     
 }
-
 
 extension Results: Identifiable {}
 

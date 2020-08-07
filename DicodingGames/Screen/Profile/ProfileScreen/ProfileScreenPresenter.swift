@@ -10,7 +10,6 @@ import Foundation
 
 class ProfileScreenPresenter: ProfileScreenPresenterProtocol {
  
-    
     weak var view: ProfileScreenViewProtocol?
     var wireFrame: ProfileScreenWireFrameProtocol?
     var userDataManager: UserLocalDataManagerInputProtocol?
@@ -20,7 +19,6 @@ class ProfileScreenPresenter: ProfileScreenPresenterProtocol {
         onLoadProfile()
         onLoadAcademies()
     }
-    
     
     func onLoadAcademies() {
                 
@@ -34,7 +32,7 @@ class ProfileScreenPresenter: ProfileScreenPresenterProtocol {
         }
     }
     
-    func deleteAcademy(id: Int){
+    func deleteAcademy(id: Int) {
         DispatchQueue.main.async {
             
             do {
@@ -68,7 +66,7 @@ class ProfileScreenPresenter: ProfileScreenPresenterProtocol {
     func showProfileEditScreen() {
         wireFrame?.presentProfileEditScreen(from: view!)
     }
-    func showAcademyAddScreen(){
+    func showAcademyAddScreen() {
         wireFrame?.presentAcademyScreen(from: view!)
     }
 

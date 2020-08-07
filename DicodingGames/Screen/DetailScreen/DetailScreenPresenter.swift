@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class DetailScreenPresenter: DetailScreenPresenterProtocol {
     var gameId: Int?
     
@@ -27,7 +26,7 @@ class DetailScreenPresenter: DetailScreenPresenterProtocol {
 
     }
     
-    func showSuggestedGameList(gameId: Int){
+    func showSuggestedGameList(gameId: Int) {
         wireFrame?.presentGameListScreen(from: self.view!, gameId: gameId)
     }
     func showDetailScreen(gameId: Int) {

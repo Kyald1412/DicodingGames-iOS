@@ -6,7 +6,6 @@
 //  Copyright © 2020 Dhiky Aldwiansyah. All rights reserved.
 //
 
-
 import Foundation
 
 struct API {

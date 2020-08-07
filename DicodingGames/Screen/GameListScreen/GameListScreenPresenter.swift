@@ -12,11 +12,11 @@ import Combine
 class GameListScreenPresenter: ObservableObject {
     private let interactor: GameListScreenInteractorInputProtocol
     
-    @Published var gameList : [Results] = []
+    @Published var gameList: [Results] = []
     @Published var title: String = ""
     @Published var isLoading: Bool = false
     @Published var nextPageUrl: String = ""
-    var query: [String:String] = [:]
+    var query: [String: String] = [:]
 
     private var cancellables = Set<AnyCancellable>()
     
@@ -24,13 +24,13 @@ class GameListScreenPresenter: ObservableObject {
         self.interactor = interactor
     }
     
-    func onGameList(query: [String:String]) {
+    func onGameList(query: [String: String]) {
         interactor.retrieveGameListData(query: query)
     }
     
-    func onNextPage(){
+    func onNextPage() {
         self.isLoading = true
-        interactor.retrieveGameListData(query: ["url":nextPageUrl])
+        interactor.retrieveGameListData(query: ["url": nextPageUrl])
     }
     
 }
@@ -40,7 +40,7 @@ extension GameListScreenPresenter: GameListScreenInteractorOutputProtocol {
 //        self.gameList = gameList.results!
         self.isLoading = false
         self.gameList.append(contentsOf: gameList.results!)
-        if(self.nextPageUrl == gameList.next){
+        if(self.nextPageUrl == gameList.next) {
             self.nextPageUrl = ""
         } else {
             self.nextPageUrl = gameList.next ?? ""
@@ -50,6 +50,5 @@ extension GameListScreenPresenter: GameListScreenInteractorOutputProtocol {
     func onError() {
         self.isLoading = false
     }
-    
 
 }

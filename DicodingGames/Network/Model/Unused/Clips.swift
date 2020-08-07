@@ -19,8 +19,6 @@ struct Clips: Codable {
   var SD: String?
   var full: String?
 
-
-
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     HD = try container.decodeIfPresent(String.self, forKey: .HD)

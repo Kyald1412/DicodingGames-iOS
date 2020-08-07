@@ -12,7 +12,7 @@ import SwiftUI
 
 class SearchScreenWireframe {
     
-    class func createSearchScreenModule() -> UIHostingController<SearchScreenView>  {
+    class func createSearchScreenModule() -> UIHostingController<SearchScreenView> {
                 
         let interactor: SearchScreenInteractorInputProtocol & SearchRemoteDataManagerOutputProtocol = SearchScreenInteractor()
         let searchRemoteDataManager: SearchRemoteDataManagerInputProtocol = SearchRemoteDataManager()
@@ -26,7 +26,5 @@ class SearchScreenWireframe {
 
         return hostingController
     }
-    
- 
     
 }

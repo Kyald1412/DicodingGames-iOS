@@ -30,7 +30,7 @@ protocol SearchScreenPresenterProtocol: class {
     var interactor: SearchScreenInteractorInputProtocol? { get set }
     var wireFrame: SearchScreenWireFrameProtocol? { get set }
     
-    var gameId : Int? { get set }
+    var gameId: Int? { get set }
     
     func viewDidLoad()
 }

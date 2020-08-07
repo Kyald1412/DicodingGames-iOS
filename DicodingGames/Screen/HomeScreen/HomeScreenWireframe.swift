@@ -12,7 +12,6 @@ import SwiftUI
 import Combine
 
 class HomeScreenWireFrame: HomeScreenWireFrameProtocol {
-   
     
     class func createHomeScreenModule(homeScreenRef: HomeScreenView) {
         
@@ -37,7 +36,6 @@ class HomeScreenWireFrame: HomeScreenWireFrameProtocol {
         return UIStoryboard(name: "Main", bundle: Bundle.main)
     }
     
-    
     func presentProfileScreen(from view: HomeScreenViewProtocol) {
         let profileViewController = ProfileScreenWireFrame.createProfileScreenModule()
         
@@ -45,7 +43,6 @@ class HomeScreenWireFrame: HomeScreenWireFrameProtocol {
             sourceView.navigationController?.pushViewController(profileViewController, animated: true)
         }
     }
-    
     
     func presentDetailScreen(from view: HomeScreenViewProtocol, games: Int) {
         let detailScreenViewController = DetailScreenWireFrame.createDetailScreenModule(forGames: games)
@@ -94,11 +91,10 @@ class HomeScreenWireFrame: HomeScreenWireFrameProtocol {
         }
         
     }
-    
 
     func presentGameListScreen(from view: HomeScreenViewProtocol) {
         
-        let parameters = ["dates":"\(getDateWithYearModify(year: -1)),\(getDateWithYearModify(year:0))", "ordering":"-released","page_size":"10"]
+        let parameters = ["dates": "\(getDateWithYearModify(year: -1)),\(getDateWithYearModify(year: 0))", "ordering": "-released", "page_size": "10"]
 
         let hostingController = GameListScreenWireframe.createGameListScreenModule(title: "New Releases", query: parameters)
         
@@ -117,6 +113,5 @@ class HomeScreenWireFrame: HomeScreenWireFrameProtocol {
         }
         
     }
-    
     
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Academy" representedClassName=".Academy" syncable="YES">
         <attribute name="desc" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
@@ -7,15 +7,15 @@
         <attribute name="photo" optional="YES" attributeType="Binary"/>
     </entity>
     <entity name="FavoriteGames" representedClassName=".FavoriteGames" syncable="YES">
-        <attribute name="game_desc" optional="YES" attributeType="String"/>
-        <attribute name="game_id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="game_img_url" optional="YES" attributeType="String"/>
-        <attribute name="game_ratings" optional="YES" attributeType="String"/>
-        <attribute name="game_release_date" optional="YES" attributeType="String"/>
-        <attribute name="game_title" optional="YES" attributeType="String"/>
+        <attribute name="gameDesc" optional="YES" attributeType="String"/>
+        <attribute name="gameId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="gameImgUrl" optional="YES" attributeType="String"/>
+        <attribute name="gameRatings" optional="YES" attributeType="String"/>
+        <attribute name="gameReleaseDate" optional="YES" attributeType="String"/>
+        <attribute name="gameTitle" optional="YES" attributeType="String"/>
     </entity>
     <entity name="NewGames" representedClassName=".NewGames" syncable="YES">
-        <attribute name="game_id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="gameId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <entity name="Profile" representedClassName=".Profile" syncable="YES">

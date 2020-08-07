@@ -28,6 +28,5 @@ class ValidationPublishers {
         .dropFirst()
         .eraseToAnyPublisher()
     }
-    
 
 }

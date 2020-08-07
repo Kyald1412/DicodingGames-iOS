@@ -12,7 +12,7 @@ import SwiftyJSON
 
 protocol GameListRemoteDataManagerInputProtocol: class {
     var remoteRequestHandler: GameListRemoteDataManagerOutputProtocol? { get set }
-    func retrieveGameListData(query: [String:String])
+    func retrieveGameListData(query: [String: String])
 }
 
 protocol GameListRemoteDataManagerOutputProtocol: class {
@@ -20,14 +20,14 @@ protocol GameListRemoteDataManagerOutputProtocol: class {
     func onError()
 }
 
-class GameListRemoteDataManager:GameListRemoteDataManagerInputProtocol {
+class GameListRemoteDataManager: GameListRemoteDataManagerInputProtocol {
     
     var remoteRequestHandler: GameListRemoteDataManagerOutputProtocol?
     
-    func retrieveGameListData(query: [String:String]) {
+    func retrieveGameListData(query: [String: String]) {
         
         var url = Endpoints.Games.allgames.url
-        var parameters: [String:String] = [:]
+        var parameters: [String: String] = [:]
         
         if let queryUrl = query["url"] {
             url = queryUrl
@@ -49,6 +49,5 @@ class GameListRemoteDataManager:GameListRemoteDataManagerInputProtocol {
                 }
         }
     }
-    
     
 }

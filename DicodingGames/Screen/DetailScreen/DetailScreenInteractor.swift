@@ -10,15 +10,14 @@ import Foundation
 
 class DetailScreenInteractor: DetailScreenInteractorInputProtocol {
 
-
     weak var presenter: DetailScreenInteractorOutputProtocol?
     var detailRemoteDataManager: DetailRemoteDataManagerInputProtocol?
     var favoriteDataManager: FavoriteLocalDataManagerInputProtocol?
     
-    func saveFavoriteGame(id: Int, title: String, desc: String, rating: String,release_date: String, imageUrl: String){
+    func saveFavoriteGame(id: Int, title: String, desc: String, rating: String, releaseDate: String, imageUrl: String) {
         do {
-            try favoriteDataManager?.saveFavoriteGame(id: id, title: title, desc: desc, rating: rating,release_date: release_date, imageUrl: imageUrl)
-        } catch  {
+            try favoriteDataManager?.saveFavoriteGame(id: id, title: title, desc: desc, rating: rating, releaseDate: releaseDate, imageUrl: imageUrl)
+        } catch {
             
         }
     }
@@ -27,7 +26,7 @@ class DetailScreenInteractor: DetailScreenInteractorInputProtocol {
         do {
             return try favoriteDataManager?.retrieveFavoriteGamesById(gameId: gameId) ?? false
 
-        } catch  {
+        } catch {
 
         }
         
@@ -45,7 +44,6 @@ class DetailScreenInteractor: DetailScreenInteractorInputProtocol {
         }
         
     }
-    
     
     func retrieveGameDetailData(gameId: Int) {
         detailRemoteDataManager?.retrieveGameDetailData(gameId: gameId)
@@ -73,7 +71,6 @@ extension DetailScreenInteractor: DetailRemoteDataManagerOutputProtocol {
     func onGameDetailRetrieved(_ gameDetail: GameDetail) {
         presenter?.didRetrieveGameDetail(gameDetail)
     }
-    
     
     func onError() {
         presenter?.onError()

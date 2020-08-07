@@ -24,8 +24,7 @@ protocol DetailRemoteDataManagerOutputProtocol: class {
     func onError()
 }
 
-
-class DetailRemoteDataManager:DetailRemoteDataManagerInputProtocol {
+class DetailRemoteDataManager: DetailRemoteDataManagerInputProtocol {
     
     var remoteRequestHandler: DetailRemoteDataManagerOutputProtocol?
   

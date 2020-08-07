@@ -37,7 +37,6 @@ struct GameModel: Codable {
   var descriptionValue: String?
   var results: [Results]?
 
-
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     seoTitle = try container.decodeIfPresent(String.self, forKey: .seoTitle)

@@ -14,7 +14,7 @@ import UIKit
 class ProfileEditScreenPresenter: ObservableObject {
     private let interactor: ProfileEditScreenInteractorInputProtocol
         
-    var onDismiss: onProfileEditScreenDismiss?
+    var onDismiss: OnProfileEditScreenDismiss?
 
     @Published var name: String = ""
     @Published var category: String = ""
@@ -47,7 +47,6 @@ class ProfileEditScreenPresenter: ObservableObject {
             return [v1].allSatisfy { $0.isSuccess } ? .success : .failure(message: "")
         }.eraseToAnyPublisher()
     }()
-        
 
     var cancellables = Set<AnyCancellable>()
     
@@ -64,7 +63,7 @@ class ProfileEditScreenPresenter: ObservableObject {
         guard let image = UIImage(named: "me") else { return }
         let jpegData = image.jpegData(compressionQuality: 0.3)!
         
-        interactor.updateProfileData(name: name, bio: bio, category: category, photo:self.inputImage?.jpegData(compressionQuality: 0.3) ?? jpegData)
+        interactor.updateProfileData(name: name, bio: bio, category: category, photo: self.inputImage?.jpegData(compressionQuality: 0.3) ?? jpegData)
     }
     
 }
@@ -76,7 +75,7 @@ extension ProfileEditScreenPresenter: ProfileEditScreenInteractorOutputProtocol 
         dismiss()
     }
     
-    func didReceiveProfileData(profile: Profile){
+    func didReceiveProfileData(profile: Profile) {
                 
         guard let image = UIImage(named: "me") else { return }
         
@@ -91,6 +90,5 @@ extension ProfileEditScreenPresenter: ProfileEditScreenInteractorOutputProtocol 
     func onError() {
         
     }
-    
 
 }
